@@ -7,5 +7,5 @@
 
 * After that go in your administration area to:	**Settings>Store>Payment**
 
-* Check MercadoPago and and then click on "Edit" to configure the module
+* Check MercadoPago and and then click on **"Edit"** to configure the module
 
