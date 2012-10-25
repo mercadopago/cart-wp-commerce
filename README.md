@@ -3,9 +3,9 @@
 
 ### Installation:
 
-* Put the file mercadopago.php inside the **\wp-content\plugins\wp-e-commerce\wpsc-merchants\** file
+* Put mercadopago.php into folder **\wp-content\plugins\wp-e-commerce\wpsc-merchants\**
 
-* After that go in your administration area to:	**Settings>Store>Payment**
+* After that, go to your administration area: **Settings>Store>Payment**
 
-* Check MercadoPago and and then click on **"Edit"** to configure the module
+* Select **MercadoPago**, click **update** and then click on **"Edit"** to configure the module
 
