@@ -150,7 +150,7 @@ function function_mercado_pago($seperator, $sessionid){
     `".WPSC_TABLE_SUBMITED_FORM_DATA."`.`log_id`=".$purchase_log['id'];
     
     $userinfo = $wpdb->get_results($usersql, ARRAY_A);
-    
+
     // configs
     $data = array();
     $data['client_id']          = get_option('mercadopago_client_id');
@@ -159,7 +159,7 @@ function function_mercado_pago($seperator, $sessionid){
     $data['pending']            = get_option('mercadopago_url_pending');
     $data['currency']           = get_option('mercadopago_currency');
     // order info
-    $data['total']              = number_format($wpsc_cart->total_price,2);
+    $data['total']              = $wpsc_cart->total_price;
     
     
     //client 
@@ -203,7 +203,7 @@ function function_mercado_pago($seperator, $sessionid){
          $data['image0'] = 'https://www.mercadopago.com/org-img/MP3/home/logomp3.gif';
         }
     }
-    
+
     // exclude methods
     
     
