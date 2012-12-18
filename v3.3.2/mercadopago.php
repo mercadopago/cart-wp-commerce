@@ -5,7 +5,7 @@
  *  It is also available through the world-wide-web at this URL: *
  *  http://opensource.org/licenses/osl-3.0.php * 
  *  @category    Payment Gateway * @package    	MercadoPago 
- *  @author      André Fuhrman (andrefuhrman@gmail.com) 
+ *  @author      Andrï¿½ Fuhrman (andrefuhrman@gmail.com) 
  *  @copyright  Copyright (c) MercadoPago [http://www.mercadopago.com] 
  *  @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0) 
  */
@@ -37,14 +37,14 @@ function form_mercado_pago(){
             $output.='<td><input name="mercadopago_client_secret" type="text" value="'. get_option('mercadopago_client_secret') .'"/></td></tr>';
             $output.='<tr><td></td><td><small>To get fields above, follow: 
                   <a href="https://www.mercadopago.com/mla/herramientas/aplicaciones" target="_blank">Argentina</a> or
-                  <a href="https://www.mercadopago.com/mlb/ferramentas/aplicacoes" target="_blank">Brasil</a><br /><br /></small></td></tr>';
+                  <a href="https://www.mercadopago.com/mlb/ferramentas/aplicacoes" target="_blank">Brasil</a> or <a href="https://www.mercadopago.com/mlm/herramientas/aplicaciones" target="_blank">Mexico</a> <br /><br /></small></td></tr>';
             $output.='<tr><td>Url Sucess Payment</td>';
             $output.='<td><input name="mercadopago_url_sucess" type="text" value="'. $url_sucess .'"/></td></tr>';
             $output.='<tr><td>Url Sucess Payment</td>';
             $output.='<td><input name="mercadopago_url_pending" type="text" value="'. $url_pending .'"/></td></tr>';
             $output.='<tr><td></td><td><small>This is just the url where the custumer is redirect after his payment is done, you can set in both fields above any url of your site, but needs to be a <b>valid URL.</b>.<br /><br /> Please set your <b>instant payment notification</b> to receive your automatic order status changes at: 
                   <a href="https://www.mercadopago.com/mla/herramientas/notificaciones" target="_blank">Argentina</a> or
-                  <a href="https://www.mercadopago.com/mlb/ferramentas/notificacoes" target="_blank">Brasil</a><br />
+                  <a href="https://www.mercadopago.com/mlb/ferramentas/notificacoes" target="_blank">Brasil</a> or <a href="https://www.mercadopago.com/mlm/herramientas/notificaciones" target="_blank">Mexico</a><br />
                   Set your url follwing this exemple: http://yourstore.com</b></small></td></tr>';
             $output.='<tr><td>Store Country</td>';
             $output.='<td>'. country() .'</td></tr>';
@@ -214,7 +214,7 @@ function function_mercado_pago($seperator, $sessionid){
     // array to create preference key
        $dados = array(
        "external_reference" => $sessionid ,// seu codigo de referencia, i.e. Numero do pedido da sua loja 
-       "currency" => $data['currency'] ,// string Argentina: ARS (peso argentino) ó USD (Dólar estadounidense); Brasil: BRL (Real).
+       "currency" => $data['currency'] ,// string Argentina: ARS (peso argentino) ï¿½ USD (Dï¿½lar estadounidense); Brasil: BRL (Real).
        "title" => $data['PROD_NAME0'],  //string
        "description" => $data['PROD_QTY0'], // string
        "quantity" => $data['PROD_QTY0'],// int 
@@ -254,6 +254,8 @@ function function_mercado_pago($seperator, $sessionid){
   
         if(get_option('mercadopago_country') == 'MLB'):
         $html .= '<div><img src="http://img.mlstatic.com/org-img/MLB/MP/BANNERS/tipo2_468X60.jpg" alt="MercadoPago" title="MercadoPago" /></div>';
+        elseif (get_option('mercadopago_country') == 'MLM'): 
+        $html .= '<div><img src="http://imgmp.mlstatic.com/org-img/banners/mx/medios/MLM_468X108.JPG" title="MercadoPago - Medios de pago" alt="MercadoPago - Medios de pago" width="468" height="108"/></div>';
         else:
         $html .= '<div><img src="http://imgmp.mlstatic.com/org-img/banners/ar/medios/468X60.jpg" alt="MercadoPago" title="MercadoPago" /></div>';    
         endif;
@@ -458,7 +460,7 @@ class Basic {
             $time = $data[0];
              
             
-            // verifica se já existe accesstoken valido, caso exista, retorna o accesstoken
+            // verifica se jï¿½ existe accesstoken valido, caso exista, retorna o accesstoken
             if(isset($this->accesstoken) && isset($this->date)){          
                 $timedifference = $time - $this->date;
                 if($timedifference < $this->expired){
@@ -479,7 +481,7 @@ class Basic {
                 $dados = $this->DoPost($post,$url,$header,'200','post','post');
                 // set the access token
                 $this->accesstoken = $dados['access_token'];
-                 // guarta o hoarario, prazo de expiraç?o e returna o access token
+                 // guarta o hoarario, prazo de expiraï¿½?o e returna o access token
                 $this->date = $time;
                 $this->expired = $dados['expires_in'];
                 return $dados['access_token'];
@@ -665,7 +667,7 @@ Class Shop extends Basic {
             } else {
                 $mercadopago_limit_payments = get_option('mercadopago_limit_payments');  
             }
-            $times = array('3','6','9','12','15','18');
+            $times = array('1','3','6','9','12','15','18','24');
             $showinstalmant = '<select name="mercadopago_limit_payments">';
             foreach ($times as $instalment):
             if($instalment == $mercadopago_limit_payments){
@@ -691,7 +693,7 @@ Class Shop extends Basic {
             } else {
                 $mercadopago_currency = get_option('mercadopago_currency');  
             }
-            $currencys = array('BRL' =>'Real','USD'=>'Dollar','ARS'=>'Pesos');
+            $currencys = array('BRL' =>'Real','USD'=>'Dollar','ARS'=>'Pesos Argentinos','MXN'=>'Peso mexicano');
             $showcurrency = '<select name="mercadopago_currency">';
             foreach ($currencys as  $currency => $key):
             if($currency == $mercadopago_currency){
