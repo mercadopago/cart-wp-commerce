@@ -37,14 +37,14 @@ function form_mercado_pago(){
             $output.='<td><input name="mercadopago_client_secret" type="text" value="'. get_option('mercadopago_client_secret') .'"/></td></tr>';
             $output.='<tr><td></td><td><small>To get fields above, follow: 
                   <a href="https://www.mercadopago.com/mla/herramientas/aplicaciones" target="_blank">Argentina</a> or
-                  <a href="https://www.mercadopago.com/mlb/ferramentas/aplicacoes" target="_blank">Brasil</a> or <a href="https://www.mercadopago.com/mlm/herramientas/aplicaciones" target="_blank">Mexico</a> <br /><br /></small></td></tr>';
+                  <a href="https://www.mercadopago.com/mlb/ferramentas/aplicacoes" target="_blank">Brasil</a> or <a href="https://www.mercadopago.com/mlm/herramientas/aplicaciones" target="_blank">Mexico</a> or <a href="https://www.mercadopago.com/mlv/herramientas/aplicaciones" target="_blank">Venezuela</a> <br /><br /></small></td></tr>';
             $output.='<tr><td>Url Sucess Payment</td>';
             $output.='<td><input name="mercadopago_url_sucess" type="text" value="'. $url_sucess .'"/></td></tr>';
             $output.='<tr><td>Url Sucess Payment</td>';
             $output.='<td><input name="mercadopago_url_pending" type="text" value="'. $url_pending .'"/></td></tr>';
             $output.='<tr><td></td><td><small>This is just the url where the custumer is redirect after his payment is done, you can set in both fields above any url of your site, but needs to be a <b>valid URL.</b>.<br /><br /> Please set your <b>instant payment notification</b> to receive your automatic order status changes at: 
                   <a href="https://www.mercadopago.com/mla/herramientas/notificaciones" target="_blank">Argentina</a> or
-                  <a href="https://www.mercadopago.com/mlb/ferramentas/notificacoes" target="_blank">Brasil</a> or <a href="https://www.mercadopago.com/mlm/herramientas/notificaciones" target="_blank">Mexico</a><br />
+                  <a href="https://www.mercadopago.com/mlb/ferramentas/notificacoes" target="_blank">Brasil</a> or <a href="https://www.mercadopago.com/mlm/herramientas/notificaciones" target="_blank">Mexico</a> or <a href="https://www.mercadopago.com/mlv/herramientas/notificaciones" target="_blank">Venezuela</a><br />
                   Set your url follwing this exemple: http://yourstore.com</b></small></td></tr>';
             $output.='<tr><td>Store Country</td>';
             $output.='<td>'. country() .'</td></tr>';
@@ -256,6 +256,8 @@ function function_mercado_pago($seperator, $sessionid){
         $html .= '<div><img src="http://img.mlstatic.com/org-img/MLB/MP/BANNERS/tipo2_468X60.jpg" alt="MercadoPago" title="MercadoPago" /></div>';
         elseif (get_option('mercadopago_country') == 'MLM'): 
         $html .= '<div><img src="http://imgmp.mlstatic.com/org-img/banners/mx/medios/MLM_468X108.JPG" title="MercadoPago - Medios de pago" alt="MercadoPago - Medios de pago" width="468" height="108"/></div>';
+        elseif (get_option('mercadopago_country') == 'MLV'): 
+        $html .= '<div><img src="http://imgmp.mlstatic.com/org-img/banners/ar/medios/468X60.jpg" title="MercadoPago - Medios de pago" alt="MercadoPago - Medios de pago" width="468" height="60"/></div>';
         else:
         $html .= '<div><img src="http://imgmp.mlstatic.com/org-img/banners/ar/medios/468X60.jpg" alt="MercadoPago" title="MercadoPago" /></div>';    
         endif;
@@ -693,7 +695,7 @@ Class Shop extends Basic {
             } else {
                 $mercadopago_currency = get_option('mercadopago_currency');  
             }
-            $currencys = array('BRL' =>'Real','USD'=>'Dollar','ARS'=>'Pesos Argentinos','MXN'=>'Peso mexicano');
+            $currencys = array('BRL' =>'Real','USD'=>'Dollar','ARS'=>'Pesos Argentinos','MXN'=>'Peso mexicano','VEB'=>'Peso venezuelano');
             $showcurrency = '<select name="mercadopago_currency">';
             foreach ($currencys as  $currency => $key):
             if($currency == $mercadopago_currency){
