@@ -1,6 +1,6 @@
 # WordPress - WP-Commerce - Mercadopago Module (v3.3.2)
 ---
-*Available for Argentina and Brazil*
+*Available for Argentina, Brazil, Mexico and Venezuela*
 
 
 ### Installation:
