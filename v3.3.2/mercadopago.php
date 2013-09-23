@@ -597,7 +597,7 @@ Class Shop extends Basic {
 
             $this->getAccessToken(); 
             $url = 'https://api.mercadolibre.com/checkout/preferences?access_token=' . $this->accesstoken;
-            $header = array('Content-Type:application/json','User-Agent:MercadoPago WPCommerce-3.3.2 Cart v1.0.0','Accept: application/json');
+            $header = array('Content-Type:application/json','User-Agent:MercadoPago WPCommerce-3.3.2 Cart v1.0.1','Accept: application/json');
             $dados = $this->DoPost($opt,$url,$header,'201','json','post');
             $link = $dados['init_point'];
             $bt = '<a href="'.$link.'" name="MP-payButton" class="blue-l-rn-ar" id="btnPagar">Comprar</a>
@@ -695,7 +695,7 @@ Class Shop extends Basic {
             } else {
                 $mercadopago_currency = get_option('mercadopago_currency');  
             }
-            $currencys = array('BRL' =>'Real','USD'=>'Dollar','ARS'=>'Pesos Argentinos','MXN'=>'Peso mexicano','VEB'=>'Peso venezuelano');
+            $currencys = array('BRL' =>'Real','USD'=>'Dollar','ARS'=>'Pesos Argentinos','MXN'=>'Peso mexicano','VEF'=>'Bolivar fuerte');
             $showcurrency = '<select name="mercadopago_currency">';
             foreach ($currencys as  $currency => $key):
             if($currency == $mercadopago_currency){
