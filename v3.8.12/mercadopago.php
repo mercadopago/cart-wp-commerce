@@ -287,7 +287,7 @@ include_once "lib/MPApi.php";
 				"id" => $sessionid,
 				"title" => $data['PROD_NAME0'],
 				"description" => $data['PROD_NAME0'] . " x " . $data['PROD_QTY0'],
-				"quantity" => $data['PROD_QTY0'],// int
+				"quantity" => 1, //$data['PROD_QTY0'],// Comes full, then no need to send amount.
 				"unit_price" =>  $data['total'] , //decimal
 				"currency_id" => $data['currency'],// string Argentina: ARS (peso argentino) � USD (D�lar estadounidense); Brasil: BRL (Real).,
 				"picture_url"=> $data['image0'],
