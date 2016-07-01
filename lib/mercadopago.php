@@ -11,7 +11,8 @@ $GLOBALS["LIB_LOCATION"] = dirname(__FILE__);
 
 class MP {
 
-    const version = "0.2.1";
+    const sdkversion = "0.2.1";
+    const modversion = "3.9.0";
 
     private $client_id;
     private $client_secret;
@@ -246,7 +247,7 @@ class MPRestClient {
     private static function get_connect($uri, $method, $content_type) {
         $connect = curl_init(self::API_BASE_URL . $uri);
 
-        curl_setopt($connect, CURLOPT_USERAGENT, "MercadoPago PHP SDK v" . MP::version);
+        curl_setopt($connect, CURLOPT_USERAGENT, "MercadoPago WPeCommerce v" . MP::modversion);
         curl_setopt($connect, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($connect, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($connect, CURLOPT_HTTPHEADER, array("Accept: application/json", "Content-Type: " . $content_type));

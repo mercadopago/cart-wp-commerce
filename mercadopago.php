@@ -4,26 +4,27 @@
 /** * * NOTICE OF LICENSE * * This source file is subject to the Open Software License (OSL). 
 *  It is also available through the world-wide-web at this URL: *
 *  http://opensource.org/licenses/osl-3.0.php * 
-*  @category    Payment Gateway * @package    	MercadoPago 
-*  @author      Andre Fuhrman (andrefuhrman@gmail.com) | Edited: Gabriel Matsuoka (gabriel.matsuoka@gmail.com)
-*  @copyright  Copyright (c) MercadoPago [http://www.mercadopago.com] 
+*  @category    Payment Gateway * @package    	Mercado Pago 
+*  @author      Andre Fuhrman (andrefuhrman@gmail.com) | Edited: Matias Gordon (matias.gordon@mercadolibre.com)
+*  @copyright  Copyright (c) Mercado Pago [http://www.mercadopago.com] 
+*  @version    3.9.0
 *  @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0) 
 */
 
-$nzshpcrt_gateways[$num]['name'] = 'MercadoPago';
-$nzshpcrt_gateways[$num]['internalname'] = 'mercado_pago';
-$nzshpcrt_gateways[$num]['function'] = 'function_mercado_pago';
-$nzshpcrt_gateways[$num]['form'] = 'form_mercado_pago';
-$nzshpcrt_gateways[$num]['submit_function'] = 'submit_mercado_pago';
+$nzshpcrt_gateways[$num]['name'] = 'Mercado Pago';
+$nzshpcrt_gateways[$num]['internalname'] = 'mercadopago';
+$nzshpcrt_gateways[$num]['function'] = 'function_mercadopago';
+$nzshpcrt_gateways[$num]['form'] = 'form_mercadopago';
+$nzshpcrt_gateways[$num]['submit_function'] = 'submit_mercadopago';
 $nzshpcrt_gateways[$num]['payment_type'] = 'mp';
-$nzshpcrt_gateways[$num]['display_name'] = 'MercadoPago';
+$nzshpcrt_gateways[$num]['display_name'] = 'Mercado Pago';
 $nzshpcrt_gateways[$num]['class_name'] = 'wpsc_merchant_mercadopago';
 
 include_once "lib/mercadopago.php";
 include_once "lib/MPApi.php";
 
 
-	function form_mercado_pago(){
+	function form_mercadopago(){
 	
 		if(get_option('mercadopago_url_sucess') != ''){
 			$url_sucess = get_option('mercadopago_url_sucess');
@@ -36,65 +37,74 @@ include_once "lib/MPApi.php";
 		} else {
 			$url_pending = get_site_url();
 		}
-		$output ='<br /><tr><td>';
-		
-		$output.='Client Id</td>';
+				
+		$output.='<tr><td colspan="2"><h4>Account Credentials</h4>
+
+		<p>Obtain your Client_id and Client_secret, accordingly to your country, in the following links:
+
+		<a href="https://www.mercadopago.com/mla/herramientas/aplicaciones" target="_blank">Argentina</a>,
+		<a href="https://www.mercadopago.com/mlb/ferramentas/aplicacoes" target="_blank">Brazil</a>,
+		<a href="https://www.mercadopago.com/mlc/herramientas/aplicaciones" target="_blank">Chile</a>,
+		<a href="https://www.mercadopago.com/mco/herramientas/aplicaciones" target="_blank">Colombia</a>,
+		<a href="https://www.mercadopago.com/mlm/herramientas/aplicaciones" target="_blank">Mexico</a>,
+		<a href="https://www.mercadopago.com/mpe/herramientas/aplicaciones" target="_blank">Peru</a> or 
+		<a href="https://www.mercadopago.com/mlv/herramientas/aplicaciones" target="_blank">Venezuela</a>
+
+		</p></td></tr>';
+
+		$output.='<tr><td>Client Id:</td>';
 		$output.='<td><input name="mercadopago_client_id" type="text" value="'. get_option('mercadopago_client_id') .'"/></td></tr>';
 		
-		$output.='<tr><td>Client Secret</td>';
+		$output.='<tr><td>Client Secret:</td>';
 		$output.='<td><input name="mercadopago_client_secret" type="text" value="'. get_option('mercadopago_client_secret') .'"/></td></tr>';
-		$output.='<tr><td></td><td><small>To get fields above, follow: 
-		<a href="https://www.mercadopago.com/mla/herramientas/aplicaciones" target="_blank">Argentina</a> or
-		<a href="https://www.mercadopago.com/mlb/ferramentas/aplicacoes" target="_blank">Brasil</a> or <a href="https://www.mercadopago.com/mlm/herramientas/aplicaciones" target="_blank">Mexico</a> or <a href="https://www.mercadopago.com/mlv/herramientas/aplicaciones" target="_blank">Venezuela</a> <br /><br /></small></td></tr>';
-		
-		
-		$output.='<tr><td>Store Category</td>';
-		$output.='<td>'. category() .'</td></tr>';
-		
-		$output.='<tr><td>Type Checkout</td>';
-		$output.='<td>'. type_checkout() .'</td></tr>';
-		
-		$output.='<tr><td>Sandbox</td>';
-		$output.='<td>'. sandbox() .'</td></tr>';
-		
-		
-		$output.='<tr><td>Url Sucess Payment</td>';
-		$output.='<td><input name="mercadopago_url_sucess" type="text" value="'. $url_sucess .'"/></td></tr>';
-		
-		$output.='<tr><td>Url Peding Payment</td>';
-		$output.='<td><input name="mercadopago_url_pending" type="text" value="'. $url_pending .'"/></td></tr>';
-		$output.='<tr><td></td><td><small>This is just the url where the custumer is redirect after his payment is done, you can set in both fields above any url of your site, but needs to be a <b>valid URL.</b>.<br /><br /> Please set your <b>instant payment notification</b> to receive your automatic order status changes at: 
-		<a href="https://www.mercadopago.com/mla/herramientas/notificaciones" target="_blank">Argentina</a> or
-		<a href="https://www.mercadopago.com/mlb/ferramentas/notificacoes" target="_blank">Brasil</a> or <a href="https://www.mercadopago.com/mlm/herramientas/notificaciones" target="_blank">Mexico</a> or <a href="https://www.mercadopago.com/mlv/herramientas/notificaciones" target="_blank">Venezuela</a><br />
-		Set your url follwing this exemple: http://yourstore.com</b></small></td></tr>';
-		
+
+		$output.='<tr><td colspan="2"><h4>Cart Customization</h4></td></tr>';
+
 		$output.='<tr><td>Store Country</td>';
 		$output.='<td>'. country() .'</td></tr>';
-		
+
 		$output.='<tr><td>Currency</td>';
 		$output.='<td>'. currency() .'</td></tr>';
-		$output.='<tr><td></td><td><small>Select Real to Brasil, or Pesos or Dollar to Argentina</small></td></tr>';
-		
-		$output.='<tr><td>Excluded methods</td>';
+
+		$output.='<tr><td>Store Category</td>';
+		$output.='<td>'. category() .'</td></tr>';
+				
+		$output.='<tr><td>Checkout Type</td>';
+		$output.='<td>'. type_checkout() .'</td></tr>';
+
+		$output.='<tr><td>Excluded payment methods</td>';
 		$output.='<td>'. methods(get_option('mercadopago_country')) .'</td></tr>';
-		$output.='<tr><td></td><td><small>SELECT only the methods that you <b>DO NOT</b>want to accept by MercadoPago<br />
-		<br /><b>Attention: </b> Payment methods depends on what country your account was created, if you change the country,<b> save the module first</b> and just after that select the Exclude Payment Methods!
-		<br /><br /><b>DO NOT</b> exclude All methods<br /><br /></small></td></tr>';
 		
-		$output.='<tr><td>Limit Payments</td>';
-		$output.='<td>'. instalments() .'</td></tr>';
-		$output.='<tr><td></td><td><small>This option allow you to limit the maximum number of instalments of MercadoPago</small></td></tr>';
+		$output.='<tr><td>Limit Installments</td>';
+		$output.='<td>'. installments() .'<p class="description">Select the max number of installments for your customers.</p></td></tr>';
 		
+		$output.='<tr><td>Automatic Return After Payment</td>';
+		$output.='<td>'. auto_return() .'</td></tr>';
+		
+		$output.='<tr><td>URL Approved Payment</td>';
+		$output.='<td><input name="mercadopago_url_sucess" type="text" value="'. $url_sucess .'"/><p class="description">This is the URL where the customer is redirected if his payment is approved.</p></td></tr>';
+		
+		$output.='<tr><td>URL Pending Payment</td>';
+		$output.='<td><input name="mercadopago_url_pending" type="text" value="'. $url_pending .'"/><p class="description">This is the URL where the customer is redirected if his payment is in process.</p></td></tr>';
+		
+		$output.='<tr><td colspan="2"><h4>IPN</h4></td></tr>';
+
+		$output.='<tr><td colspan="2"><p>IPN (instant payment notification) will automatically update your sales logs status when payments are successful.</p></td></tr>';
+
+		$output.='<tr><td colspan="2"><h4>Test and Debug Options</h4></td></tr>';
+
+		$output.='<tr><td>Sandbox mode</td>';
+		$output.='<td>'. sandbox() .'<p class="description">Enable to test payments inside a sandbox environment.</p></td></tr>';
+
 		$output.='<tr><td>Debug mode</td>';
-		$output.='<td>'. debugs() .'</td></tr>';
-		$output.='<tr><td></td><td><small>Turn debug mode on to see erro log with your getting error on checkout</small></td></tr>';
+		$output.='<td>'. debugs() .'<p class="description">Enable to display error messages to frontend (not recommended in production environment).</p></td></tr>';
 		return $output;
 	
 	}
 
 
 
-	function submit_mercado_pago(){
+	function submit_mercadopago(){
 		
 		if ( isset($_POST['mercadopago_client_id'])) {
 			update_option('mercadopago_client_id',trim($_POST['mercadopago_client_id']));
@@ -114,6 +124,9 @@ include_once "lib/MPApi.php";
 			update_option('mercadopago_typecheckout',trim($_POST['mercadopago_typecheckout']));
 		}
 		
+		if($_POST['mercadopago_auto_return'] != null) {
+			update_option('mercadopago_auto_return',trim($_POST['mercadopago_auto_return']));
+		}
 		
 		if($_POST['mercadopago_category'] != null) {
 			update_option('mercadopago_category',trim($_POST['mercadopago_category']));
@@ -132,14 +145,10 @@ include_once "lib/MPApi.php";
 			update_option('mercadopago_url_pending',trim($_POST['mercadopago_url_pending']));
 		}
 		
-		if($_POST['mercadopago_currency'] != null) {
-			update_option('mercadopago_currency',trim($_POST['mercadopago_currency']));
-		}
-		
 		if($_POST['mercadopago_country'] != null) {
 			update_option('mercadopago_country',trim($_POST['mercadopago_country']));
 		}
-		
+
 		if($_POST['mercadopago_limit_payments'] != null) {
 			update_option('mercadopago_limit_payments',trim($_POST['mercadopago_limit_payments']));
 		}
@@ -166,7 +175,7 @@ include_once "lib/MPApi.php";
 	}
 
 
-	function function_mercado_pago($seperator, $sessionid){
+	function function_mercadopago($seperator, $sessionid){
 		
 		global $wpdb, $wpsc_cart;
 		
@@ -199,13 +208,59 @@ include_once "lib/MPApi.php";
 		$data['client_secret'] = get_option('mercadopago_client_secret');
 		$data['sucess'] = get_option('mercadopago_url_sucess');
 		$data['pending'] = get_option('mercadopago_url_pending');
-		$data['currency'] = get_option('mercadopago_currency');
 		
-		$sandbox = get_option('mercadopago_sandbox') == "active" ? true:false;
-		$type_checkout = get_option('mercadopago_typecheckout');
+		switch (get_option('mercadopago_country')) {
+			case 'MLA': 
+				$data['currency'] = 'ARS';
+				break;
+			case 'MLB': 
+				$data['currency'] = 'BRL';
+				break;
+			case 'MLC':
+				$data['currency'] = 'CLP';
+				break;
+			case 'MCO':
+				$data['currency'] = 'COP';
+				break;
+			case 'MLM':
+				$data['currency'] = 'MXN';
+				break;
+			case 'MPE':
+				$data['currency'] = 'PEN';
+				break;
+			case 'MLV':
+				$data['currency'] = 'VEF';
+				break;
+		}
+
 		$category = get_option('mercadopago_category');
-	
-	
+		$type_checkout = get_option('mercadopago_typecheckout');
+		$auto_return = get_option('mercadopago_auto_return') == "active" ? true:false;
+		$sandbox = get_option('mercadopago_sandbox') == "active" ? true:false;
+
+		switch (get_option('mercadopago_country')) {
+			case 'MLA': 
+				$sponsor_id = 219693774;
+				break;
+			case 'MLB':
+				$sponsor_id = 219691508;
+				break;
+			case 'MLC':
+				$sponsor_id = 219691655;
+				break;
+			case 'MCO':
+				$sponsor_id = 219695429;
+				break;
+			case 'MLM':
+				$sponsor_id = 219696864;
+				break; 
+			case 'MPE':
+				$sponsor_id = 219692012;
+				break; 
+			case 'MLV':
+				$sponsor_id = 219696139;
+				break; 
+		}
 		
 		// order info
 		$data['total'] = $wpsc_cart->total_price;
@@ -288,8 +343,8 @@ include_once "lib/MPApi.php";
 				"title" => $data['PROD_NAME0'],
 				"description" => $data['PROD_NAME0'] . " x " . $data['PROD_QTY0'],
 				"quantity" => 1, //$data['PROD_QTY0'],// Comes full, then no need to send amount.
-				"unit_price" =>  $data['total'] , //decimal
-				"currency_id" => $data['currency'],// string Argentina: ARS (peso argentino) � USD (D�lar estadounidense); Brasil: BRL (Real).,
+				"unit_price" =>  $data['total'] , // decimal
+				"currency_id" => $data['currency'],// string
 				"picture_url"=> $data['image0'],
 				"category_id"=> $category
 			)
@@ -336,6 +391,16 @@ include_once "lib/MPApi.php";
 		$pref['back_urls'] = $back_urls;
 		$pref['payment_methods'] = $payment_methods;
 		
+		if (!$sandbox):
+			$pref['sponsor_id'] = $sponsor_id;
+		endif;
+
+		if ($auto_return):
+			$pref['auto_return'] = "approved";
+		endif;
+
+		$pref['notification_url'] = get_site_url();
+
 		$mp = new MP($data['client_id'], $data['client_secret']);
 		$preferenceResult = $mp->create_preference($pref);
 	
@@ -353,23 +418,38 @@ include_once "lib/MPApi.php";
 		//title
 		$title = "";
 		if(get_option('mercadopago_country') == 'MLB'):
-			$title = 'Continue pagando com MercadoPago';
+			$title = 'Continue pagando com Mercado Pago';
 		else:
-			$title = 'Continue pagando con MercadoPago';    
+			$title = 'Continue pagando con Mercado Pago';    
 		endif;
-		
+
+
 		//add image
 		$img_banner = "";
-		if(get_option('mercadopago_country') == 'MLB'):
-			$img_banner = '<img src="http://img.mlstatic.com/org-img/MLB/MP/BANNERS/tipo2_468X60.jpg" alt="MercadoPago" title="MercadoPago" />';
-		elseif (get_option('mercadopago_country') == 'MLM'): 
-			$img_banner = '<img src="http://imgmp.mlstatic.com/org-img/banners/mx/medios/MLM_468X108.JPG" title="MercadoPago - Medios de pago" alt="MercadoPago - Medios de pago" width="468" height="108"/>';
-		elseif (get_option('mercadopago_country') == 'MLV'): 
-			$img_banner = '<img src="http://imgmp.mlstatic.com/org-img/banners/ar/medios/468X60.jpg" title="MercadoPago - Medios de pago" alt="MercadoPago - Medios de pago" width="468" height="60"/>';
-		else:
-			$img_banner = '<img src="http://imgmp.mlstatic.com/org-img/banners/ar/medios/468X60.jpg" alt="MercadoPago" title="MercadoPago" />';    
-		endif;
 		
+		switch (get_option('mercadopago_country')) {
+			case 'MLA': 
+				$img_banner = '<img src="http://imgmp.mlstatic.com/org-img/banners/ar/medios/468X60.jpg" alt="Mercado Pago" title="Mercado Pago" />'; 
+				break;
+			case 'MLB':
+				$img_banner = '<img src="http://imgmp.mlstatic.com/org-img/MLB/MP/BANNERS/tipo2_468X60.jpg" alt="Mercado Pago" title="Mercado Pago" />';
+				break;
+			case 'MLC':
+				$img_banner = '<img src="https://www.mercadopago.cl/banner/468X60_banner.jpg" alt="Mercado Pago" title="Mercado Pago" />';
+				break;
+			case 'MCO':
+				$img_banner = '<img src="https://secure.mlstatic.com/developers/site/cloud/banners/co/468x60_Todos-los-medios-de-pago.jpg" title="Mercado Pago" alt="Mercado Pago"/>';
+				break;
+			case 'MLM':
+				$img_banner = '<img src="http://imgmp.mlstatic.com/org-img/banners/mx/medios/MLM_468X60.JPG" title="Mercado Pago" alt="Mercado Pago" />';
+				break; 
+			case 'MPE':
+				$img_banner = '<img title=Mercado Pago" alt="Mercado Pago" />';
+				break; 
+			case 'MLV':
+				$img_banner = '<img src="https://imgmp.mlstatic.com/org-img/banners/ve/medios/468X60.jpg" title="Mercado Pago" alt="Mercado Pago" />';
+				break; 
+		}	
 		
 		$button = "";
 		
@@ -447,23 +527,23 @@ include_once "lib/MPApi.php";
 			
 			switch ($order_status) {
 				case 'approved':
-				$purchase_log_sql = "UPDATE `".WPSC_TABLE_PURCHASE_LOGS."` SET transactid = ".$mp_id.", processed = 3, notes = 'Payment Approved by MercadoPago' WHERE `sessionid`= '".$order_id."' LIMIT 1";           
+				$purchase_log_sql = "UPDATE `".WPSC_TABLE_PURCHASE_LOGS."` SET transactid = ".$mp_id.", processed = 3, notes = 'Payment Approved by Mercado Pago' WHERE `sessionid`= '".$order_id."' LIMIT 1";           
 				break;
 			case 'pending':
 			case 'in_process':    
 				$purchase_log_sql = "UPDATE `".WPSC_TABLE_PURCHASE_LOGS."` SET transactid = ".$mp_id.", processed = 2, notes = 'Order received, wait for payment confirmation' WHERE `sessionid`= '".$order_id."' LIMIT 1";           
 				break;    
 			case 'reject':
-				$purchase_log_sql = "UPDATE `".WPSC_TABLE_PURCHASE_LOGS."` SET transactid = ".$mp_id.", processed = 6, notes = 'Payment declined by MercadoPago, contact the client and ask to do a new order' WHERE `sessionid`= '".$order_id."' LIMIT 1";           
+				$purchase_log_sql = "UPDATE `".WPSC_TABLE_PURCHASE_LOGS."` SET transactid = ".$mp_id.", processed = 6, notes = 'Payment declined by Mercado Pago, contact the client and ask to do a new order' WHERE `sessionid`= '".$order_id."' LIMIT 1";           
 				break;    
 			case 'refunded':
-				$purchase_log_sql = "UPDATE `".WPSC_TABLE_PURCHASE_LOGS."` SET transactid = ".$mp_id.", processed = 6, notes = 'Payment refunded by MercadoPago' WHERE `sessionid`= '".$order_id."' LIMIT 1";           
+				$purchase_log_sql = "UPDATE `".WPSC_TABLE_PURCHASE_LOGS."` SET transactid = ".$mp_id.", processed = 6, notes = 'Payment refunded by Mercado Pago' WHERE `sessionid`= '".$order_id."' LIMIT 1";           
 				break;    
 			case 'cancelled':
-				$purchase_log_sql = "UPDATE `".WPSC_TABLE_PURCHASE_LOGS."` SET transactid = ".$mp_id.", processed = 6, notes = 'Payment canceled by MercadoPago' WHERE `sessionid`= '".$order_id."' LIMIT 1";             
+				$purchase_log_sql = "UPDATE `".WPSC_TABLE_PURCHASE_LOGS."` SET transactid = ".$mp_id.", processed = 6, notes = 'Payment canceled by Mercado Pago' WHERE `sessionid`= '".$order_id."' LIMIT 1";             
 				break;    
-			case 'in_metiation':
-				$purchase_log_sql = "UPDATE `".WPSC_TABLE_PURCHASE_LOGS."` SET transactid = ".$mp_id.", processed = 6, notes = 'This orders has a mediation in MercadoPago' WHERE `sessionid`= '".$order_id."' LIMIT 1";             
+			case 'in_mediation':
+				$purchase_log_sql = "UPDATE `".WPSC_TABLE_PURCHASE_LOGS."` SET transactid = ".$mp_id.", processed = 6, notes = 'This orders has a mediation in Mercado Pago' WHERE `sessionid`= '".$order_id."' LIMIT 1";             
 				break;
 			default:
 				$purchase_log_sql = "UPDATE `".WPSC_TABLE_PURCHASE_LOGS."` SET transactid = ".$mp_id.", processed = 2, notes = 'Order received, wait for payment confirmation' WHERE `sessionid`= '".$order_id."' LIMIT 1";           
@@ -473,25 +553,82 @@ include_once "lib/MPApi.php";
 		}
 	}
 
-
 	function country(){
 	
-		$mp = new MPApi();
-		$countries = $mp->getCountries();    
-		
-		$showcountries  = '<select name="mercadopago_country">';
-		foreach ($countries as $country) {
-			if ($country['id'] == get_option('mercadopago_country')) { 
-				$showcountries  .=  '<option value="'. $country["id"].'" selected="selected" id="'. $country["id"] .'">'.$country["name"].'</option>';
-			} else { 
-				$showcountries  .=  '<option value="'. $country['id'] .'" id="'.$country["id"].'">'.$country["name"] .'</option>';
-			} 
-		}
 	
-		$showcountries  .=  '</select>';
-		return $showcountries;
+		if (get_option('mercadopago_country') == null || get_option('mercadopago_country') == ''){
+			$mercadopago_country = 'MLA';        
+		} else {
+			$mercadopago_country = get_option('mercadopago_country');  
+		}
+		
+		$sites = array(
+				'MLA' =>'Argentina',
+				'MLB' =>'Brazil',
+				'MLC' =>'Chile',
+				'MCO' =>'Colombia',
+				'MLM' =>'Mexico',
+				'MPE' =>'Peru',
+				'MLV' =>'Venezuela'
+		);
+		
+		$showsites= '<select name="mercadopago_country">';
+
+		foreach ($sites as $site_id => $site_name):
+			if($site_id == $mercadopago_country){
+				$showsites .= '<option value="'.$site_id.'" selected="selected" id="'.$site_id.'">'.$site_name.'</option>'; 
+			} else {
+				$showsites .= '<option value="'.$site_id.'" id="'.$site_id.'">'.$site_name.'</option>';    
+			}         
+		endforeach;
+		
+		$showsites .= '</select>';
+		return $showsites;
+
 	}
 
+	function currency(){
+
+		if (get_option('mercadopago_country') == null || get_option('mercadopago_country') == ''){
+			$mercadopago_currency = 'Select first one country, save and reload the page to show the currency';    
+			return $mercadopago_currency;
+		}else{	
+			switch (get_option('mercadopago_country')) {
+				case 'MLA': return $mercadopago_currency = 'ARS';
+				case 'MLB': return $mercadopago_currency = 'BRL';
+				case 'MLC': return $mercadopago_currency = 'CLP';
+				case 'MCO': return $mercadopago_currency = 'COP';
+				case 'MLM': return $mercadopago_currency = 'MXN';
+				case 'MPE': return $mercadopago_currency = 'PEN';
+				case 'MLV': return $mercadopago_currency = 'VEF';
+				default: return '';
+			}
+		}
+	}
+
+	function category(){
+		
+		$category = get_option('mercadopago_category');
+		$category = $category === false || is_null($category) ? "others" : $category;		
+		
+		//category marketplace
+		$mp = new MPApi();
+		$list_category = $mp->getCategories();
+		$select_category = '<select name="mercadopago_category" id="category" style="max-width:600px;>';
+		foreach($list_category as $category_arr):
+		
+			$selected = "";
+			if($category_arr['id'] == $category):
+				$selected = 'selected="selected"';
+			endif;
+			
+			$select_category .= '<option value="' . $category_arr['id'] . '" id="type-checkout-' . $category_arr['description'] . '" ' . $selected . ' >' . $category_arr['description'] . '</option>';
+		endforeach;
+		
+		$select_category .= "</select>";
+		
+		return $select_category;
+	}
 
 	function methods($country = null ){
 	
@@ -512,6 +649,10 @@ include_once "lib/MPApi.php";
 				}
 			endforeach;
 			
+			$showmethods.= '<p class="description">Select the payment methods you do not want to accept with Mercado Pago.</p>';
+
+			$showmethods.= '<p class="description"><b>Note:</b> If you change the country, first <b>save and reload</b> the page, and after that do the selection.</p>';
+
 			return $showmethods;
 		
 		} else {
@@ -521,60 +662,84 @@ include_once "lib/MPApi.php";
 	
 	}
 
-	function instalments(){
+	function installments(){
 	
 		if (get_option('mercadopago_limit_payments') == null || get_option('mercadopago_limit_payments') == ''){
-			$mercadopago_limit_payments = 18;        
+			$mercadopago_limit_payments = 24;        
 		} else {
 			$mercadopago_limit_payments = get_option('mercadopago_limit_payments');  
 		}
 		
-		$times = array('1','3','6','9','12','15','18','24');
-		$showinstalmant = '<select name="mercadopago_limit_payments">';
+		$times = array('1','3','6','9','12','15','18','24','36');
+		$showinstallment = '<select name="mercadopago_limit_payments">';
 		
-		foreach ($times as $instalment):
-			if($instalment == $mercadopago_limit_payments){
-				$showinstalmant .= '<option value="'.$instalment.'" selected="selected">'.$instalment.'</option>'; 
+		foreach ($times as $installment):
+			if($installment == $mercadopago_limit_payments){
+				$showinstallment .= '<option value="'.$installment.'" selected="selected">'.$installment.'</option>'; 
 			} else {
-				$showinstalmant .= '<option value="'.$instalment.'">'.$instalment .'</option>';    
+				$showinstallment .= '<option value="'.$installment.'">'.$installment .'</option>';    
 			}         
 		endforeach;
 		
-		$showinstalmant .= '</select>';
+		$showinstallment .= '</select>';
 		
-		return $showinstalmant;
+		return $showinstallment;
 	}
-
-	function currency(){
 	
-	
-		if (get_option('mercadopago_currency') == null || get_option('mercadopago_currency') == ''){
-			$mercadopago_currency = 'BRL';        
-		} else {
-			$mercadopago_currency = get_option('mercadopago_currency');  
-		}
+	function type_checkout(){
 		
-		$currencys = array(
-				'BRL' =>'Real',
-				'USD' =>'Dollar',
-				'ARS' =>'Pesos Argentinos',
-				'MXN' =>'Peso mexicano',
-				'VEF' =>'Bolivar fuerte'
+		$type_checkout = get_option('mercadopago_typecheckout');
+		$type_checkout = $type_checkout === false || is_null($type_checkout) ? "Redirect" : $type_checkout;
+
+		//Type Checkout
+		$type_checkout_options = array(
+			"Iframe",
+			"Lightbox",
+			"Redirect"
 		);
 		
-		$showcurrency = '<select name="mercadopago_currency">';
+		
+		$select_type_checkout = '<select name="mercadopago_typecheckout" id="type_checkout">';
 
-		foreach ($currencys as  $currency => $key):
-			if($currency == $mercadopago_currency){
-				$showcurrency .= '<option value="'.$currency.'" selected="selected">'.$key.'</option>'; 
-			} else {
-				$showcurrency .= '<option value="'.$currency.'">'.$key .'</option>';    
-			}         
+		foreach($type_checkout_options as $select_type):
+		
+			$selected = "";
+			if($select_type == $type_checkout):
+				$selected = 'selected="selected"';
+			endif;
+			
+			$select_type_checkout .= '<option value="' . $select_type . '" id="type-checkout-' . $select_type . '" ' . $selected . ' >' . $select_type . '</option>';
+		endforeach;
+		$select_type_checkout .= "</select>";
+		
+		return $select_type_checkout;
+	}
+
+	function sandbox(){
+		
+		$sandbox = get_option('mercadopago_sandbox');
+		$sandbox = $sandbox === false || is_null($sandbox) ? "inactive" : $sandbox;
+		
+		//sandbox
+		$sandbox_options = array(
+			array("value" => "active", "text" => "Active"),
+			array("value" => "inactive", "text" => "Inactive")
+		);
+		
+		$select_sandbox = '<select name="mercadopago_sandbox" id="sandbox">';
+		foreach($sandbox_options as $op_sandbox):
+		
+			$selected = "";
+			if($op_sandbox['value'] == $sandbox):
+			$selected = 'selected="selected"';
+			endif;
+			
+			$select_sandbox .= '<option value="' . $op_sandbox['value'] . '" id="sandbox-' . $op_sandbox['value'] . '" ' . $selected . '>' . $op_sandbox['text'] . '</option>';
 		endforeach;
 		
-		$showcurrency .= '</select>';
-		return $showcurrency;
-
+		$select_sandbox .= "</select>";
+		
+		return $select_sandbox;
 	}
 
 	function debugs(){
@@ -600,86 +765,33 @@ include_once "lib/MPApi.php";
 
 		return $showdebugs;
 	}
-	
-	
-	function category(){
-		
-		$category = get_option('mercadopago_category');
-		$category = $category === false || is_null($category) ? "others" : $category;		
-		
-		//category marketplace
-		$mp = new MPApi();
-		$list_category = $mp->getCategories();
-		$select_category = '<select name="mercadopago_category" id="category">';
-		foreach($list_category as $category_arr):
-		
-			$selected = "";
-			if($category_arr['id'] == $category):
-				$selected = 'selected="selected"';
-			endif;
-			
-			$select_category .= '<option value="' . $category_arr['id'] . '" id="type-checkout-' . $category_arr['description'] . '" ' . $selected . ' >' . $category_arr['description'] . '</option>';
-		endforeach;
-		
-		$select_category .= "</select>";
-		
-		return $select_category;
-	}
-	
-	function type_checkout(){
-		
-		$type_checkout = get_option('mercadopago_typecheckout');
-		$type_checkout = $type_checkout === false || is_null($type_checkout) ? "Lightbox" : $type_checkout;
 
-		//Type Checkout
-		$type_checkout_options = array(
-			"Iframe",
-			"Lightbox",
-			"Redirect"
-		);
+	function auto_return(){
 		
+		$auto_return = get_option('mercadopago_auto_return');
+		$auto_return = $auto_return === false || is_null($auto_return) ? "inactive" : $auto_return;
 		
-		$select_type_checkout = '<select name="mercadopago_typecheckout" id="type_checkout">';
-
-		foreach($type_checkout_options as $select_type):
-		
-			$selected = "";
-			if($select_type == $type_checkout):
-				$selected = 'selected="selected"';
-			endif;
-			
-			$select_type_checkout .= '<option value="' . $select_type . '" id="type-checkout-' . $select_type . '" ' . $selected . ' >' . $select_type . '</option>';
-		endforeach;
-		$select_type_checkout .= "</select>";
-		
-		return $select_type_checkout;
-	}
-	
-	function sandbox(){
-		
-		$sandbox = get_option('mercadopago_sandbox');
-		$sandbox = $sandbox === false || is_null($sandbox) ? "deactivate" : $sandbox;
-		
-		//sandbox
-		$sandbox_options = array(
+		$auto_return_options = array(
 			array("value" => "active", "text" => "Active"),
-			array("value" => "deactivate", "text" => "Deactivate")
+			array("value" => "inactive", "text" => "Inactive")
 		);
 		
-		$select_sandbox = '<select name="mercadopago_sandbox" id="sandbox">';
-		foreach($sandbox_options as $op_sandbox):
+		$select_auto_return = '<select name="mercadopago_auto_return" id="auto_return">';
+		foreach($auto_return_options as $op_auto_return):
 		
 			$selected = "";
-			if($op_sandbox['value'] == $sandbox):
+			if($op_auto_return['value'] == $auto_return):
 			$selected = 'selected="selected"';
 			endif;
 			
-			$select_sandbox .= '<option value="' . $op_sandbox['value'] . '" id="sandbox-' . $op_sandbox['value'] . '" ' . $selected . '>' . $op_sandbox['text'] . '</option>';
+			$select_auto_return .= '<option value="' . $op_auto_return['value'] . '" id="auto_return-' . $op_auto_return['value'] . '" ' . $selected . '>' . $op_auto_return['text'] . '</option>';
 		endforeach;
 		
-		$select_sandbox .= "</select>";
+		$select_auto_return .= "</select>";
 		
-		return $select_sandbox;
+		return $select_auto_return;
+
 	}
+
 
 add_action('init', 'mp_retorno');
