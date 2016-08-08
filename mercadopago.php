@@ -1,11 +1,10 @@
 <?php
 
-
 /** * * NOTICE OF LICENSE * * This source file is subject to the Open Software License (OSL). 
 *  It is also available through the world-wide-web at this URL: *
 *  http://opensource.org/licenses/osl-3.0.php * 
 *  @category    Payment Gateway * @package    	Mercado Pago 
-*  @author      Andre Fuhrman (andrefuhrman@gmail.com) | Edited: Matias Gordon (matias.gordon@mercadolibre.com)
+*  @author      Andre Fuhrman (andrefuhrman@gmail.com) | Edited: Matias Gordon (matias.gordon@mercadolibre.com), Marcelo T. Hama (marcelo.hama@mercadolibre.com)
 *  @copyright  Copyright (c) Mercado Pago [http://www.mercadopago.com] 
 *  @version    3.9.0
 *  @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0) 
@@ -23,16 +22,15 @@ $nzshpcrt_gateways[$num]['class_name'] = 'wpsc_merchant_mercadopago';
 include_once "lib/mercadopago.php";
 include_once "lib/MPApi.php";
 
-
-	function form_mercadopago(){
+	function form_mercadopago() {
 	
-		if(get_option('mercadopago_url_sucess') != ''){
+		if (get_option('mercadopago_url_sucess') != '') {
 			$url_sucess = get_option('mercadopago_url_sucess');
 		} else {
 			$url_sucess = get_site_url();
 		}
 		
-		if(get_option('mercadopago_url_pending') != ''){
+		if (get_option('mercadopago_url_pending') != '') {
 			$url_pending = get_option('mercadopago_url_pending');
 		} else {
 			$url_pending = get_site_url();
@@ -102,9 +100,7 @@ include_once "lib/MPApi.php";
 	
 	}
 
-
-
-	function submit_mercadopago(){
+	function submit_mercadopago() {
 		
 		if ( isset($_POST['mercadopago_client_id'])) {
 			update_option('mercadopago_client_id',trim($_POST['mercadopago_client_id']));
@@ -171,9 +167,7 @@ include_once "lib/MPApi.php";
 		}
 		
 		return true;
-	
 	}
-
 
 	function function_mercadopago($seperator, $sessionid){
 		
@@ -270,14 +264,14 @@ include_once "lib/MPApi.php";
 		foreach((array)$userinfo as $key => $value){
 			$arr_info[$value['unique_name']] = $value['value'];
 		}
-		
+
 		// products
 		foreach($wpsc_cart->cart_items as $i => $Item) {
 			$data['PROD_NAME'.$i] = $Item->product_name;              
 			$data['PROD_TOTAL'.$i] = number_format($Item->unit_price,2);
 			$data['PROD_NUMBER'.$i]	= $i;
 			$data['PROD_QTY'.$i] = $Item->quantity;      
-			$data['prod'] .=  $Item->product_name .'*'. $Item->quantity;
+			//$data['prod'] .=  $Item->product_name .'*'. $Item->quantity;
 			
 			if($Item->thumbnail_image){
 				foreach ($Item->thumbnail_image as $key => $Image) {
@@ -316,9 +310,9 @@ include_once "lib/MPApi.php";
 		$billingphone = array_key_exists("billingphone", $arr_info) && $arr_info['billingphone'] != ""  ? $arr_info['billingphone'] : "uninformed";
 		
 		$payer = array(
-			"name" => $data['billingfirstname'],
-			"surname" => $data['billinglastname'],
-			"email" => $data['email'],
+			"name" => "name",//$data['billingfirstname'],
+			"surname" => "surname",//$data['billinglastname'],
+			"email" => "email",//$data['email'],
 			"date_created" => "",
 			"phone" => array(
 				"area_code" => "-",
@@ -391,7 +385,12 @@ include_once "lib/MPApi.php";
 		$pref['back_urls'] = $back_urls;
 		$pref['payment_methods'] = $payment_methods;
 		
-		if (!$sandbox):
+		$mp = new MP($data['client_id'], $data['client_secret']);
+		$access_token = $mp->get_access_token();
+		$get_request = MPRestClient::get( "/users/me?access_token=" . $access_token );
+		$isTestUser = in_array( 'test_user', $get_request[ 'response' ][ 'tags' ] );
+
+		if (!$sandbox && !$isTestUser):
 			$pref['sponsor_id'] = $sponsor_id;
 		endif;
 
@@ -401,7 +400,6 @@ include_once "lib/MPApi.php";
 
 		$pref['notification_url'] = get_site_url();
 
-		$mp = new MP($data['client_id'], $data['client_secret']);
 		$preferenceResult = $mp->create_preference($pref);
 	
 		if($preferenceResult['status'] == 201):
@@ -414,15 +412,13 @@ include_once "lib/MPApi.php";
 			echo "Error: " . $preferenceResult['status'];
 		endif;
 		
-	
 		//title
 		$title = "";
-		if(get_option('mercadopago_country') == 'MLB'):
+		if (get_option('mercadopago_country') == 'MLB'):
 			$title = 'Continue pagando com Mercado Pago';
 		else:
 			$title = 'Continue pagando con Mercado Pago';    
 		endif;
-
 
 		//add image
 		$img_banner = "";
@@ -488,7 +484,6 @@ include_once "lib/MPApi.php";
 				break;
 		endswitch;
 		
-		
 		//show page 
 		get_header();
 		
@@ -506,7 +501,6 @@ include_once "lib/MPApi.php";
 		get_footer();
 		
 		exit;
-		
 	}
 
 	function mp_retorno(){

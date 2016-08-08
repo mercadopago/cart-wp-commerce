@@ -208,13 +208,13 @@ class MP {
         return $preapproval_payment_result;
     }
 
-	/**
+    /**
      * Update a preapproval payment
      * @param string $preapproval_payment, $id
      * @return array(json)
-     */	
-	
-	public function update_preapproval_payment($id, $preapproval_payment) {
+     */ 
+    
+    public function update_preapproval_payment($id, $preapproval_payment) {
         $access_token = $this->get_access_token();
 
         $preapproval_payment_result = MPRestClient::put("/preapproval/" . $id . "?access_token=" . $access_token, $preapproval_payment);
@@ -242,7 +242,8 @@ class MP {
  */
 class MPRestClient {
 
-    const API_BASE_URL = "https://api.mercadolibre.com";
+    //const API_BASE_URL = "https://api.mercadolibre.com";
+    const API_BASE_URL = "https://api.mercadopago.com";
 
     private static function get_connect($uri, $method, $content_type) {
         $connect = curl_init(self::API_BASE_URL . $uri);
