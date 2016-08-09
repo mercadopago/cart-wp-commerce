@@ -76,23 +76,63 @@ new WPSC_Merchant_MercadoPago_Basic();
  * @since 4.0
  */
 function submit_mercadopago_basic() {
-	/*if ( isset ( $_POST['mercadopago_certified_apiuser'] ) ) {
-		update_option( 'mercadopago_certified_apiuser', $_POST['mercadopago_certified_apiuser'] );
+	if (isset($_POST['mercadopago_certified_clientid'])) {
+		update_option('mercadopago_certified_clientid', trim($_POST['mercadopago_certified_clientid']));
 	}
-	if ( isset ( $_POST['mercadopago_certified_apipass'] ) ) {
-		update_option( 'mercadopago_certified_apipass', $_POST['mercadopago_certified_apipass'] );
+	if ($_POST['mercadopago_certified_clientsecret'] != null) {
+		update_option('mercadopago_certified_clientsecret', trim($_POST['mercadopago_certified_clientsecret']));
 	}
-	if ( isset ( $_POST['mercadopago_curcode'] ) ) {
-		update_option( 'mercadopago_curcode', $_POST['mercadopago_curcode'] );
+	if ($_POST['mercadopago_certified_description'] != null) {
+		update_option('mercadopago_certified_description', trim($_POST['mercadopago_certified_description']));
 	}
-	if ( isset ( $_POST['mercadopago_certified_apisign'] ) ) {
-		update_option( 'mercadopago_certified_apisign', $_POST['mercadopago_certified_apisign'] );
+	if ($_POST['mercadopago_certified_category'] != null) {
+		update_option('mercadopago_certified_category', trim($_POST['mercadopago_certified_category']));
 	}
-	if ( isset ( $_POST['mercadopago_certified_server_type'] ) ) {
-		update_option( 'mercadopago_certified_server_type', $_POST['mercadopago_certified_server_type'] );
+	if ($_POST['mercadopago_certified_invoiceprefix'] != null) {
+		update_option('mercadopago_certified_invoiceprefix', trim($_POST['mercadopago_certified_invoiceprefix']));
 	}
-	if ( isset ( $_POST['mercadopago_ipn'])) {
-		update_option( 'mercadopago_ipn', (int)$_POST['mercadopago_ipn'] );
+	if ($_POST['mercadopago_certified_typecheckout'] != null) {
+		update_option('mercadopago_certified_typecheckout', trim($_POST['mercadopago_certified_typecheckout']));
+	}
+	if (isset($_POST['mercadopago_certified_iframewidth'])) {
+		update_option('mercadopago_certified_iframewidth', trim($_POST['mercadopago_certified_iframewidth']));
+	}
+	if (isset($_POST['mercadopago_certified_iframeheight'])) {
+		update_option('mercadopago_certified_iframeheight', trim($_POST['mercadopago_certified_iframeheight']));
+	}
+	if ($_POST['mercadopago_certified_autoreturn'] != null) {
+		update_option('mercadopago_certified_autoreturn', trim($_POST['mercadopago_certified_autoreturn']));
+	}
+	if ($_POST['mercadopago_certified_maxinstallments'] != null) {
+		update_option('mercadopago_certified_maxinstallments', trim($_POST['mercadopago_certified_maxinstallments']));
+	}
+	if (in_array('mercadopago_certified_exmethods', $_POST)) {
+		$methods = '';
+		foreach ($_POST['mercadopago_certified_exmethods'] as $name) {
+			$methods .= $name.',';
+		}
+		update_option('mercadopago_certified_exmethods', $methods);
+	} else {
+		update_option('mercadopago_certified_exmethods', '');
+	}
+
+	/*if ($_POST['mercadopago_sandbox'] != null) {
+		update_option('mercadopago_sandbox', trim($_POST['mercadopago_sandbox']));
+	}
+	if ($_POST['mercadopago_debug'] != null) {
+		update_option('mercadopago_debug', trim($_POST['mercadopago_debug']));
+	}
+	if ($_POST['mercadopago_url_sucess'] != null) {
+		update_option('mercadopago_url_sucess', trim($_POST['mercadopago_url_sucess']));
+	}
+	if ($_POST['mercadopago_url_pending'] != null) {
+		update_option('mercadopago_url_pending', trim($_POST['mercadopago_url_pending']));
+	}
+	if ($_POST['mercadopago_country'] != null) {
+		update_option('mercadopago_country', trim($_POST['mercadopago_country']));
+	}
+	if ($_POST['mercadopago_curcode'] != null) {
+		update_option('mercadopago_curcode', trim($_POST['mercadopago_curcode']));
 	}*/
 
 	return true;
@@ -504,7 +544,7 @@ function auto_return() {
 	}
 
 function type_checkout() {
-	$type_checkout = get_option('mercadopago_certified_description');
+	$type_checkout = get_option('mercadopago_certified_typecheckout');
 	$type_checkout = $type_checkout === false || is_null($type_checkout) ? "Redirect" : $type_checkout;
 	// type Checkout
 	$type_checkout_options = array(
@@ -512,7 +552,7 @@ function type_checkout() {
 		'Lightbox',
 		'Redirect'
 	);
-	$select_type_checkout = '<select name="mercadopago_certified_description" id="type_checkout">';
+	$select_type_checkout = '<select name="mercadopago_certified_typecheckout" id="type_checkout">';
 	foreach ($type_checkout_options as $select_type) :
 		$selected = "";
 		if ($select_type == $type_checkout) :
@@ -571,18 +611,19 @@ function validateCredentials($client_id, $client_secret) {
 		try {
 			$mp = new MP( $client_id, $client_secret );
 			$result['access_token'] = $mp->get_access_token();
-			$get_request = $mp->get( "/users/me?access_token=" . $result['access_token'] );
+			$mpApi = new MPApi();
+			$get_request = $mpApi->getMe( $result['access_token'] );
 			if ( isset( $get_request[ 'response' ][ 'site_id' ] ) ) {
 				$result['is_test_user'] = in_array( 'test_user', $get_request[ 'response' ][ 'tags' ] );
 				$result['site_id'] = $get_request[ 'response' ][ 'site_id' ];
-				$result['payments'] = methods($result['site_id']);
+				//$result['payments'] = methods($result['site_id']);
 				//$payments = $mp->get( "/v1/payment_methods/?access_token=" . $access_token );
 				//array_push( $payment_methods, "n/d" );
 				//foreach ( $payments[ "response" ] as $payment ) {
 				//	array_push( $payment_methods, str_replace( "_", " ", $payment[ 'id' ] ) );
 				//}
 				// check for auto converstion of currency
-				$result['currency_ratio'] = 1;
+				/*$result['currency_ratio'] = 1;
 				$currency_obj = MPRestClient::get_ml( array( "uri" =>
 					"/currency_conversions/search?from=" .
 					get_woocommerce_currency() .
@@ -598,7 +639,7 @@ function validateCredentials($client_id, $client_secret) {
 					}
 				} else {
 					$result['currency_ratio'] = -1;
-				}
+				}*/
 				$result['is_valid'] = true;
 				return $result;
 			} else {
