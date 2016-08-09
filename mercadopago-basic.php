@@ -447,14 +447,14 @@ function form_mercadopago_basic() {
 		</tr>\n";
 	}*/
 
-	$output .="
+	/*$output .="
 	<tr>
 		<td colspan='2'>
 			<p class='description'>
 	 		" . sprintf( __( "For more help configuring mercadopago Basic Checkout, please read our documentation <a href='%s'>here</a>", 'wpecomm-mercadopago-module' ), esc_url( 'http://docs.wpecommerce.org/documentation/mercadopago-basic-checkout/' ) ) . "
 	 		</p>
 		</td>
-   	</tr>\n";
+   	</tr>\n";*/
 
 	return $output;
 }
