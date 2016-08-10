@@ -66,7 +66,6 @@ class WPSC_Merchant_MercadoPago_Basic extends wpsc_merchant {
 	}
 
 }
-
 new WPSC_Merchant_MercadoPago_Basic();
 
 /**
@@ -103,16 +102,14 @@ function submit_mercadopago_basic() {
 	if ($_POST['mercadopago_certified_autoreturn'] != null) {
 		update_option('mercadopago_certified_autoreturn', trim($_POST['mercadopago_certified_autoreturn']));
 	}
+	if ($_POST['mercadopago_certified_currencyconversion'] != null) {
+		update_option('mercadopago_certified_currencyconversion', trim($_POST['mercadopago_certified_currencyconversion']));
+	}
 	if ($_POST['mercadopago_certified_maxinstallments'] != null) {
 		update_option('mercadopago_certified_maxinstallments', trim($_POST['mercadopago_certified_maxinstallments']));
 	}
 	if (isset($_POST['mercadopago_certified_exmethods'])) {
 		$methods = implode(",", $_POST['mercadopago_certified_exmethods']);
-		/*for ($i=0; $i<sizeof($_POST['mercadopago_certified_exmethods']); $i++) {
-			$methods .= $_POST['mercadopago_certified_exmethods'][$i];
-			if ($i < sizeof($_POST['mercadopago_certified_exmethods'])-1)
-				$methods .= ',';
-		}*/
 		update_option('mercadopago_certified_exmethods', $methods);
 	} else {
 		update_option('mercadopago_certified_exmethods', '');
@@ -123,21 +120,6 @@ function submit_mercadopago_basic() {
 	if ($_POST['mercadopago_certified_debug'] != null) {
 		update_option('mercadopago_certified_debug', trim($_POST['mercadopago_certified_debug']));
 	}
-
-	/*
-	if ($_POST['mercadopago_url_sucess'] != null) {
-		update_option('mercadopago_url_sucess', trim($_POST['mercadopago_url_sucess']));
-	}
-	if ($_POST['mercadopago_url_pending'] != null) {
-		update_option('mercadopago_url_pending', trim($_POST['mercadopago_url_pending']));
-	}
-	if ($_POST['mercadopago_country'] != null) {
-		update_option('mercadopago_country', trim($_POST['mercadopago_country']));
-	}
-	if ($_POST['mercadopago_curcode'] != null) {
-		update_option('mercadopago_curcode', trim($_POST['mercadopago_curcode']));
-	}*/
-
 	return true;
 }
 
@@ -151,16 +133,59 @@ function submit_mercadopago_basic() {
 function form_mercadopago_basic() {
 	global $wpdb, $wpsc_gateways;
 
-	$serverType1 = '';
-	$serverType2 = '';
-	//$select_currency[ get_option( 'mercadopago_curcode' ) ] = "selected='selected'";
-
 	$result = validateCredentials(
 		get_option('mercadopago_certified_clientid'),
 		get_option('mercadopago_certified_clientsecret')
 	);
+	$store_currency = WPSC_Countries::get_currency_code(absint(get_option('currency_type')));
 
+	// Trigger API to get payment methods and site_id, also validates Client_id/Client_secret.
 	if ($result['is_valid'] == true) {
+		try {
+			// checking the currency
+			$currency_message = "";
+			if (!isSupportedCurrency($result['site_id'])) {
+				if (get_option('mercadopago_certified_currencyconversion') == 'inactive') {
+					$result['currency_ratio'] = -1;
+					$currency_message .= '<img width="12" height="12" src="' .
+						plugins_url( 'wpsc-merchants/mercadopago-images/warning.png', plugin_dir_path( __FILE__ ) ) . '">' .
+						' ' . __( 'ATTENTION: The currency', 'wpecomm-mercadopago-module' ) . ' ' . $store_currency .
+						' ' . __( 'defined in WPeCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be', 'wpecomm-mercadopago-module' ) .
+						' ' . getCurrencyId( $result['site_id'] ) . ' (' . getCountryName( $result['site_id'] ) . ').' .
+						' ' . __( 'Currency conversions should be made outside this module.', 'wpecomm-mercadopago-module' );
+				} else if (get_option('mercadopago_certified_currencyconversion') == 'active' && $result['currency_ratio'] != -1 ) {
+					$currency_message .= '<img width="12" height="12" src="' .
+						plugins_url( 'wpsc-merchants/mercadopago-images/check.png', plugin_dir_path( __FILE__ ) ) . '">' .
+						' ' . __( 'CURRENCY CONVERTED: The currency conversion ratio from', 'wpecomm-mercadopago-module' )  . ' ' . $store_currency .
+						' ' . __( 'to', 'wpecomm-mercadopago-module' ) . ' ' . getCurrencyId( $result['site_id'] ) . __( ' is: ', 'wpecomm-mercadopago-module' ) . $result['currency_ratio'] . ".";
+				} else {
+					$result['currency_ratio'] = -1;
+					$currency_message .= '<img width="12" height="12" src="' .
+						plugins_url( 'wpsc-merchants/mercadopago-images/error.png', plugin_dir_path( __FILE__ ) ) . '">' .
+						' ' . __( 'ERROR: It was not possible to convert the unsupported currency', 'wpecomm-mercadopago-module' ) . ' ' . $store_currency .
+						' '	. __( 'to', 'wpecomm-mercadopago-module' ) . ' ' . getCurrencyId( $result['site_id'] ) . '.' .
+						' ' . __( 'Currency conversions should be made outside this module.', 'wpecomm-mercadopago-module' );
+				}
+			} else {
+				$result['currency_ratio'] = -1;
+			}
+			$credentials_message = '<img width="12" height="12" src="' .
+				plugins_url( 'wpsc-merchants/mercadopago-images/check.png', plugin_dir_path( __FILE__ ) ) . '">' .
+				' ' . __( 'Your credentials are <strong>valid</strong> for', 'wpecomm-mercadopago-module' ) .
+				': ' . getCountryName( $result['site_id'] ) . ' <img width="18.6" height="12" src="' .
+				plugins_url( 'wpsc-merchants/mercadopago-images/' . $result['site_id'] . '/' . $result['site_id'] . '.png', plugin_dir_path( __FILE__ ) ) . '"> ';
+		} catch ( MercadoPagoException $e ) {
+			$credentials_message = '<img width="12" height="12" src="' .
+				plugins_url( 'wpsc-merchants/mercadopago-images/error.png', plugin_dir_path( __FILE__ ) ) . '">' .
+				' ' . __( 'Your credentials are <strong>not valid</strong>!', 'wpecomm-mercadopago-module' );
+		}
+	} else {
+		$credentials_message = '<img width="12" height="12" src="' .
+			plugins_url( 'wpsc-merchants/mercadopago-images/error.png', plugin_dir_path( __FILE__ ) ) . '">' .
+			' ' . __( 'Your credentials are <strong>not valid</strong>!', 'wpecomm-mercadopago-module' );
+	}
+
+	/*if ($result['is_valid'] == true) {
 		$credentials_message = '<img width="12" height="12" src="' .
 		plugins_url(
 			'wpsc-merchants/mercadopago-images/check.png',
@@ -174,14 +199,7 @@ function form_mercadopago_basic() {
 		$credentials_message = '<img width="12" height="12" src="' .
 			plugins_url( 'wpsc-merchants/mercadopago-images/error.png', plugin_dir_path( __FILE__ ) ) . '">' .
 			' ' . __( 'Your credentials are <strong>not valid</strong>!', 'wpecomm-mercadopago-module' );
-	}
-
-	if ( get_option( 'mercadopago_certified_server_type' ) == 'sandbox' ) {
-		$serverType1 = "checked='checked'";
-	} elseif ( get_option( 'mercadopago_certified_server_type' ) == 'production' ) {
-		$serverType2 = "checked='checked'";
-	}
-	$mercadopago_certified_ipn = get_option( 'mercadopago_certified_ipn' );
+	}*/
 
 	$api_secret_locale = sprintf(
 		'<a href="https://www.mercadopago.com/mla/account/credentials?type=custom" target="_blank">%s</a>, ' .
@@ -335,7 +353,7 @@ function form_mercadopago_basic() {
 		</td>
 	</tr>
 	<tr>
-		<td>" . __('Auto Return', 'wpecomm-mercadopago-module' ) . "</td>
+		<td>" . __('Auto Return', 'wpecomm-mercadopago-module') . "</td>
 		<td>" .
 			auto_return() . "
 			<p class='description'>" .
@@ -345,10 +363,10 @@ function form_mercadopago_basic() {
 	</tr>
 	<tr>
 		<td></td>
-		<td><h3><strong>" . __('Payment Options', 'wpecomm-mercadopago-module' ) . "</strong></h3></td>
+		<td><h3><strong>" . __('Payment Options', 'wpecomm-mercadopago-module') . "</strong></h3></td>
 	</tr>
 	<tr>
-		<td>" . __('Max installments', 'wpecomm-mercadopago-module' ) . "</td>
+		<td>" . __('Max installments', 'wpecomm-mercadopago-module') . "</td>
 		<td>" .
 			installments() . "
 			<p class='description'>" .
@@ -357,17 +375,27 @@ function form_mercadopago_basic() {
 		</td>
 	</tr>
 	<tr>
-		<td>" . __('Exclude Payment Methods', 'wpecomm-mercadopago-module' ) . "</td>
+		<td>" . __('Currency Conversion', 'wpecomm-mercadopago-module') . "</td>
+		<td>" .
+			currency_conversion() . "
+			<p class='description'>" .
+				__('If the used currency in WPeCommerce is different or not supported by Mercado Pago, convert values of your transactions using Mercado Pago currency ratio', 'wpecomm-mercadopago-module') . "<br >" .
+				__(sprintf('%s', $currency_message)) . "
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>" . __('Exclude Payment Methods', 'wpecomm-mercadopago-module') . "</td>
 		<td>" .
 			methods($result['site_id']) . "
 		</td>
 	</tr>
 	<tr>
 		<td></td>
-		<td><h3><strong>" . __('Test and Debug Options', 'wpecomm-mercadopago-module' ) . "</strong></h3></td>
+		<td><h3><strong>" . __('Test and Debug Options', 'wpecomm-mercadopago-module') . "</strong></h3></td>
 	</tr>
 	<tr>
-		<td>" . __('Enable Sandbox', 'wpecomm-mercadopago-module' ) . "
+		<td>" . __('Enable Sandbox', 'wpecomm-mercadopago-module') . "
 		</td>
 		<td>" .
 			sandbox() . "
@@ -378,81 +406,14 @@ function form_mercadopago_basic() {
 		</td>
 	</tr>
 	<tr>
-		<td>" . __('Debug mode', 'wpecomm-mercadopago-module' ) . "</td>
+		<td>" . __('Debug mode', 'wpecomm-mercadopago-module') . "</td>
 		<td>" .
 			debugs() . "
 			<p class='description'>" .
-			__( 'Enable to display error messages to frontend (not recommended in production environment)', 'wpecomm-mercadopago-module' ) . "
+			__('Enable to display error messages to frontend (not recommended in production environment)', 'wpecomm-mercadopago-module') . "
 			</p>
 		</td>
 	</tr>\n";
-
-	/*$mercadopago_certified_ipn = get_option( 'mercadopago_certified_ipn' );
-	$store_currency_code = WPSC_Countries::get_currency_code( absint( get_option( 'currency_type' ) ) );
-
-	$current_currency = get_option( 'mercadopago_curcode' );
-
-	if ( ( $current_currency == '' ) && in_array( $store_currency_code, $wpsc_gateways['WPSC_Merchant_MercadoPago_Basic']['supported_currencies']['currency_list'] ) ) {
-		update_option( 'mercadopago_curcode', $store_currency_code );
-		$current_currency = $store_currency_code;
-	}
-	if ( $current_currency != $store_currency_code ) {
-		$output .= "<tr> <td colspan='2'><strong class='form_group'>" . __( 'Currency Converter', 'wpecomm-mercadopago-module' ) . "</td> </tr>
-		<tr>
-			<td colspan='2'>
-			" . __( 'Your website is using a currency not accepted by mercadopago. Please select an accepted currency using the drop down menu below. Buyers on your site will still pay in your local currency. However, we will convert the currency and send the order through to mercadopago using the currency you choose below.', 'wpecomm-mercadopago-module' ) . "
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-			" . __('Convert to', 'wpecomm-mercadopago-module' ) . "
-			</td>
-			<td>
-				<select name='mercadopago_curcode'>\n";
-
-		if ( ! isset( $wpsc_gateways['WPSC_Merchant_MercadoPago_Basic']['supported_currencies']['currency_list'] ) ) {
-			$wpsc_gateways['WPSC_Merchant_MercadoPago_Basic']['supported_currencies']['currency_list'] = array();
-		}
-
-
-		// TODO verify that this query is correct, the WPSC_Countries call that repalced it was coded to duplicate the results, but
-		// why are currecies of inactive countries being returned??
-		//$old_currency_list = $wpdb->get_results( "SELECT DISTINCT `code`, `currency` FROM `" . WPSC_TABLE_CURRENCY_LIST . "` WHERE `code` IN ('" . implode( "','", $mercadopago_currency_list ) . "')", ARRAY_A );
-		$mercadopago_currency_list = array_map( 'esc_sql', $wpsc_gateways['WPSC_Merchant_MercadoPago_Basic']['supported_currencies']['currency_list'] );
-		$currency_list = WPSC_Countries::get_currencies( true );
-		$currency_codes_in_commmon = array_intersect( array_keys( $currency_list ), $mercadopago_currency_list );
-
-		foreach ( $currency_codes_in_commmon as $currency_code ) {
-
-			$currency_item = $currency_list[$currency_code];
-
-			if ( in_array( $currency_code, $mercadopago_currency_list ) ) {
-				$selected_currency = '';
-
-				if ( $current_currency == $currency_item['code'] ) {
-					$selected_currency = "selected='selected'";
-				}
-
-				$output .= "<option ".$selected_currency." value='{$currency_item['code']}'>{$currency_item['currency']}</option>";
-			}
-		}
-
-		$output .= "
-				</select>
-			</td>
-		</tr>\n";
-	}*/
-
-	/*$output .="
-	<tr>
-		<td colspan='2'>
-			<p class='description'>
-	 		" . sprintf( __( "For more help configuring mercadopago Basic Checkout, please read our documentation <a href='%s'>here</a>", 'wpecomm-mercadopago-module' ), esc_url( 'http://docs.wpecommerce.org/documentation/mercadopago-basic-checkout/' ) ) . "
-	 		</p>
-		</td>
-   	</tr>\n";*/
-
 	return $output;
 }
 
@@ -611,6 +572,29 @@ function sandbox() {
 	return $select_sandbox;
 }
 
+function currency_conversion() {
+	$currencyconversion = get_option('mercadopago_certified_currencyconversion');
+	$currencyconversion = $currencyconversion === false || is_null($currencyconversion) ? "inactive" : $currencyconversion;
+	$currencyconversion_options = array(
+		array("value" => "active", "text" => "Active"),
+		array("value" => "inactive", "text" => "Inactive")
+	);
+	$select_currencyconversion = '<select name="mercadopago_certified_currencyconversion" id="currencyconversion">';
+	foreach ($currencyconversion_options as $op_currencyconversion) :
+		$selected = "";
+		if ($op_currencyconversion['value'] == $currencyconversion) :
+		$selected = 'selected="selected"';
+		endif;
+		$select_currencyconversion .=
+			'<option value="' . $op_currencyconversion['value'] .
+			'" id="currencyconversion-' . $op_currencyconversion['value'] .
+			'" ' . $selected . '>' . __($op_currencyconversion['text'], "wpecomm-mercadopago-module") .
+			'</option>';
+	endforeach;
+	$select_currencyconversion .= "</select>";
+	return $select_currencyconversion;
+}
+
 function debugs() {
 	if (get_option('mercadopago_certified_debug') == null || get_option('mercadopago_certified_debug') == '') {
 		$mercadopago_certified_debug = 'No';
@@ -637,43 +621,30 @@ function debugs() {
 // check if we have valid credentials.
 function validateCredentials($client_id, $client_secret) {
 	$result = array();
-	if ( empty( $client_id ) ) {
+	if (empty($client_id)) {
 		$result['site_id'] = null;
 		$result['is_valid'] = false;
 		return $result;
 	}
-	if ( empty( $client_secret ) ) {
+	if (empty($client_secret)) {
 		$result['site_id'] = null;
 		$result['is_valid'] = false;
 		return $result;
 	}
-	if ( strlen( $client_id ) > 0 && strlen( $client_secret ) > 0 ) {
+	if (strlen($client_id) > 0 && strlen($client_secret) > 0 ) {
 		try {
-			$mp = new MP( $client_id, $client_secret );
+			$mp = new MP($client_id, $client_secret);
 			$result['access_token'] = $mp->get_access_token();
 			$mpApi = new MPApi();
-			$get_request = $mpApi->getMe( $result['access_token'] );
-			if ( isset( $get_request[ 'response' ][ 'site_id' ] ) ) {
-				$result['is_test_user'] = isset($get_request[ 'response' ][ 'tags' ][ 'test_user' ] );
-				$result['site_id'] = $get_request[ 'response' ][ 'site_id' ];
+			$get_request = $mpApi->getMe($result['access_token']);
+			if (isset($get_request['response']['site_id'])) {
+				$result['is_test_user'] = isset($get_request['response']['tags']['test_user']);
+				$result['site_id'] = $get_request['response']['site_id'];
 				// check for auto converstion of currency
-				/*$result['currency_ratio'] = 1;
-				$currency_obj = MPRestClient::get_ml( array( "uri" =>
-					"/currency_conversions/search?from=" .
-					get_woocommerce_currency() .
-					"&to=" .
-					$getCurrencyId( $site_id )
-				) );
-				if ( isset( $currency_obj[ 'response' ] ) ) {
-					$currency_obj = $currency_obj[ 'response' ];
-					if ( isset( $currency_obj['ratio'] ) ) {
-						$result['currency_ratio'] = (float) $currency_obj['ratio'];
-					} else {
-						$result['currency_ratio'] = -1;
-					}
-				} else {
-					$result['currency_ratio'] = -1;
-				}*/
+				$result['currency_ratio'] = $mpApi->getCurrencyRatio(
+					WPSC_Countries::get_currency_code(absint(get_option('currency_type'))),
+					getCurrencyId($result['site_id'])
+				);
 				$result['is_valid'] = true;
 				return $result;
 			} else {
@@ -692,8 +663,8 @@ function validateCredentials($client_id, $client_secret) {
 	return $result;
 }
 
-function getCurrencyId( $site_id ) {
-	switch ( $site_id ) {
+function getCurrencyId($site_id) {
+	switch ($site_id) {
 		case 'MLA': return 'ARS';
 		case 'MLB': return 'BRL';
 		case 'MCO': return 'COP';
@@ -705,9 +676,9 @@ function getCurrencyId( $site_id ) {
 	}
 }
 
-function getCountryName( $site_id ) {
+function getCountryName($site_id) {
 	$country = $site_id;
-	switch ( $site_id ) {
+	switch ($site_id) {
 		case 'MLA': return __( 'Argentine', 'wpecomm-mercadopago-module' );
 		case 'MLB': return __( 'Brazil', 'wpecomm-mercadopago-module' );
 		case 'MCO': return __( 'Colombia', 'wpecomm-mercadopago-module' );
@@ -717,6 +688,12 @@ function getCountryName( $site_id ) {
 		case 'MPE': return __( 'Peru', 'wpecomm-mercadopago-module' );
 	}
 
+}
+
+// Return boolean indicating if currency is supported.
+function isSupportedCurrency($site_id) {
+	$store_currency_code = WPSC_Countries::get_currency_code(absint(get_option('currency_type')));
+	return $store_currency_code == getCurrencyId($site_id);
 }
 
 function debug_to_console($data) {

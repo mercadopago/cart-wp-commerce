@@ -3,7 +3,7 @@
 /**
  * MercadoPago Integration Library
  * Access MercadoPago for payments integration
- * 
+ *
  * @author hcasatti
  *
  */
@@ -58,7 +58,7 @@ class MP {
         $access_token = $this->get_access_token();
 
         $uri_prefix = $this->sandbox ? "/sandbox" : "";
-            
+
         $payment_info = MPRestClient::get($uri_prefix."/collections/notifications/" . $id . "?access_token=" . $access_token);
         return $payment_info;
     }
@@ -70,7 +70,7 @@ class MP {
      * Get information for specific authorized payment
      * @param id
      * @return array(json)
-    */    
+    */
     public function get_authorized_payment($id) {
         $access_token = $this->get_access_token();
 
@@ -142,7 +142,7 @@ class MP {
         $filters = $this->build_query($filters);
 
         $uri_prefix = $this->sandbox ? "/sandbox" : "";
-            
+
         $collection_result = MPRestClient::get($uri_prefix."/collections/search?" . $filters . "&access_token=" . $access_token);
         return $collection_result;
     }
@@ -212,8 +212,8 @@ class MP {
      * Update a preapproval payment
      * @param string $preapproval_payment, $id
      * @return array(json)
-     */ 
-    
+     */
+
     public function update_preapproval_payment($id, $preapproval_payment) {
         $access_token = $this->get_access_token();
 
@@ -242,11 +242,11 @@ class MP {
  */
 class MPRestClient {
 
-    //const API_BASE_URL = "https://api.mercadolibre.com";
+    const API_BASE_URL_ML = "https://api.mercadolibre.com";
     const API_BASE_URL = "https://api.mercadopago.com";
 
-    private static function get_connect($uri, $method, $content_type) {
-        $connect = curl_init(self::API_BASE_URL . $uri);
+    private static function get_connect($uri, $method, $content_type, $base_domain) {
+        $connect = curl_init($base_domain . $uri);
 
         curl_setopt($connect, CURLOPT_USERAGENT, "MercadoPago WPeCommerce v" . MP::modversion);
         curl_setopt($connect, CURLOPT_RETURNTRANSFER, true);
@@ -275,8 +275,8 @@ class MPRestClient {
         curl_setopt($connect, CURLOPT_POSTFIELDS, $data);
     }
 
-    private static function exec($method, $uri, $data, $content_type) {
-        $connect = self::get_connect($uri, $method, $content_type);
+    private static function exec($method, $uri, $data, $content_type, $base_domain) {
+        $connect = self::get_connect($uri, $method, $content_type, $base_domain);
         if ($data) {
             self::set_data($connect, $data, $content_type);
         }
@@ -298,16 +298,16 @@ class MPRestClient {
         return $response;
     }
 
-    public static function get($uri, $content_type = "application/json") {
-        return self::exec("GET", $uri, null, $content_type);
+    public static function get($uri, $content_type = "application/json", $base_domain = self::API_BASE_URL) {
+        return self::exec("GET", $uri, null, $content_type, $base_domain);
     }
 
-    public static function post($uri, $data, $content_type = "application/json") {
-        return self::exec("POST", $uri, $data, $content_type);
+    public static function post($uri, $data, $content_type = "application/json", $base_domain = self::API_BASE_URL) {
+        return self::exec("POST", $uri, $data, $content_type, $base_domain);
     }
 
-    public static function put($uri, $data, $content_type = "application/json") {
-        return self::exec("PUT", $uri, $data, $content_type);
+    public static function put($uri, $data, $content_type = "application/json", $base_domain = self::API_BASE_URL) {
+        return self::exec("PUT", $uri, $data, $content_type, $base_domain);
     }
 
 }

@@ -130,6 +130,33 @@ msgstr "Após a compra, o cliente é redirecionado automaticamente."
 msgid "Payment Options"
 msgstr "Opções de Pagamento"
 
+msgid "ATTENTION: The currency"
+msgstr "ATENÇÃO: A moeda"
+
+msgid "defined in WPeCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be"
+msgstr "definida no WPeCommerce é diferente da usada no país de suas credenciais.<br>A moeda para transações feitas por este meio de pagamento será"
+
+msgid "Currency conversions should be made outside this module."
+msgstr "Conversões devem ser feitas fora deste módulo."
+
+msgid "CURRENCY CONVERTED: The currency conversion ratio from"
+msgstr "MOEDA CONVERTIDA: A taxa de conversão de moeda de"
+
+msgid "ERROR: It was not possible to convert the unsupported currency"
+msgstr "ERRO: Não foi possível converter a moeda não suportada"
+
+msgid "to"
+msgstr "para"
+
+msgid "If the used currency in WPeCommerce is different or not supported by Mercado Pago, convert values of your transactions using Mercado Pago currency ratio"
+msgstr "Se a moeda utilizada pelo WPeCommerce for diferente ou não suportada pelo Mercado Pago, converte os valores de suas transações usando a taxa de conversão do Mercado Pago"
+
+msgid " is: "
+msgstr " é: "
+
+msgid "Currency Conversion"
+msgstr "Conversão de Moeda"
+
 msgid "Max installments"
 msgstr "Número Máximo de Parcelamentos"
 

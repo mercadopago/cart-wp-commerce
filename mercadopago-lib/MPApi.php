@@ -21,4 +21,22 @@ class MPApi{
         return $response;
     }
 
+    public function getCurrencyRatio($from, $to) {
+        $currency_obj = MPRestClient::get(
+            "/currency_conversions/search?from=" . $from . "&to=" . $to,
+            "application/json",
+            MPRestClient::API_BASE_URL_ML
+        );
+        if (isset($currency_obj['response'])) {
+            $currency_obj = $currency_obj['response'];
+            if (isset($currency_obj['ratio'])) {
+                return (float) $currency_obj['ratio'];
+            } else {
+                return -1;
+            }
+        } else {
+            return -1;
+        }
+    }
+
 }
