@@ -106,22 +106,25 @@ function submit_mercadopago_basic() {
 	if ($_POST['mercadopago_certified_maxinstallments'] != null) {
 		update_option('mercadopago_certified_maxinstallments', trim($_POST['mercadopago_certified_maxinstallments']));
 	}
-	if (in_array('mercadopago_certified_exmethods', $_POST)) {
-		$methods = '';
-		foreach ($_POST['mercadopago_certified_exmethods'] as $name) {
-			$methods .= $name.',';
-		}
+	if (isset($_POST['mercadopago_certified_exmethods'])) {
+		$methods = implode(",", $_POST['mercadopago_certified_exmethods']);
+		/*for ($i=0; $i<sizeof($_POST['mercadopago_certified_exmethods']); $i++) {
+			$methods .= $_POST['mercadopago_certified_exmethods'][$i];
+			if ($i < sizeof($_POST['mercadopago_certified_exmethods'])-1)
+				$methods .= ',';
+		}*/
 		update_option('mercadopago_certified_exmethods', $methods);
 	} else {
 		update_option('mercadopago_certified_exmethods', '');
 	}
+	if ($_POST['mercadopago_certified_sandbox'] != null) {
+		update_option('mercadopago_certified_sandbox', trim($_POST['mercadopago_certified_sandbox']));
+	}
+	if ($_POST['mercadopago_certified_debug'] != null) {
+		update_option('mercadopago_certified_debug', trim($_POST['mercadopago_certified_debug']));
+	}
 
-	/*if ($_POST['mercadopago_sandbox'] != null) {
-		update_option('mercadopago_sandbox', trim($_POST['mercadopago_sandbox']));
-	}
-	if ($_POST['mercadopago_debug'] != null) {
-		update_option('mercadopago_debug', trim($_POST['mercadopago_debug']));
-	}
+	/*
 	if ($_POST['mercadopago_url_sucess'] != null) {
 		update_option('mercadopago_url_sucess', trim($_POST['mercadopago_url_sucess']));
 	}
@@ -360,33 +363,27 @@ function form_mercadopago_basic() {
 		</td>
 	</tr>
 	<tr>
-		<td>
-		" . __( 'IPN', 'wpecomm-mercadopago-module' ) . "
-		</td>
-		<td>
-			<input type='radio' value='1' name='mercadopago_certified_ipn' id='mercadopago_ipn1' " . checked( $mercadopago_certified_ipn, 1, false ) . " /> <label for='mercadopago_ipn1'>".__('Yes', 'wpecomm-mercadopago-module') . "</label> &nbsp;
-			<input type='radio' value='0' name='mercadopago_certified_ipn' id='mercadopago_ipn2' " . checked( $mercadopago_certified_ipn, 0, false ) . " /> <label for='mercadopago_ipn2'>".__('No', 'wpecomm-mercadopago-module') . "</label>
-			<p class='description'>
-			" . __( "IPN (instant payment notification) will automatically update your sales logs to 'Accepted payment' when a customer's payment is successful. It is highly recommended using IPN, especially if you are selling digital products.", 'wpecomm-mercadopago-module' ) . "
-			</p>
-		</td>
-	</tr>
-	<tr>
 		<td></td>
 		<td><h3><strong>" . __('Test and Debug Options', 'wpecomm-mercadopago-module' ) . "</strong></h3></td>
 	</tr>
 	<tr>
-		<td>" . __('Server Type', 'wpecomm-mercadopago-module' ) . "
+		<td>" . __('Enable Sandbox', 'wpecomm-mercadopago-module' ) . "
 		</td>
-		<td>
-			<input $serverType1 type='radio' name='mercadopago_certified_server_type' value='sandbox' id='mercadopago_certified_server_type_sandbox' /> <label for='mercadopago_certified_server_type_sandbox'>" .
-				__('Sandbox (For testing)', 'wpecomm-mercadopago-module' ) . "</label> &nbsp;
-			<input $serverType2 type='radio' name='mercadopago_certified_server_type' value='production' id='mercadopago_certified_server_type_production' /> <label for='mercadopago_certified_server_type_production'>" .
-				__('Production', 'wpecomm-mercadopago-module' ) . "</label>
+		<td>" .
+			sandbox() . "
 			<p class='description'>" . __(
-				"Only use the sandbox server if you have a sandbox account with mercadopago.",
+				"This option allows you to test payments inside a sandbox environment.",
 				'wpecomm-mercadopago-module'
 			) . "</p>
+		</td>
+	</tr>
+	<tr>
+		<td>" . __('Debug mode', 'wpecomm-mercadopago-module' ) . "</td>
+		<td>" .
+			debugs() . "
+			<p class='description'>" .
+			__( 'Enable to display error messages to frontend (not recommended in production environment)', 'wpecomm-mercadopago-module' ) . "
+			</p>
 		</td>
 	</tr>\n";
 
@@ -464,37 +461,38 @@ function form_mercadopago_basic() {
 ================================================================================*/
 
 function methods($country = null) {
-		$activemethods = preg_split("/[\s,]+/",get_option('mercadopago_certified_exmethods'));
-		if ($country != '' || $country != null) {
-			$mp = new MPApi();
-			$methods = $mp->getPaymentMethods($country);
-			$showmethods = '';
-			foreach ($methods as $method) :
-				if ($method['id'] != 'account_money') {
-					if ($activemethods != null && in_array($method['id'], $activemethods)) {
-						$showmethods .=
-							'<input name="mercadopago_certified_exmethods[]" type="checkbox" checked="yes" value="' .
-							$method['id'] . '">' . $method['name'].'<br />';
-					} else {
-						$showmethods .=
-							'<input name="mercadopago_certified_exmethods[]" type="checkbox" value="' .
-							$method['id'] . '"> '.$method['name'].'<br />';
-					}
+	$activemethods = explode(",", get_option('mercadopago_certified_exmethods'));
+	if ($country != '' || $country != null) {
+		$mp = new MPApi();
+		$methods = $mp->getPaymentMethods($country);
+		$showmethods = '';
+		foreach ($methods as $method) :
+			if ($method['id'] != 'account_money') {
+				$icon = '<img height="12" src="' .
+				$method['secure_thumbnail'] . '">';
+				if ($activemethods != null && in_array($method['id'], $activemethods)) {
+					$showmethods .=
+						'<input name="mercadopago_certified_exmethods[]" type="checkbox" checked="yes" value="' .
+						$method['id'] . '"> ' . $icon . " (" . $method['name'] . ')<br /><br />';
+				} else {
+					$showmethods .=
+						'<input name="mercadopago_certified_exmethods[]" type="checkbox" value="' .
+						$method['id'] . '"> ' . $icon . " (" . $method['name'] . ')<br /><br />';
 				}
-			endforeach;
-			$showmethods .=
-				'<p class="description">' .
-					__( 'Select the payment methods that you <strong>don\'t</strong> want to receive with Mercado Pago.', 'wpecomm-mercadopago-module' ) .
-				'</p>';
-			return $showmethods;
-		} else {
-			$showmethods = '<img width="12" height="12" src="' .
-				plugins_url( 'wpsc-merchants/mercadopago-images/warning.png', plugin_dir_path( __FILE__ ) ) . '">' . ' ' .
-				__( 'Configure your Client_id and Client_secret to have access to more options.', 'wpecomm-mercadopago-module' );
-			return $showmethods;
-		}
-
+			}
+		endforeach;
+		$showmethods .=
+			'<p class="description">' .
+				__( 'Select the payment methods that you <strong>don\'t</strong> want to receive with Mercado Pago.', 'wpecomm-mercadopago-module' ) .
+			'</p>';
+		return $showmethods;
+	} else {
+		$showmethods = '<img width="12" height="12" src="' .
+			plugins_url( 'wpsc-merchants/mercadopago-images/warning.png', plugin_dir_path( __FILE__ ) ) . '">' . ' ' .
+			__( 'Configure your Client_id and Client_secret to have access to more options.', 'wpecomm-mercadopago-module' );
+		return $showmethods;
 	}
+}
 
 function installments() {
 		if (get_option('mercadopago_certified_maxinstallments') == null ||
@@ -524,8 +522,8 @@ function auto_return() {
 		$auto_return = get_option('mercadopago_certified_autoreturn');
 		$auto_return = $auto_return === false || is_null($auto_return) ? "inactive" : $auto_return;
 		$auto_return_options = array(
-			array("value" => "active", "text" => "Active"),
-			array("value" => "inactive", "text" => "Inactive")
+			array("value" => "active", "text" => __( "Active", "wpecomm-mercadopago-module")),
+			array("value" => "inactive", "text" => __( "Inactive", "wpecomm-mercadopago-module"))
 		);
 		$select_auto_return = '<select name="mercadopago_certified_autoreturn" id="auto_return">';
 		foreach ($auto_return_options as $op_auto_return) :
@@ -549,7 +547,7 @@ function type_checkout() {
 	// type Checkout
 	$type_checkout_options = array(
 		'Iframe',
-		'Lightbox',
+		'Modal Window',
 		'Redirect'
 	);
 	$select_type_checkout = '<select name="mercadopago_certified_typecheckout" id="type_checkout">';
@@ -561,7 +559,7 @@ function type_checkout() {
 		$select_type_checkout .=
 			'<option value="' . $select_type .
 			'" id="type-checkout-' . $select_type .
-			'" ' . $selected . ' >' . $select_type .
+			'" ' . $selected . ' >' . __($select_type, "wpecomm-mercadopago-module") .
 			'</option>';
 	endforeach;
 	$select_type_checkout .= "</select>";
@@ -590,6 +588,48 @@ function category() {
 	return $select_category;
 }
 
+function sandbox() {
+	$sandbox = get_option('mercadopago_certified_sandbox');
+	$sandbox = $sandbox === false || is_null($sandbox) ? "inactive" : $sandbox;
+	$sandbox_options = array(
+		array("value" => "active", "text" => "Active"),
+		array("value" => "inactive", "text" => "Inactive")
+	);
+	$select_sandbox = '<select name="mercadopago_certified_sandbox" id="sandbox">';
+	foreach ($sandbox_options as $op_sandbox) :
+		$selected = "";
+		if ($op_sandbox['value'] == $sandbox) :
+		$selected = 'selected="selected"';
+		endif;
+		$select_sandbox .=
+			'<option value="' . $op_sandbox['value'] .
+			'" id="sandbox-' . $op_sandbox['value'] .
+			'" ' . $selected . '>' . __($op_sandbox['text'], "wpecomm-mercadopago-module") .
+			'</option>';
+	endforeach;
+	$select_sandbox .= "</select>";
+	return $select_sandbox;
+}
+
+function debugs() {
+	if (get_option('mercadopago_certified_debug') == null || get_option('mercadopago_certified_debug') == '') {
+		$mercadopago_certified_debug = 'No';
+	} else {
+		$mercadopago_certified_debug = get_option('mercadopago_certified_debug');
+	}
+	$debugs = array('No','Yes');
+	$showdebugs = '<select name="mercadopago_certified_debug">';
+	foreach ($debugs as  $debug ) :
+		if ($debug == $mercadopago_certified_debug) {
+			$showdebugs .= '<option value="' . $debug . '" selected="selected">' . __($debug, "wpecomm-mercadopago-module") . '</option>';
+		} else {
+			$showdebugs .= '<option value="' . $debug . '">' . __($debug, "wpecomm-mercadopago-module") . '</option>';
+		}
+	endforeach;
+	$showdebugs .= '</select>';
+	return $showdebugs;
+}
+
 /*===============================================================================
 	AUXILIARY FUNCTIONS
 ================================================================================*/
@@ -614,14 +654,8 @@ function validateCredentials($client_id, $client_secret) {
 			$mpApi = new MPApi();
 			$get_request = $mpApi->getMe( $result['access_token'] );
 			if ( isset( $get_request[ 'response' ][ 'site_id' ] ) ) {
-				$result['is_test_user'] = in_array( 'test_user', $get_request[ 'response' ][ 'tags' ] );
+				$result['is_test_user'] = isset($get_request[ 'response' ][ 'tags' ][ 'test_user' ] );
 				$result['site_id'] = $get_request[ 'response' ][ 'site_id' ];
-				//$result['payments'] = methods($result['site_id']);
-				//$payments = $mp->get( "/v1/payment_methods/?access_token=" . $access_token );
-				//array_push( $payment_methods, "n/d" );
-				//foreach ( $payments[ "response" ] as $payment ) {
-				//	array_push( $payment_methods, str_replace( "_", " ", $payment[ 'id' ] ) );
-				//}
 				// check for auto converstion of currency
 				/*$result['currency_ratio'] = 1;
 				$currency_obj = MPRestClient::get_ml( array( "uri" =>
@@ -683,6 +717,13 @@ function getCountryName( $site_id ) {
 		case 'MPE': return __( 'Peru', 'wpecomm-mercadopago-module' );
 	}
 
+}
+
+function debug_to_console($data) {
+  $output  = "<script>console.log( 'PHP debugger: ";
+  $output .= json_encode(print_r($data, true), JSON_PRETTY_PRINT);
+  $output .= "' );</script>";
+  echo $output;
 }
 
 ?>

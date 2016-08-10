@@ -148,20 +148,29 @@ msgstr "Configure seu Client_id e Client_secret para ter acesso a mais opções.
 msgid "Test and Debug Options"
 msgstr "Opções de Teste e Debug"
 
-msgid "Server Type"
-msgstr "Tipo de Servidor"
+msgid "Enable Sandbox"
+msgstr "Habilitar Sandbox"
 
-msgid "Production"
-msgstr "Produção"
+msgid "This option allows you to test payments inside a sandbox environment."
+msgstr "Esta opção permite a você testar pagamentos em um ambiente sandbox."
 
-msgid "Only use the sandbox server if you have a sandbox account with mercadopago."
-msgstr "Apenas use o servidor Sandbox se você tiver uma conta Sandbox no Mercado Pago."
+msgid "Debug mode"
+msgstr "Modo debug"
+
+msgid "Enable to display error messages to frontend (not recommended in production environment)"
+msgstr "Habilite para exibir mensagens de erro/aviso no frontend (não recomendado em ambientes de produção)"
 
 msgid "IPN"
 msgstr "IPN"
 
 msgid "Yes"
 msgstr "Sim"
+
+msgid "Active"
+msgstr "Ativo"
+
+msgid "Inactive"
+msgstr "Inativo"
 
 msgid "No"
 msgstr "Não"
