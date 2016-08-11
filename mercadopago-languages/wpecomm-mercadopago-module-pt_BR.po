@@ -184,8 +184,8 @@ msgstr "Esta opção permite a você testar pagamentos em um ambiente sandbox."
 msgid "Debug mode"
 msgstr "Modo debug"
 
-msgid "Enable to display error messages to frontend (not recommended in production environment)"
-msgstr "Habilite para exibir mensagens de erro/aviso no frontend (não recomendado em ambientes de produção)"
+msgid "Enable to display log messages in browser console (not recommended in production environment)"
+msgstr "Habilite para exibir mensagens de log no console do browser (não recomendado em ambientes de produção)"
 
 msgid "IPN"
 msgstr "IPN"
@@ -204,3 +204,12 @@ msgstr "Não"
 
 msgid "IPN (instant payment notification) will automatically update your sales logs to 'Accepted payment' when a customer's payment is successful. It is highly recommended using IPN, especially if you are selling digital products."
 msgstr "IPN (instant payment notification) irá automaticamente atualizar o status de suas vendas para 'pagamento aceito' quando o pagamento do cliente for efetuado. É altamente recomendado o uso de IPN, especialmente se você estiver vendendo produtos digitais."
+
+msgid "Shipping service used by store"
+msgstr "Serviço de envio usado pela loja"
+
+msgid "Tax fees applicable in store"
+msgstr "Taxas de impostos aplicáveis na loja"
+
+msgid "Keep paying wih Mercado Pago"
+msgstr "Continue pagando com o Mercado Pago"
