@@ -105,6 +105,9 @@ function submit_mercadopago_basic() {
 	if ($_POST['mercadopago_certified_currencyconversion'] != null) {
 		update_option('mercadopago_certified_currencyconversion', trim($_POST['mercadopago_certified_currencyconversion']));
 	}
+	if ($_POST['mercadopago_certified_currencyratio'] != null) {
+		update_option('mercadopago_certified_currencyratio', trim($_POST['mercadopago_certified_currencyratio']));
+	}
 	if ($_POST['mercadopago_certified_maxinstallments'] != null) {
 		update_option('mercadopago_certified_maxinstallments', trim($_POST['mercadopago_certified_maxinstallments']));
 	}
@@ -382,6 +385,12 @@ function form_mercadopago_basic() {
 				__('If the used currency in WPeCommerce is different or not supported by Mercado Pago, convert values of your transactions using Mercado Pago currency ratio', 'wpecomm-mercadopago-module') . "<br >" .
 				__(sprintf('%s', $currency_message)) . "
 			</p>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<input type='hidden' size='60' value='" . $result['currency_ratio'] . "' name='mercadopago_certified_currencyratio' />
 		</td>
 	</tr>
 	<tr>
