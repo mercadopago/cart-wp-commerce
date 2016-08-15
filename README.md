@@ -69,7 +69,7 @@ If you have already the module installed, please follow the [Upgrade instruction
 
 **Step-to-Step**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a>;
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a>);
 
 2. Unzip the folder and find "wpecomm-mercado-pago-module" directory;
 
@@ -130,7 +130,7 @@ If you already had installed a previous version of WPeComm Mercado Pago Module, 
 
 **Step-to-Step**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a>;
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a>);
 
 2. Unzip the folder and find "wpecomm-mercado-pago-module" directory;
 
