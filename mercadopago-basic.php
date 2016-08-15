@@ -83,6 +83,8 @@ function submit_mercadopago_basic() {
 	if ($_POST['mercadopago_certified_siteid'] != null) {
 		update_option('mercadopago_certified_siteid', trim($_POST['mercadopago_certified_siteid']));
 	}
+
+	// TODO: find a better way to pass translated fields to customer view
 	if (isset($_POST['mercadopago_certified_checkoutmessage1'])) {
 		update_option('mercadopago_certified_checkoutmessage1', trim($_POST['mercadopago_certified_checkoutmessage1']));
 	}
@@ -91,6 +93,21 @@ function submit_mercadopago_basic() {
 	}
 	if (isset($_POST['mercadopago_certified_checkoutmessage3'])) {
 		update_option('mercadopago_certified_checkoutmessage3', trim($_POST['mercadopago_certified_checkoutmessage3']));
+	}
+	if (isset($_POST['mercadopago_certified_checkoutmessage4'])) {
+		update_option('mercadopago_certified_checkoutmessage4', trim($_POST['mercadopago_certified_checkoutmessage4']));
+	}
+	if (isset($_POST['mercadopago_certified_checkoutmessage5'])) {
+		update_option('mercadopago_certified_checkoutmessage5', trim($_POST['mercadopago_certified_checkoutmessage5']));
+	}
+	if (isset($_POST['mercadopago_certified_checkoutmessage6'])) {
+		update_option('mercadopago_certified_checkoutmessage6', trim($_POST['mercadopago_certified_checkoutmessage6']));
+	}
+	if (isset($_POST['mercadopago_certified_url_sucess'])) {
+		update_option('mercadopago_certified_url_sucess', trim($_POST['mercadopago_certified_url_sucess']));
+	}
+	if (isset($_POST['mercadopago_certified_url_pending'])) {
+		update_option('mercadopago_certified_url_pending', trim($_POST['mercadopago_certified_url_pending']));
 	}
 	if ($_POST['mercadopago_certified_istestuser'] != null) {
 		update_option('mercadopago_certified_istestuser', trim($_POST['mercadopago_certified_istestuser']));
@@ -119,6 +136,7 @@ function submit_mercadopago_basic() {
 	if ($_POST['mercadopago_certified_autoreturn'] != null) {
 		update_option('mercadopago_certified_autoreturn', trim($_POST['mercadopago_certified_autoreturn']));
 	}
+
 	if ($_POST['mercadopago_certified_currencyconversion'] != null) {
 		update_option('mercadopago_certified_currencyconversion', trim($_POST['mercadopago_certified_currencyconversion']));
 	}
@@ -250,6 +268,17 @@ function form_mercadopago_basic() {
 		$installments_desc =
 			__( 'Select the max number of installments for your customers.', 'wpecomm-mercadopago-module' );
 	}
+	// Get callbacks
+	if (get_option('mercadopago_certified_url_sucess') != '') {
+		$url_sucess = get_option('mercadopago_certified_url_sucess');
+	} else {
+		$url_sucess = get_site_url();
+	}
+	if (get_option('mercadopago_certified_url_pending') != '') {
+		$url_pending = get_option('mercadopago_certified_url_pending');
+	} else {
+		$url_pending = get_site_url();
+	}
 
 	// send output to generate settings page
 	$output = "
@@ -274,6 +303,15 @@ function form_mercadopago_basic() {
 			<input type='hidden' size='60' value='" .
 				__( 'Keep paying wih Mercado Pago', 'wpecomm-mercadopago-module' ) .
 				"' name='mercadopago_certified_checkoutmessage3' />
+			<input type='hidden' size='60' value='" .
+				__( 'Thank you for your order. Proceed with your payment completing the following information.', 'wpecomm-mercadopago-module' ) .
+				"' name='mercadopago_certified_checkoutmessage4' />
+			<input type='hidden' size='60' value='" .
+				__( 'Pay with Mercado Pago', 'wpecomm-mercadopago-module' ) .
+				"' name='mercadopago_certified_checkoutmessage5' />
+			<input type='hidden' size='60' value='" .
+				__( 'An error occurred when proccessing your payment. Please try again or contact us for assistence.', 'wpecomm-mercadopago-module' ) .
+				"' name='mercadopago_certified_checkoutmessage6' />
 			<input type='hidden' size='60' value='" . $result['is_test_user'] . "' name='mercadopago_certified_istestuser' />
 			<input type='hidden' size='60' value='" . $result['currency_ratio'] . "' name='mercadopago_certified_currencyratio' />
 			<p><a href='https://wordpress.org/support/view/plugin-reviews/wpecomm-mercado-pago-module?filter=5#postform' target='_blank' class='button button-primary'>" . sprintf(
@@ -360,7 +398,7 @@ function form_mercadopago_basic() {
 		<td>" . __('iFrame Height', 'wpecomm-mercadopago-module' ) . "</td>
 		<td>
 			<input type='number' id='iframeheight' name='mercadopago_certified_iframeheight' min='800' value='" .
-			(get_option( 'mercadopago_certified_iframeheight') == null ? 800 : get_option( 'mercadopago_certified_iframeheight')) . "' />
+			(get_option('mercadopago_certified_iframeheight') == null ? 800 : get_option( 'mercadopago_certified_iframeheight')) . "' />
 			<p class='description'>" . $iframe_height_desc . "
 			</p>
 		</td>
@@ -371,6 +409,26 @@ function form_mercadopago_basic() {
 			auto_return() . "
 			<p class='description'>" .
 				__( 'After the payment, client is automatically redirected.', 'wpecomm-mercadopago-module' ) . "
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>" . __('URL Approved Payment', 'wpecomm-mercadopago-module') . "</td>
+		<td>
+			<input name='mercadopago_certified_url_sucess' type='text' value='" . $url_sucess . "'/>
+			<p class='description'>" .
+				__( 'This is the URL where the customer is redirected if his payment is approved.',
+					'wpecomm-mercadopago-module' ) . "
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>" . __('URL Pending Payment', 'wpecomm-mercadopago-module') . "</td>
+		<td>
+			<input name='mercadopago_certified_url_pending' type='text' value='" . $url_pending . "'/>
+			<p class='description'>" .
+				__( 'This is the URL where the customer is redirected if his payment is in process.',
+					'wpecomm-mercadopago-module' ) . "
 			</p>
 		</td>
 	</tr>
@@ -651,11 +709,11 @@ function function_mercadopago_basic($seperator, $sessionid) {
 		);
 	}
 
-	process_payment($preferences);
+	process_payment($preferences, $wpsc_cart);
 
 }
 
-function process_payment($preferences) {
+function process_payment($preferences, $wpsc_cart) {
 
 	$mp = new MP(
 		get_option('mercadopago_certified_clientid'),
@@ -687,52 +745,60 @@ function process_payment($preferences) {
     "MLV" => 'MLV/standard.jpg',
     "MLM" => 'MLM/standard.jpg'
   );
-	$banner_url = '<img alt="Mercado Pago" title="Mercado Pago" width="468" height="60" src="' .
-		plugins_url( 'wpsc-merchants/mercadopago-images/' . $banners_mercadopago_standard[
-			get_option('mercadopago_certified_siteid')
-		], plugin_dir_path( __FILE__ ) ) . '">';
+  $html =
+		'<img alt="Mercado Pago" title="Mercado Pago" width="468" height="60" src="' .
+		plugins_url( 'wpsc-merchants/mercadopago-images/' . $banners_mercadopago_standard[get_option('mercadopago_certified_siteid')], plugin_dir_path( __FILE__ ) ) . '">';
 
-	// build payment button html code
-	$button_html = "";
-	switch (get_option('mercadopago_certified_typecheckout')) {
-		case "Redirect":
-			// we don't need to build the payment page, as it is a redirection to Mercado Pago
-			header("location: " . $link);
-			break;
-		case "Iframe":
-			$button_html = '
-				<iframe src="' . $link . '" name="MP-Checkout" width="640" height="800" frameborder="0"></iframe>
-				<script type="text/javascript">
-					(function(){function $MPBR_load(){window.$MPBR_loaded !== true && (function(){var s = document.createElement("script");s.type = "text/javascript";s.async = true;
-					s.src = ("https:"==document.location.protocol?"https://www.mercadopago.com/org-img/jsapi/mptools/buttons/":"http://mp-tools.mlstatic.com/buttons/")+"render.js";
-					var x = document.getElementsByTagName("script")[0];x.parentNode.insertBefore(s, x);window.$MPBR_loaded = true;})();}
-					window.$MPBR_loaded !== true ? (window.attachEvent ? window.attachEvent("onload", $MPBR_load) : window.addEventListener("load", $MPBR_load, false)) : null;})();
-				</script>';
-			break;
-		case "Lightbox": default:
-			$button_html = '
-				<a href="' . $link . '" name="MP-Checkout" class="blue-L-Rn" mp-mode="modal" onreturn="execute_my_onreturn">
-					Pagar
-				</a>
-				<script type="text/javascript">
-					(function(){function $MPBR_load(){window.$MPBR_loaded !== true && (function(){var s = document.createElement("script");s.type = "text/javascript";s.async = true;
-					s.src = ("https:"==document.location.protocol?"https://www.mercadopago.com/org-img/jsapi/mptools/buttons/":"http://mp-tools.mlstatic.com/buttons/")+"render.js";
-					var x = document.getElementsByTagName("script")[0];x.parentNode.insertBefore(s, x);window.$MPBR_loaded = true;})();}
-					window.$MPBR_loaded !== true ? (window.attachEvent ? window.attachEvent("onload", $MPBR_load) : window.addEventListener("load", $MPBR_load, false)) : null;})();
-				</script>';
-			break;
+	if ($link) {
+		// build payment button html code
+		switch (get_option('mercadopago_certified_typecheckout')) {
+			case "Redirect":
+				// we don't need to build the payment page, as it is a redirection to Mercado Pago
+				header("location: " . $link);
+				break;
+			case "Iframe":
+				$html .= '<p></p><p>' . wordwrap(
+					get_option('mercadopago_certified_checkoutmessage4'),
+					60, '<br>' ) . '</p>';
+				$html .=
+					'<iframe src="' . $link . '" name="MP-Checkout" ' .
+					'width="' . ( is_numeric( (int)
+						get_option('mercadopago_certified_iframewidth') ) ?
+						get_option('mercadopago_certified_iframewidth') : 640 ) . '" ' .
+					'height="' . ( is_numeric( (int)
+						get_option('mercadopago_certified_iframeheight') ) ?
+						get_option('mercadopago_certified_iframeheight') : 800 ) . '" ' .
+					'frameborder="0" scrolling="no" id="checkout_mercadopago"></iframe>';
+				break;
+			case "Lightbox": default:
+					$html .= '<p></p>';
+					$html .=
+						'<a id="mp-btn" href="' . $link . '" name="MP-Checkout" class="button alt" mp-mode="modal">' .
+						get_option('mercadopago_certified_checkoutmessage5') .
+						'</a> ';
+					$html .=
+						'<script type="text/javascript">(function(){function $MPBR_load(){window.$MPBR_loaded !== true && (function(){var s = document.createElement("script");s.type = "text/javascript";s.async = true;s.src = ("https:"==document.location.protocol?"https://www.mercadopago.com/org-img/jsapi/mptools/buttons/":"http://mp-tools.mlstatic.com/buttons/")+"render.js";var x = document.getElementsByTagName("script")[0];x.parentNode.insertBefore(s, x);window.$MPBR_loaded = true;})();}window.$MPBR_loaded !== true ? (window.attachEvent ? window.attachEvent("onload", $MPBR_load) : window.addEventListener("load", $MPBR_load, false)) : null;})();</script>';
+					$html .=
+						'<style>#mp-btn {background-color: #009ee3; border: 1px solid #009ee3; border-radius: 4px;
+							color: #fff; display: inline-block; font-family: Arial,sans-serif; font-size: 18px;
+							font-weight: normal; margin: 0; padding: 10px; text-align: center; width: 50%;}
+						</style>';
+				break;
+		}
+	} else {
+		$html =
+			'<p>' . get_option('mercadopago_certified_checkoutmessage6') . '</p>';
 	}
 
 	// show page
 	get_header();
-	$html = '<div style="position: relative; margin: 20px 0;" >';
-		$html .= '<div style="margin: 0 auto; width: 1080px; ">';
-			$html .= '<h3>' . get_option('mercadopago_certified_checkoutmessage3') . '</h3>';
-			$html .= '<p>' . $banner_url . '</p>';
-			$html .= $button_html;
-		$html .= '</div>';
-	$html .= '</div>';
-	echo $html;
+	$page = '<div style="position: relative; margin: 20px 0;" >';
+		$page .= '<div style="margin: 0 auto; width: 1080px; ">';
+			$page .= '<h3>' . get_option('mercadopago_certified_checkoutmessage3') . '</h3>';
+			$page .= $html;
+		$page .= '</div>';
+	$page .= '</div>';
+	echo $page;
 	get_footer();
 
 	exit;
