@@ -55,7 +55,7 @@ Basically, the requirements of this plugin are same as you need to run WP eComme
   <thead>
   <tbody>
     <tr>
-      <td>v2.1.1</td>
+      <td>v4.0.0</td>
       <td>Stable (Current version)</td>
       <td>WP eCommerce 3.11.x or greater</td>
     </tr>
