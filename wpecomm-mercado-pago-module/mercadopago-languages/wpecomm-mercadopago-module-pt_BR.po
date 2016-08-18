@@ -175,11 +175,11 @@ msgstr "Número Máximo de Parcelamentos"
 msgid "Select the max number of installments for your customers."
 msgstr "Selecione o número máximo de parcelas que sua loja oferece a seus clientes."
 
-msgid "Exclude Payment Methods"
-msgstr "Excluir Métodos de Pagamento"
+msgid "Accepted Payment Methods"
+msgstr "Métodos de Pagamento Aceitos"
 
-msgid "Select the payment methods that you <strong>don\'t</strong> want to receive with Mercado Pago."
-msgstr "Selecione os meios de pagamento que <strong>não</strong> gostaria de receber com o Mercado Pago."
+msgid "Select the payment methods that you want to receive with Mercado Pago."
+msgstr "Selecione os meios de pagamento que gostaria de receber com o Mercado Pago."
 
 msgid "Configure your Client_id and Client_secret to have access to more options."
 msgstr "Configure seu Client_id e Client_secret para ter acesso a mais opções."
