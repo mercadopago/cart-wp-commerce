@@ -1,0 +1,236 @@
+# Translation of WP e-Commerce in Portuguese (Brazil)
+# This file is distributed under the same license as the WP e-Commerce package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2012-06-12 10:51+1200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: GlotPress/0.1\n"
+"Project-Id-Version: WPeComm Mercado Pago Module\n"
+"POT-Creation-Date: \n"
+"Last-Translator: marcelo tomio hama <marcelo.hama@mercadolivre.com>\n"
+"Language-Team: \n"
+
+msgid "Mercado Pago Basic Checkout"
+msgstr "Checkout Básico Mercado Pago"
+
+msgid "Mercado Pago Credentials"
+msgstr "Credenciais do Mercado Pago"
+
+msgid "Please, rate us %s on WordPress.org and give your feedback to help improve this module!"
+msgstr "Por favor, avalie-nos com %s na WordPress.org e dê seu feedback para ajudar a melhorar este módulo!"
+
+msgid "Your credentials are <strong>valid</strong> for"
+msgstr "Suas credenciais <strong>são válidas</strong> para"
+
+msgid "Your credentials are <strong>not valid</strong>!"
+msgstr "Suas credenciais <strong>não são válidas</strong>!"
+
+msgid "You can obtain your credentials for"
+msgstr "Você pode obter suas credenciais para"
+
+msgid "Argentine"
+msgstr "Argentina"
+
+msgid "Brazil"
+msgstr "Brasil"
+
+msgid "Chile"
+msgstr "Chile"
+
+msgid "Colombia"
+msgstr "Colômbia"
+
+msgid "Mexico"
+msgstr "México"
+
+msgid "Peru"
+msgstr "Peru"
+
+msgid "or"
+msgstr "ou"
+
+msgid "Venezuela"
+msgstr "Venezuela"
+
+msgid "The text that people see when making a purchase"
+msgstr "O texto que as pessoas vêem ao fazer uma compra"
+
+msgid "Client_id"
+msgstr "Client_id"
+
+msgid "Insert your Mercado Pago Client_id."
+msgstr "Insira seu Client_id do Mercado Pago."
+
+msgid "Client_secret"
+msgstr "Client_secret"
+
+msgid "Insert your Mercado Pago Client_secret."
+msgstr "Insira seu Client_secret do Mercado Pago."
+
+msgid "Checkout Options"
+msgstr "Opções de Checkout"
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "Description shown to the client in the checkout."
+msgstr "Descrição mostrada ao cliente durante o checkout."
+
+msgid "Define which type of products your store sells."
+msgstr "Defina qual o tipo dos produtos que sua loja vende."
+
+msgid "Store Identificator"
+msgstr "Identificador da Loja"
+
+msgid "Please, inform a prefix to your store."
+msgstr "Por favor, informe um prefixo para sua loja."
+
+msgid "If you use your Mercado Pago account on multiple stores you should make sure that this prefix is unique as Mercado Pago will not allow orders with same identificators."
+msgstr "Se estiver usando sua conta Mercado Pago para múltiplas lojas então você deverá assegurar-se que este prefixo seja único pois o Mercado Pago não permitirá pedidos com um mesmo identificador."
+
+msgid "Integration Method"
+msgstr "Método de Integração"
+
+msgid "Select how your clients should interact with Mercado Pago. Modal Window (inside your store), Redirect (Client is redirected to Mercado Pago), or iFrame (an internal window is embedded to the page layout)."
+msgstr "Selecione como seus clientes irão interagir com o Mercado Pago. Janela Modal (Dentro de sua loja), Redirecionamento (O cliente é redirecionado ao Mercado Pago), ou iFrame (Uma janela de pagamento é incorporada ao layout da página)."
+
+msgid "This field should be an integer."
+msgstr "Este campo deve ser um número inteiro."
+
+msgid "If your integration method is iFrame, please inform the payment iFrame width."
+msgstr "Se o seu método de integração é por iFrame, por favor informe a largura do layout."
+
+msgid "If your integration method is iFrame, please inform the payment iFrame height."
+msgstr "Se o seu método de integração é por iFrame, por favor informe a altura do layout."
+
+msgid "iFrame"
+msgstr "iFrame"
+
+msgid "Modal Window"
+msgstr "Janela Modal"
+
+msgid "Redirect"
+msgstr "Redirecionamento"
+
+msgid "iFrame Width"
+msgstr "Largura do iFrame"
+
+msgid "iFrame Height"
+msgstr "Altura do iFrame"
+
+msgid "Auto Return"
+msgstr "Auto Retorno"
+
+msgid "URL Approved Payment"
+msgstr "URL de Pagamento Aprovado"
+
+msgid "URL Pending Payment"
+msgstr "URL de Pagamento Pendente"
+
+msgid "This is the URL where the customer is redirected if his payment is approved."
+msgstr "Esta é a URL a qual o cliente será redirecionado se o pagamento for aprovado."
+
+msgid "This is the URL where the customer is redirected if his payment is in process."
+msgstr "Esta é a URL a qual o cliente será redirecionado se o pagamento estiver em análise."
+
+msgid "After the payment, client is automatically redirected."
+msgstr "Após a compra, o cliente é redirecionado automaticamente."
+
+msgid "Payment Options"
+msgstr "Opções de Pagamento"
+
+msgid "ATTENTION: The currency"
+msgstr "ATENÇÃO: A moeda"
+
+msgid "defined in WPeCommerce is different from the one used in your credentials country.<br>The currency for transactions in this payment method will be"
+msgstr "definida no WPeCommerce é diferente da usada no país de suas credenciais.<br>A moeda para transações feitas por este meio de pagamento será"
+
+msgid "Currency conversions should be made outside this module."
+msgstr "Conversões devem ser feitas fora deste módulo."
+
+msgid "CURRENCY CONVERTED: The currency conversion ratio from"
+msgstr "MOEDA CONVERTIDA: A taxa de conversão de moeda de"
+
+msgid "ERROR: It was not possible to convert the unsupported currency"
+msgstr "ERRO: Não foi possível converter a moeda não suportada"
+
+msgid "to"
+msgstr "para"
+
+msgid "If the used currency in WPeCommerce is different or not supported by Mercado Pago, convert values of your transactions using Mercado Pago currency ratio"
+msgstr "Se a moeda utilizada pelo WPeCommerce for diferente ou não suportada pelo Mercado Pago, converte os valores de suas transações usando a taxa de conversão do Mercado Pago"
+
+msgid " is: "
+msgstr " é: "
+
+msgid "Currency Conversion"
+msgstr "Conversão de Moeda"
+
+msgid "Max installments"
+msgstr "Número Máximo de Parcelamentos"
+
+msgid "Select the max number of installments for your customers."
+msgstr "Selecione o número máximo de parcelas que sua loja oferece a seus clientes."
+
+msgid "Exclude Payment Methods"
+msgstr "Métodos de Pagamento Excluídos"
+
+msgid "Select the payment methods that you <strong>don\'t</strong> want to receive with Mercado Pago."
+msgstr "Selecione os meios de pagamento que <strong>não</strong> gostaria de receber com o Mercado Pago."
+
+msgid "Configure your Client_id and Client_secret to have access to more options."
+msgstr "Configure seu Client_id e Client_secret para ter acesso a mais opções."
+
+msgid "Test and Debug Options"
+msgstr "Opções de Teste e Debug"
+
+msgid "Enable Sandbox"
+msgstr "Habilitar Sandbox"
+
+msgid "This option allows you to test payments inside a sandbox environment."
+msgstr "Esta opção permite a você testar pagamentos em um ambiente sandbox."
+
+msgid "Debug mode"
+msgstr "Modo debug"
+
+msgid "Enable to display log messages in browser console (not recommended in production environment)"
+msgstr "Habilite para exibir mensagens de log no console do browser (não recomendado em ambientes de produção)"
+
+msgid "IPN"
+msgstr "IPN"
+
+msgid "Yes"
+msgstr "Sim"
+
+msgid "Active"
+msgstr "Ativo"
+
+msgid "Inactive"
+msgstr "Inativo"
+
+msgid "No"
+msgstr "Não"
+
+msgid "IPN (instant payment notification) will automatically update your sales logs to 'Accepted payment' when a customer's payment is successful. It is highly recommended using IPN, especially if you are selling digital products."
+msgstr "IPN (instant payment notification) irá automaticamente atualizar o status de suas vendas para 'pagamento aceito' quando o pagamento do cliente for efetuado. É altamente recomendado o uso de IPN, especialmente se você estiver vendendo produtos digitais."
+
+msgid "Shipping service used by store"
+msgstr "Serviço de envio usado pela loja"
+
+msgid "Tax fees applicable in store"
+msgstr "Taxas de impostos aplicáveis na loja"
+
+msgid "Keep paying wih Mercado Pago"
+msgstr "Continue pagando com o Mercado Pago"
+
+msgid "Thank you for your order. Proceed with your payment completing the following information."
+msgstr "Obrigado pela sua compra. Prossiga com seu pagamento completando as informações abaixo."
+
+msgid "Pay with Mercado Pago"
+msgstr "Pagar com Mercado Pago"
+
+msgid "An error occurred when proccessing your payment. Please try again or contact us for assistence."
+msgstr "Um erro ocorreu ao processar seu pagamento. Por favor tente novamente ou nos contacte para assistência."

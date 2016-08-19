@@ -1,0 +1,9 @@
+CHANGELOG:
+
+= v4.0.4 (20/08/2016) =
+* Features
+	- LatAm Basic Checkout support. Great for merchants who want to get going quickly and easily. This is the basic payment integration with Mercado Pago. Want to see how it works on-the-fly? Please check this video: <a href="https://www.youtube.com/watch?v=DgOsX1eXjBU">Standard Checkout</a>
+* Improvements
+	- Improved set of configurable fields and customizations. Title, description, category, and external reference customizations, integrations via iframe, modal, and redirection, with configurable auto-returning, max installments and payment method exclusion setup;
+	- Checkout flow with a more complete integration;
+	- Metafiles standardization (readme, changelo, etc).
