@@ -175,10 +175,10 @@ msgstr ""
 msgid "Select the max number of installments for your customers."
 msgstr ""
 
-msgid "Accepted Payment Methods"
+msgid "Exclude Payment Methods"
 msgstr ""
 
-msgid "Select the payment methods that you want to receive with Mercado Pago."
+msgid "Select the payment methods that you <strong>don\'t</strong> want to receive with Mercado Pago."
 msgstr ""
 
 msgid "Configure your Client_id and Client_secret to have access to more options."

@@ -176,11 +176,11 @@ msgstr "Número Máximo de Mensualidades"
 msgid "Select the max number of installments for your customers."
 msgstr "Seleccione el número máximo de mensualidades disponibles para sus clientes."
 
-msgid "Accepted Payment Methods"
-msgstr "Medios de Pago Aceptados"
+msgid "Exclude Payment Methods"
+msgstr "Excluir Medios de Pago"
 
-msgid "Select the payment methods that you want to receive with Mercado Pago."
-msgstr "Selecione los medios de pago que desea aceptar con Mercado Pago."
+msgid "Select the payment methods that you <strong>don\'t</strong> want to receive with Mercado Pago."
+msgstr "Selecione los medios de pago que <strong>no</strong> desea aceptar con Mercado Pago."
 
 msgid "Configure your Client_id and Client_secret to have access to more options."
 msgstr "Configure su Client_id y Client_secret para tener acceso a más opciones."

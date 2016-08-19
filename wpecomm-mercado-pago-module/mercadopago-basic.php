@@ -141,7 +141,7 @@ function submit_mercadopago_basic() {
 	if ($_POST['mercadopago_certified_maxinstallments'] != null) {
 		update_option('mercadopago_certified_maxinstallments', trim($_POST['mercadopago_certified_maxinstallments']));
 	}
-	if (isset($_POST['mercadopago_certified_exmethods']) && isset($_POST['mercadopago_certified_paymentmethods'])) {
+	/*if (isset($_POST['mercadopago_certified_exmethods']) && isset($_POST['mercadopago_certified_paymentmethods'])) {
 		$paymentmethods = explode(",", $_POST['mercadopago_certified_paymentmethods']);
 		$methods = $_POST['mercadopago_certified_exmethods'];
 		if (!in_array('account_money', $methods)) {
@@ -153,6 +153,12 @@ function submit_mercadopago_basic() {
 	} else {
 		update_option('mercadopago_certified_exmethods', '');
 		update_option('mercadopago_certified_paymentmethods', '');
+	}*/
+	if (isset($_POST['mercadopago_certified_exmethods'])) {
+		$methods = implode(",", $_POST['mercadopago_certified_exmethods']);
+		update_option('mercadopago_certified_exmethods', $methods);
+	} else {
+		update_option('mercadopago_certified_exmethods', '');
 	}
 	if ($_POST['mercadopago_certified_sandbox'] != null) {
 		update_option('mercadopago_certified_sandbox', trim($_POST['mercadopago_certified_sandbox']));
@@ -462,7 +468,7 @@ function form_mercadopago_basic() {
 		</td>
 	</tr>
 	<tr>
-		<td>" . __('Accepted Payment Methods', 'wpecomm-mercadopago-module') . "</td>
+		<td>" . __('Exclude Payment Methods', 'wpecomm-mercadopago-module') . "</td>
 		<td>" .
 			methods($result['payment_methods']) . "
 		</td>
@@ -830,9 +836,8 @@ function methods($methods = null) {
 		$showmethods = '';
 		foreach ($methods as $method) :
 			if ($method['id'] != 'account_money') {
-				$icon = '<img height="12" src="' .
-				$method['secure_thumbnail'] . '">';
-				if ($activemethods != null && in_array($method['id'], $activemethods)) {
+				$icon = '<img height="12" src="' . $method['secure_thumbnail'] . '">';
+				/*if ($activemethods != null && in_array($method['id'], $activemethods)) {
 					$showmethods .=
 						'<input name="mercadopago_certified_exmethods[]" type="checkbox" value="' .
 						$method['id'] . '"> ' . $icon . " (" . $method['name'] . ')<br /><br />';
@@ -840,12 +845,21 @@ function methods($methods = null) {
 					$showmethods .=
 						'<input name="mercadopago_certified_exmethods[]" type="checkbox" checked="yes" value="' .
 						$method['id'] . '"> ' . $icon . " (" . $method['name'] . ')<br /><br />';
+				}*/
+				if ($activemethods != null && in_array($method['id'], $activemethods)) {
+					$showmethods .=
+						'<input name="mercadopago_certified_exmethods[]" type="checkbox" checked="yes" value="' .
+						$method['id'] . '"> ' . $icon . " (" . $method['name'] . ')<br /><br />';
+				} else {
+					$showmethods .=
+						'<input name="mercadopago_certified_exmethods[]" type="checkbox" value="' .
+						$method['id'] . '"> ' . $icon . " (" . $method['name'] . ')<br /><br />';
 				}
 			}
 		endforeach;
 		$showmethods .=
 			'<p class="description">' .
-				__( 'Select the payment methods that you want to receive with Mercado Pago.', 'wpecomm-mercadopago-module' ) .
+				__( 'Select the payment methods that you <strong>don\'t</strong> want to receive with Mercado Pago.', 'wpecomm-mercadopago-module' ) .
 			'</p>';
 		return $showmethods;
 	} else {
