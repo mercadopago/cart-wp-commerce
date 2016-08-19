@@ -178,7 +178,7 @@ msgstr "Seleccione el número máximo de cuotas disponibles para sus clientes."
 msgid "Accepted Payment Methods"
 msgstr "Medios de Pago Aceptados"
 
-msgid "Select the payment methods that you <strong>don\'t</strong> want to receive with Mercado Pago."
+msgid "Select the payment methods that you want to receive with Mercado Pago."
 msgstr "Selecione los medios de pago que desea aceptar con Mercado Pago."
 
 msgid "Configure your Client_id and Client_secret to have access to more options."
