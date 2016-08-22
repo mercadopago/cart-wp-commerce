@@ -42,11 +42,6 @@ Basically, the requirements of this plugin are same as you need to run WPeCommer
 * <a href="http://www.mysql.com/">MySQL</a> version 5.6 or greater OR <a href="https://mariadb.org/">MariaDB</a> version 10.0 or greater;
 * <a href="https://httpd.apache.org/">Apache 2.x</a>.
 
-**SSL certificate**
-
-If you're using Custom Checkout, it is a requirement that you have a SSL certificate, and the payment form to be provided under an HTTPS page.
-During the sandbox mode tests, you can operate over HTTP, but for homologation you'll need to acquire the certificate in case you don't have it.
-
 <a name="available_versions"></a>
 ##Available versions##
 
