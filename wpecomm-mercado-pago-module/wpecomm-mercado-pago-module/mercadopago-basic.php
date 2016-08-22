@@ -1,14 +1,10 @@
 <?php
 
 /**
- * Plugin Name: WPeComm Mercado Pago Module
- * Plugin URI: https://github.com/mercadopago/cart-wp-commerce
- * Description: This is the <strong>oficial</strong> module of Mercado Pago for WP-eCommerce plugin. This module enables WP-eCommerce to use Mercado Pago as a payment Gateway for purchases made in your e-commerce store.
- * Author: Mercado Pago
- * Author URI: https://www.mercadopago.com.br/developers/
- * Developer: Andre Fuhrman (andrefuhrman@gmail.com) | Edited: Matias Gordon (matias.gordon@mercadolibre.com), Marcelo T. Hama (marcelo.hama@mercadolibre.com)
- * Copyright: Copyright(c) MercadoPago [http://www.mercadopago.com]
- * Version: 4.0.0
+ * Part of WPeComm Mercado Pago Module
+ * Author - Mercado Pago
+ * Developer - Andre Fuhrman (andrefuhrman@gmail.com) | Edited: Matias Gordon (matias.gordon@mercadolibre.com), Marcelo T. Hama (marcelo.hama@mercadolibre.com)
+ * Copyright - Copyright(c) MercadoPago [http://www.mercadopago.com]
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: wpecomm-mercadopago-module
  * Domain Path: /mercadopago-languages/
@@ -24,11 +20,7 @@ include_once "mercadopago-lib/MPApi.php";
 
 $nzshpcrt_gateways[$num] = array(
 	'name' =>  __( 'Mercado Pago Basic Checkout', 'wpecomm-mercadopago-module' ),
-	//'api_version' => 2.0,
-	//'image' => WPSC_URL . '/images/mercadopago.gif',
 	'class_name' => 'WPSC_Merchant_MercadoPago_Basic',
-	//'has_recurring_billing' => false,
-	//'wp_admin_cannot_cancel' => true,
 	'display_name' => __( 'Mercado Pago Basic Checkout', 'wpecomm-mercadopago-module' ),
 	'requirements' => array(
 		/// so that you can restrict merchant modules to PHP 5, if you use PHP 5 features
@@ -37,16 +29,11 @@ $nzshpcrt_gateways[$num] = array(
 		'extra_modules' => array()
 	),
 	'internalname' => 'WPSC_Merchant_MercadoPago_Basic',
-
 	// All array members below here are legacy, and use the code in mercadopago_multiple.php
 	'form' => 'form_mercadopago_basic',
 	'function' => 'function_mercadopago_basic',
 	'submit_function' => 'submit_mercadopago_basic',
-	'payment_type' => 'mercadopago',
-	/*'supported_currencies' => array(
-		'currency_list' =>  array( 'ARS', 'BRL', 'CLP', 'COP', 'MXN', 'PEN', 'VEF' ),
-		'option_name' => 'mercadopago_curcode'
-	)*/
+	'payment_type' => 'mercadopago'
 );
 
 class WPSC_Merchant_MercadoPago_Basic extends wpsc_merchant {
