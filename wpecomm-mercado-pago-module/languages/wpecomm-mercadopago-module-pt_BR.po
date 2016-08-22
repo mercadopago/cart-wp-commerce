@@ -1,0 +1,30 @@
+# Translation of WP e-Commerce in Portuguese (Brazil)
+# This file is distributed under the same license as the WP e-Commerce package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2012-06-12 10:51+1200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: GlotPress/0.1\n"
+"Project-Id-Version: WPeComm Mercado Pago Module\n"
+"POT-Creation-Date: \n"
+"Last-Translator: marcelo tomio hama <marcelo.hama@mercadolivre.com>\n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+
+msgid "This is the <strong>oficial</strong> module of Mercado Pago for WP-eCommerce plugin. This module enables WP-eCommerce to use Mercado Pago as a payment Gateway for purchases made in your e-commerce store."
+msgstr "Este é o módulo <strong>oficial</strong> do Mercado Pago para o plugin WP-eCommerce. Este módulo habilita o WP-eCommerce a usar o Mercado Pago como meio de pagamento para compras realizadas em sua loja virtual."
+
+msgid "WPeComm Mercado Pago Module depends on the last version of %s to execute!"
+msgstr "WPeComm Mercado Pago Module depende da última versão do %s para executar!"
+
+msgid "Basic Checkout"
+msgstr "Checkout Básico"
+
+msgid "Custom Checkout"
+msgstr "Checkout Transparente"
+
+msgid "Ticket"
+msgstr "Boleto"
