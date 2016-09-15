@@ -1,4 +1,4 @@
-# Translation of WP e-Commerce in Portuguese (Brazil)
+# Translation of WP e-Commerce
 # This file is distributed under the same license as the WP e-Commerce package.
 msgid ""
 msgstr ""
@@ -12,6 +12,12 @@ msgstr ""
 "POT-Creation-Date: \n"
 "Last-Translator: marcelo tomio hama <marcelo.hama@mercadolivre.com>\n"
 "Language-Team: \n"
+
+msgid "Mercado Pago - Basic Checkout"
+msgstr ""
+
+msgid "Mercado Pago - Credit Card"
+msgstr ""
 
 msgid "Mercado Pago Basic Checkout"
 msgstr ""
@@ -73,10 +79,10 @@ msgstr ""
 msgid "Checkout Options"
 msgstr ""
 
-msgid "Description"
+msgid "Resume Message"
 msgstr ""
 
-msgid "Description shown to the client in the checkout."
+msgid "Message shown to client in transaction resume."
 msgstr ""
 
 msgid "Define which type of products your store sells."
@@ -229,8 +235,188 @@ msgstr ""
 msgid "Thank you for your order. Proceed with your payment completing the following information."
 msgstr ""
 
-msgid "Pay with Mercado Pago"
+msgid "Your order has been made with Mercado Pago."
 msgstr ""
 
 msgid "An error occurred when proccessing your payment. Please try again or contact us for assistence."
+msgstr ""
+
+msgid "Public Key"
+msgstr ""
+
+msgid "Access Token"
+msgstr ""
+
+msgid "Insert your Mercado Pago Access Token."
+msgstr ""
+
+msgid "Insert your Mercado Pago Public Key."
+msgstr ""
+
+msgid "Binary Mode"
+msgstr ""
+
+msgid "When charging a credit card, only [approved] or [reject] status will be taken."
+msgstr ""
+
+msgid "Coupons"
+msgstr ""
+
+msgid "If there is a Mercado Pago campaign, allow your store to give discounts to customers."
+msgstr ""
+
+msgid "Statement Descriptor"
+msgstr ""
+
+msgid "The description that will be shown in your customer's invoice."
+msgstr ""
+
+msgid "Other Bank"
+msgstr ""
+
+msgid "Choose"
+msgstr ""
+
+msgid "Your Card"
+msgstr ""
+
+msgid "Other Cards"
+msgstr ""
+
+msgid "Other Card"
+msgstr ""
+
+msgid "ended in"
+msgstr ""
+
+msgid " as it appears in your card ..."
+msgstr ""
+
+msgid "Credit card number"
+msgstr ""
+
+msgid "Expiration month"
+msgstr ""
+
+msgid "Expiration year"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Month"
+msgstr ""
+
+msgid "Card holder name"
+msgstr ""
+
+msgid "Security code"
+msgstr ""
+
+msgid "Document Type"
+msgstr ""
+
+msgid "Document number"
+msgstr ""
+
+msgid "Issuer"
+msgstr ""
+
+msgid "Installments"
+msgstr ""
+
+msgid "Parameter cardNumber can not be null/empty"
+msgstr ""
+
+msgid "Invalid Card Number"
+msgstr ""
+
+msgid "Invalid Expiration Date"
+msgstr ""
+
+msgid "Parameter cardholderName can not be null/empty"
+msgstr ""
+
+msgid "Invalid Card Holder Name"
+msgstr ""
+
+msgid "Parameter securityCode can not be null/empty"
+msgstr ""
+
+msgid "Invalid Security Code"
+msgstr ""
+
+msgid "Parameter docType can not be null/empty"
+msgstr ""
+
+msgid "Invalid Document Type"
+msgstr ""
+
+msgid "Parameter docNumber can not be null/empty"
+msgstr ""
+
+msgid "Invalid Document Number"
+msgstr ""
+
+msgid "The parameter cardholder.document.subtype can not be null or empty"
+msgstr ""
+
+msgid "Invalid Document Sub Type"
+msgstr ""
+
+msgid "Parameter cardIssuerId can not be null/empty"
+msgstr ""
+
+msgid "Payment with converted currency"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid "Pay With Mercado Pago"
+msgstr ""
+
+msgid "Your payment failed to be processed.<br/>Are you sure you have set all information?"
+msgstr ""
+
+msgid "Your payment could not be completed. Please, try again."
+msgstr ""
+
+msgid "Return and Try Again"
+msgstr ""
+
+msgid "Payment <strong>approved</strong>."
+msgstr ""
+
+msgid "Your payment is under <strong>review</strong>."
+msgstr ""
+
+msgid "Your payment was <strong>refused</strong>."
+msgstr ""
+
+msgid "Your payment is <strong>pending</strong>."
+msgstr ""
+
+msgid "Your payment has been <strong>canceled</strong>."
+msgstr ""
+
+msgid "Your payment is in <strong>mediation</strong>."
+msgstr ""
+
+msgid "Your payment has been <strong>refunded</strong>."
+msgstr ""
+
+msgid "Please, select the ticket issuer of your preference."
+msgstr ""
+
+msgid "Click [Place order] button. The ticket will be generated and you will be redirected to print it."
+msgstr ""
+
+msgid "Important - The order will be confirmed only after the payment approval."
+msgstr ""
+
+msgid "Please, pay the ticket to get your order approved"
+msgstr ""
+
+msgid "Print the Ticket"
 msgstr ""
