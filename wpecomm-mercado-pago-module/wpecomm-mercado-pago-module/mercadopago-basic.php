@@ -4,8 +4,8 @@
  * Part of WPeComm Mercado Pago Module
  * Author - Mercado Pago
  * Developer - Andre Fuhrman (andrefuhrman@gmail.com) | Edited: Matias Gordon (matias.gordon@mercadolibre.com), Marcelo T. Hama (marcelo.hama@mercadolibre.com)
- * Copyright - Copyright(c) MercadoPago [http://www.mercadopago.com]
- * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
+ * Copyright - Copyright(c) MercadoPago [https://www.mercadopago.com]
+ * License: https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: wpecomm-mercadopago-module
  * Domain Path: /mercadopago-languages/
  */
@@ -16,12 +16,11 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 include_once "mercadopago-lib/mercadopago.php";
-include_once "mercadopago-lib/MPApi.php";
 
 $nzshpcrt_gateways[$num] = array(
-	'name' =>  __( 'Mercado Pago Basic Checkout', 'wpecomm-mercadopago-module' ),
+	'name' =>  __( 'Mercado Pago - Basic Checkout', 'wpecomm-mercadopago-module' ),
 	'class_name' => 'WPSC_Merchant_MercadoPago_Basic',
-	'display_name' => __( 'Mercado Pago Basic Checkout', 'wpecomm-mercadopago-module' ),
+	'display_name' => __( 'Mercado Pago - Basic Checkout', 'wpecomm-mercadopago-module' ),
 	'requirements' => array(
 		/// so that you can restrict merchant modules to PHP 5, if you use PHP 5 features
 		'php_version' => 5.6,
@@ -39,11 +38,11 @@ $nzshpcrt_gateways[$num] = array(
 class WPSC_Merchant_MercadoPago_Basic extends wpsc_merchant {
 
 	function __construct() {
-		add_action( 'init', array( $this, 'load_plugin_textdomain_mp' ) );
+		add_action( 'init', array( $this, 'load_plugin_textdomain_wpecomm' ) );
 	}
 
 	// Multi-language plugin
-	function load_plugin_textdomain_mp() {
+	function load_plugin_textdomain_wpecomm() {
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'wpecomm-mercadopago-module' );
 		load_textdomain(
 			'wpecomm-mercadopago-module',
@@ -64,10 +63,10 @@ function submit_mercadopago_basic() {
 	if (isset($_POST['mercadopago_certified_clientid'])) {
 		update_option('mercadopago_certified_clientid', trim($_POST['mercadopago_certified_clientid']));
 	}
-	if ($_POST['mercadopago_certified_clientsecret'] != null) {
+	if (isset($_POST['mercadopago_certified_clientsecret'])) {
 		update_option('mercadopago_certified_clientsecret', trim($_POST['mercadopago_certified_clientsecret']));
 	}
-	if ($_POST['mercadopago_certified_siteid'] != null) {
+	if (isset($_POST['mercadopago_certified_siteid'])) {
 		update_option('mercadopago_certified_siteid', trim($_POST['mercadopago_certified_siteid']));
 	}
 	// TODO: find a better way to pass translated fields to customer view
@@ -95,22 +94,22 @@ function submit_mercadopago_basic() {
 	if (isset($_POST['mercadopago_certified_url_pending'])) {
 		update_option('mercadopago_certified_url_pending', trim($_POST['mercadopago_certified_url_pending']));
 	}
-	if ($_POST['mercadopago_certified_istestuser'] != null) {
+	if (isset($_POST['mercadopago_certified_istestuser'])) {
 		update_option('mercadopago_certified_istestuser', trim($_POST['mercadopago_certified_istestuser']));
 	}
-	if ($_POST['mercadopago_certified_currencyratio'] != null) {
+	if (isset($_POST['mercadopago_certified_currencyratio'])) {
 		update_option('mercadopago_certified_currencyratio', trim($_POST['mercadopago_certified_currencyratio']));
 	}
-	if ($_POST['mercadopago_certified_description'] != null) {
+	if (isset($_POST['mercadopago_certified_description'])) {
 		update_option('mercadopago_certified_description', trim($_POST['mercadopago_certified_description']));
 	}
-	if ($_POST['mercadopago_certified_category'] != null) {
+	if (isset($_POST['mercadopago_certified_category'])) {
 		update_option('mercadopago_certified_category', trim($_POST['mercadopago_certified_category']));
 	}
-	if ($_POST['mercadopago_certified_invoiceprefix'] != null) {
+	if (isset($_POST['mercadopago_certified_invoiceprefix'])) {
 		update_option('mercadopago_certified_invoiceprefix', trim($_POST['mercadopago_certified_invoiceprefix']));
 	}
-	if ($_POST['mercadopago_certified_typecheckout'] != null) {
+	if (isset($_POST['mercadopago_certified_typecheckout'])) {
 		update_option('mercadopago_certified_typecheckout', trim($_POST['mercadopago_certified_typecheckout']));
 	}
 	if (isset($_POST['mercadopago_certified_iframewidth'])) {
@@ -119,13 +118,13 @@ function submit_mercadopago_basic() {
 	if (isset($_POST['mercadopago_certified_iframeheight'])) {
 		update_option('mercadopago_certified_iframeheight', trim($_POST['mercadopago_certified_iframeheight']));
 	}
-	if ($_POST['mercadopago_certified_autoreturn'] != null) {
+	if (isset($_POST['mercadopago_certified_autoreturn'])) {
 		update_option('mercadopago_certified_autoreturn', trim($_POST['mercadopago_certified_autoreturn']));
 	}
-	if ($_POST['mercadopago_certified_currencyconversion'] != null) {
+	if (isset($_POST['mercadopago_certified_currencyconversion'])) {
 		update_option('mercadopago_certified_currencyconversion', trim($_POST['mercadopago_certified_currencyconversion']));
 	}
-	if ($_POST['mercadopago_certified_maxinstallments'] != null) {
+	if (isset($_POST['mercadopago_certified_maxinstallments'])) {
 		update_option('mercadopago_certified_maxinstallments', trim($_POST['mercadopago_certified_maxinstallments']));
 	}
 	/*if (isset($_POST['mercadopago_certified_exmethods']) && isset($_POST['mercadopago_certified_paymentmethods'])) {
@@ -147,10 +146,10 @@ function submit_mercadopago_basic() {
 	} else {
 		update_option('mercadopago_certified_exmethods', '');
 	}
-	if ($_POST['mercadopago_certified_sandbox'] != null) {
+	if (isset($_POST['mercadopago_certified_sandbox'])) {
 		update_option('mercadopago_certified_sandbox', trim($_POST['mercadopago_certified_sandbox']));
 	}
-	if ($_POST['mercadopago_certified_debug'] != null) {
+	if (isset($_POST['mercadopago_certified_debug'])) {
 		update_option('mercadopago_certified_debug', trim($_POST['mercadopago_certified_debug']));
 	}
 	return true;
@@ -219,13 +218,13 @@ function form_mercadopago_basic() {
 	}
 
 	$api_secret_locale = sprintf(
-		'<a href="https://www.mercadopago.com/mla/account/credentials?type=custom" target="_blank">%s</a>, ' .
-		'<a href="https://www.mercadopago.com/mlb/account/credentials?type=custom" target="_blank">%s</a>, ' .
-		'<a href="https://www.mercadopago.com/mlc/account/credentials?type=custom" target="_blank">%s</a>, ' .
-		'<a href="https://www.mercadopago.com/mco/account/credentials?type=custom" target="_blank">%s</a>, ' .
-		'<a href="https://www.mercadopago.com/mlm/account/credentials?type=custom" target="_blank">%s</a>, ' .
-		'<a href="https://www.mercadopago.com/mpe/account/credentials?type=custom" target="_blank">%s</a> %s ' .
-		'<a href="https://www.mercadopago.com/mlv/account/credentials?type=custom" target="_blank">%s</a>',
+		'<a href="https://www.mercadopago.com/mla/account/credentials?type=basic" target="_blank">%s</a>, ' .
+		'<a href="https://www.mercadopago.com/mlb/account/credentials?type=basic" target="_blank">%s</a>, ' .
+		'<a href="https://www.mercadopago.com/mlc/account/credentials?type=basic" target="_blank">%s</a>, ' .
+		'<a href="https://www.mercadopago.com/mco/account/credentials?type=basic" target="_blank">%s</a>, ' .
+		'<a href="https://www.mercadopago.com/mlm/account/credentials?type=basic" target="_blank">%s</a>, ' .
+		'<a href="https://www.mercadopago.com/mpe/account/credentials?type=basic" target="_blank">%s</a> %s ' .
+		'<a href="https://www.mercadopago.com/mlv/account/credentials?type=basic" target="_blank">%s</a>',
 		__( 'Argentine', 'wpecomm-mercadopago-module' ),
 		__( 'Brazil', 'wpecomm-mercadopago-module' ),
 		__( 'Chile', 'wpecomm-mercadopago-module' ),
@@ -515,6 +514,10 @@ function function_mercadopago_basic($seperator, $sessionid) {
 	foreach ((array)$userinfo as $key => $value){
 		$arr_info[$value['unique_name']] = $value['value'];
 	}
+	// site id
+	$site_id = get_option('mercadopago_certified_siteid', 'MLA');
+   if ( empty($site_id) || $site_id == null )
+      $site_id = 'MLA';
 
 	// Using a string to register each item (this is a workaround to deal with API problem that shows only first item)
 	$list_of_items = array();
@@ -553,7 +556,7 @@ function function_mercadopago_basic($seperator, $sessionid) {
 						(float)get_option('mercadopago_certified_currencyratio') > 0 ?
 						(float)get_option('mercadopago_certified_currencyratio') : 1
 					),
-					'currency_id' => getCurrencyId(get_option('mercadopago_certified_siteid'))
+					'currency_id' => getCurrencyId($site_id)
 				));
 			}
 		}
@@ -569,7 +572,7 @@ function function_mercadopago_basic($seperator, $sessionid) {
 				(float)get_option('mercadopago_certified_currencyratio') > 0 ?
 				(float)get_option('mercadopago_certified_currencyratio') : 1
 			),
-			'currency_id' => getCurrencyId(get_option('mercadopago_certified_siteid'))
+			'currency_id' => getCurrencyId($site_id)
 		));
 		$ship_cost = (
 			((float)($wpsc_cart->base_shipping)+(float)($wpsc_cart->total_item_shipping))
@@ -586,7 +589,7 @@ function function_mercadopago_basic($seperator, $sessionid) {
 				'category_id' => get_option('mercadopago_certified_category'),
 				'quantity' => 1,
 				'unit_price' => $ship_cost,
-				'currency_id' => getCurrencyId(get_option('mercadopago_certified_siteid'))
+				'currency_id' => getCurrencyId($site_id)
 			));
 		}
 		// Using a string to register each item (this is a workaround to deal with API problem that shows only first item)
@@ -639,9 +642,15 @@ function function_mercadopago_basic($seperator, $sessionid) {
 			)
 		),
 		'back_urls' => array(
-			'success' => workaroundAmperSandBug( esc_url( get_site_url() ) ),
-			'failure' => workaroundAmperSandBug( esc_url( get_site_url() ) ),
-			'pending' => workaroundAmperSandBug( esc_url( get_site_url() ) )
+			'success' => workaroundAmperSandBug( esc_url( add_query_arg(
+				'sessionid', $sessionid, get_option( 'transact_url' )
+			) ) ),
+			'failure' => workaroundAmperSandBug( esc_url( add_query_arg(
+				'sessionid', $sessionid, get_option( 'transact_url' )
+			) ) ),
+			'pending' => workaroundAmperSandBug( esc_url( add_query_arg(
+				'sessionid', $sessionid, get_option( 'transact_url' )
+			) ) )
 		),
 		//'marketplace' =>
     //'marketplace_fee' =>
@@ -674,7 +683,7 @@ function function_mercadopago_basic($seperator, $sessionid) {
   }
 	// Set sponsor ID
 	if ( get_option('mercadopago_certified_istestuser') == "no" ) {
-		switch (get_option('mercadopago_certified_siteid')) {
+		switch ($site_id) {
 			case 'MLA':
 				$sponsor_id = 219693774;
 				break;
@@ -717,11 +726,11 @@ function function_mercadopago_basic($seperator, $sessionid) {
 		);
 	}
 
-	process_payment($preferences, $wpsc_cart);
+	process_payment_wpecomm_mp_basic($preferences, $wpsc_cart);
 
 }
 
-function process_payment($preferences, $wpsc_cart) {
+function process_payment_wpecomm_mp_basic($preferences, $wpsc_cart) {
 
 	$mp = new MP(
 		get_option('mercadopago_certified_clientid'),
@@ -738,79 +747,80 @@ function process_payment($preferences, $wpsc_cart) {
 		} else {
 			$link = $preferenceResult['response']['init_point'];
 		}
+		$site_id = get_option('mercadopago_certified_siteid', 'MLA');
+		if ( empty($site_id) || $site_id == null )
+      	$site_id = 'MLA';
+      // build payment banner url
+		$banners_mercadopago_standard = array(
+		  	"MLA" => 'MLA/standard.jpg',
+		  	"MLB" => 'MLB/standard.jpg',
+		  	"MCO" => 'MCO/standard.jpg',
+		  	"MLC" => 'MLC/standard.gif',
+			"MPE" => 'MPE/standard.png',
+	    	"MLV" => 'MLV/standard.jpg',
+	    	"MLM" => 'MLM/standard.jpg'
+  		);
+		$html =
+			'<img alt="Mercado Pago" title="Mercado Pago" width="468" height="60" src="' .
+			plugins_url( 'wpsc-merchants/mercadopago-images/' . $banners_mercadopago_standard[$site_id],
+				plugin_dir_path( __FILE__ ) ) . '">';
+		if ($link) {
+			// build payment button html code
+			switch (get_option('mercadopago_certified_typecheckout')) {
+				case "Redirect":
+					// we don't need to build the payment page, as it is a redirection to Mercado Pago
+					header("location: " . $link);
+					break;
+				case "Iframe":
+					$html .= '<p></p><p>' . wordwrap(
+						get_option('mercadopago_certified_checkoutmessage4'),
+						60, '<br>' ) . '</p>';
+					$html .=
+						'<iframe src="' . $link . '" name="MP-Checkout" ' .
+						'width="' . ( is_numeric( (int)
+							get_option('mercadopago_certified_iframewidth') ) ?
+							get_option('mercadopago_certified_iframewidth') : 640 ) . '" ' .
+						'height="' . ( is_numeric( (int)
+							get_option('mercadopago_certified_iframeheight') ) ?
+							get_option('mercadopago_certified_iframeheight') : 800 ) . '" ' .
+						'frameborder="0" scrolling="no" id="checkout_mercadopago"></iframe>';
+					break;
+				case "Lightbox": default:
+						$html .= '<p></p>';
+						$html .=
+							'<a id="mp-btn" href="' . $link . '" name="MP-Checkout" class="button alt" mp-mode="modal">' .
+							get_option('mercadopago_certified_checkoutmessage5') .
+							'</a> ';
+						$html .=
+							'<script type="text/javascript">(function(){function $MPBR_load(){window.$MPBR_loaded !== true && (function(){var s = document.createElement("script");s.type = "text/javascript";s.async = true;s.src = ("https:"==document.location.protocol?"https://www.mercadopago.com/org-img/jsapi/mptools/buttons/":"https://mp-tools.mlstatic.com/buttons/")+"render.js";var x = document.getElementsByTagName("script")[0];x.parentNode.insertBefore(s, x);window.$MPBR_loaded = true;})();}window.$MPBR_loaded !== true ? (window.attachEvent ? window.attachEvent("onload", $MPBR_load) : window.addEventListener("load", $MPBR_load, false)) : null;})();</script>';
+						$html .=
+							'<style>#mp-btn {background-color: #009ee3; border: 1px solid #009ee3; border-radius: 4px;
+								color: #fff; display: inline-block; font-family: Arial,sans-serif; font-size: 18px;
+								font-weight: normal; margin: 0; padding: 10px; text-align: center; width: 50%;}
+							</style>';
+					break;
+			}
+		} else {
+			$html = '<p>' . get_option('mercadopago_certified_checkoutmessage6') . '</p>';
+		}
+		// show page
+		get_header();
+		$page = '<div style="position: relative; margin: 20px 0;" >';
+			$page .= '<div style="margin: 0 auto; width: 1080px; ">';
+				$page .= '<h3>' . get_option('mercadopago_certified_checkoutmessage3') . '</h3>';
+				$page .= $html;
+			$page .= '</div>';
+		$page .= '</div>';
+		echo $page;
+		get_footer();
+		exit;
 	} else {
 		// TODO: create a better user feedback...
+		get_header();
 		echo "Error: " . $preferenceResult['status'];
+		get_footer();
+		exit();
 	}
-
-	// build payment banner url
-	$banners_mercadopago_standard = array(
-	  "MLA" => 'MLA/standard.jpg',
-	  "MLB" => 'MLB/standard.jpg',
-	  "MCO" => 'MCO/standard.jpg',
-	  "MLC" => 'MLC/standard.gif',
-		"MPE" => 'MPE/standard.png',
-    "MLV" => 'MLV/standard.jpg',
-    "MLM" => 'MLM/standard.jpg'
-  );
-  $html =
-		'<img alt="Mercado Pago" title="Mercado Pago" width="468" height="60" src="' .
-		plugins_url( 'wpsc-merchants/mercadopago-images/' . $banners_mercadopago_standard[get_option('mercadopago_certified_siteid')], plugin_dir_path( __FILE__ ) ) . '">';
-
-	if ($link) {
-		// build payment button html code
-		switch (get_option('mercadopago_certified_typecheckout')) {
-			case "Redirect":
-				// we don't need to build the payment page, as it is a redirection to Mercado Pago
-				header("location: " . $link);
-				break;
-			case "Iframe":
-				$html .= '<p></p><p>' . wordwrap(
-					get_option('mercadopago_certified_checkoutmessage4'),
-					60, '<br>' ) . '</p>';
-				$html .=
-					'<iframe src="' . $link . '" name="MP-Checkout" ' .
-					'width="' . ( is_numeric( (int)
-						get_option('mercadopago_certified_iframewidth') ) ?
-						get_option('mercadopago_certified_iframewidth') : 640 ) . '" ' .
-					'height="' . ( is_numeric( (int)
-						get_option('mercadopago_certified_iframeheight') ) ?
-						get_option('mercadopago_certified_iframeheight') : 800 ) . '" ' .
-					'frameborder="0" scrolling="no" id="checkout_mercadopago"></iframe>';
-				break;
-			case "Lightbox": default:
-					$html .= '<p></p>';
-					$html .=
-						'<a id="mp-btn" href="' . $link . '" name="MP-Checkout" class="button alt" mp-mode="modal">' .
-						get_option('mercadopago_certified_checkoutmessage5') .
-						'</a> ';
-					$html .=
-						'<script type="text/javascript">(function(){function $MPBR_load(){window.$MPBR_loaded !== true && (function(){var s = document.createElement("script");s.type = "text/javascript";s.async = true;s.src = ("https:"==document.location.protocol?"https://www.mercadopago.com/org-img/jsapi/mptools/buttons/":"http://mp-tools.mlstatic.com/buttons/")+"render.js";var x = document.getElementsByTagName("script")[0];x.parentNode.insertBefore(s, x);window.$MPBR_loaded = true;})();}window.$MPBR_loaded !== true ? (window.attachEvent ? window.attachEvent("onload", $MPBR_load) : window.addEventListener("load", $MPBR_load, false)) : null;})();</script>';
-					$html .=
-						'<style>#mp-btn {background-color: #009ee3; border: 1px solid #009ee3; border-radius: 4px;
-							color: #fff; display: inline-block; font-family: Arial,sans-serif; font-size: 18px;
-							font-weight: normal; margin: 0; padding: 10px; text-align: center; width: 50%;}
-						</style>';
-				break;
-		}
-	} else {
-		$html =
-			'<p>' . get_option('mercadopago_certified_checkoutmessage6') . '</p>';
-	}
-
-	// show page
-	get_header();
-	$page = '<div style="position: relative; margin: 20px 0;" >';
-		$page .= '<div style="margin: 0 auto; width: 1080px; ">';
-			$page .= '<h3>' . get_option('mercadopago_certified_checkoutmessage3') . '</h3>';
-			$page .= $html;
-		$page .= '</div>';
-	$page .= '</div>';
-	echo $page;
-	get_footer();
-
-	exit;
-
 }
 
 /*===============================================================================
@@ -933,8 +943,8 @@ function category() {
 	$category = get_option('mercadopago_certified_category');
 	$category = $category === false || is_null($category) ? "others" : $category;
 	// category marketplace
-	$mp = new MPApi();
-	$list_category = $mp->getCategories();
+	$list_category = MPRestClient::get( array( "uri" => "/item_categories" ) );
+	$list_category = $list_category["response"];
 	$select_category = '<select name="mercadopago_certified_category" id="category" style="max-width:600px;>';
 	foreach ($list_category as $category_arr) :
 		$selected = "";
@@ -1036,12 +1046,12 @@ function validateCredentials($client_id, $client_secret) {
 		try {
 			$mp = new MP($client_id, $client_secret);
 			$result['access_token'] = $mp->get_access_token();
-			$mpApi = new MPApi();
-			$get_request = $mpApi->getMe($result['access_token']);
+			$get_request = $mp->get( "/users/me?access_token=" . $result['access_token'] );
 			if (isset($get_request['response']['site_id'])) {
 				$result['is_test_user'] = in_array('test_user', $get_request['response']['tags']) ? "yes" : "no";
 				$result['site_id'] = $get_request['response']['site_id'];
-				$payment_methods = $mpApi->getPaymentMethods($result['site_id']);
+				$payment_methods = $mp->get( "/v1/payment_methods/?access_token=" . $result['access_token'] );
+				$payment_methods = $payment_methods["response"];
 				$arr = array();
 				foreach ($payment_methods as $payment) {
 					$arr[] = $payment['id'];
@@ -1049,10 +1059,25 @@ function validateCredentials($client_id, $client_secret) {
 				$result['payment_methods'] = $payment_methods;
 				$result['all_payment_methods'] = implode(",", $arr);
 				// check for auto converstion of currency
-				$result['currency_ratio'] = $mpApi->getCurrencyRatio(
-					WPSC_Countries::get_currency_code(absint(get_option('currency_type'))),
-					getCurrencyId($result['site_id'])
-				);
+				$result['currency_ratio'] = -1;
+				if ( get_option('mercadopago_certified_currencyconversion') == "active" ) {
+					$currency_obj = MPRestClient::get_ml( array( "uri" =>
+						"/currency_conversions/search?from=" .
+						WPSC_Countries::get_currency_code(absint(get_option('currency_type'))) .
+						"&to=" .
+						getCurrencyId( $result['site_id'] )
+					) );
+					if ( isset( $currency_obj[ 'response' ] ) ) {
+						$currency_obj = $currency_obj[ 'response' ];
+						if ( isset( $currency_obj['ratio'] ) ) {
+							$result['currency_ratio'] = (float) $currency_obj['ratio'];
+						} else {
+							$result['currency_ratio'] = -1;
+						}
+					} else {
+						$result['currency_ratio'] = -1;
+					}
+				}
 				$result['is_valid'] = true;
 				return $result;
 			} else {
