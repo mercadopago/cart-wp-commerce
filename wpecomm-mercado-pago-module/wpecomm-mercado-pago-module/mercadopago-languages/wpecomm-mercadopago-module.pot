@@ -420,21 +420,3 @@ msgstr ""
 
 msgid "Print the Ticket"
 msgstr ""
-
-msgid "Payment Methods"
-msgstr ""
-
-msgid "Select the payment methods that you want to receive with Mercado Pago."
-msgstr ""
-
-msgid "Two Cards Mode"
-msgstr ""
-
-msgid "Payments with Two Cards"
-msgstr ""
-
-msgid "Your customer will be able to use two different cards to pay the order."
-msgstr ""
-
-msgid "Your Mercado Pago credentials Access Token appears to be misconfigured."
-msgstr ""

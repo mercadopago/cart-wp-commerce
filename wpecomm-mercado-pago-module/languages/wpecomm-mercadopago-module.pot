@@ -27,9 +27,3 @@ msgstr ""
 
 msgid "Ticket"
 msgstr ""
-
-msgid "Rate Us"
-msgstr ""
-
-msgid "Report Issue"
-msgstr ""
