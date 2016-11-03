@@ -28,3 +28,9 @@ msgstr "Checkout Customizado"
 
 msgid "Ticket"
 msgstr "Ticket"
+
+msgid "Rate Us"
+msgstr "Calificar"
+
+msgid "Report Issue"
+msgstr "Informar Problema"

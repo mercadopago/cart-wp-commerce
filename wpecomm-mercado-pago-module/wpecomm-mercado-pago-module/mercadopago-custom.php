@@ -778,14 +778,12 @@ function form_mercadopago_custom() {
    // send output to generate settings page
    $output = "
       <tr>
-         <td></td>
-         <td><h3><strong>" . __('Mercado Pago Credentials', 'wpecomm-mercadopago-module' ) . "</strong></h3></td>
-      </tr>
-      <tr>
          <td>
             <img width='200' height='52' src='" .
-               plugins_url( 'wpsc-merchants/mercadopago-images/mplogo.png', plugin_dir_path( __FILE__ ) ) .
-            "'>
+            plugins_url(
+               'wpsc-merchants/mercadopago-images/mplogo.png',
+               plugin_dir_path( __FILE__ )
+            ) . "'>
          </td>
          <td>
             <input type='hidden' size='60' value='" . $result['site_id'] . "' name='mercadopago_custom_siteid' />
@@ -794,11 +792,7 @@ function form_mercadopago_custom() {
                "' name='mercadopago_custom_checkoutmessage1' />
             <input type='hidden' size='60' value='" . $result['is_test_user'] . "' name='mercadopago_custom_istestuser' />
             <input type='hidden' size='60' value='" . $result['currency_ratio'] . "' name='mercadopago_custom_currencyratio' />
-            <p><a href='https://wordpress.org/support/view/plugin-reviews/wpecomm-mercado-pago-module?filter=5#postform' target='_blank' class='button button-primary'>" . sprintf(
-                  __( 'Please, rate us %s on WordPress.org and give your feedback to help improve this module!', 'wpecomm-mercadopago-module' ),
-                  '&#9733;&#9733;&#9733;&#9733;&#9733;'
-                  ) . "
-            </a></p><br>
+            <strong>" . __('Mercado Pago Credentials', 'wpecomm-mercadopago-module' ) . "</strong>
             <p class='description'>" .
                sprintf( '%s', $credentials_message ) . '<br>' . sprintf(
                   __( 'You can obtain your credentials for', 'wpecomm-mercadopago-module' ) . ' %s.',

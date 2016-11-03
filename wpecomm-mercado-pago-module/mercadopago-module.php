@@ -8,7 +8,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo T. Hama (marcelo.hama@mercadolibre.com)
  * Copyright: Copyright(c) MercadoPago [https://www.mercadopago.com]
- * Version: 4.2.0
+ * Version: 4.2.1
  * License: https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: wpecomm-mercadopago-module
  * Domain Path: /languages/
@@ -150,23 +150,35 @@ class WPeComm_MercadoPago_Module {
 
 add_action( 'plugins_loaded', array( 'WPeComm_MercadoPago_Module', 'initMercadoPagoGatewayClass' ), 0 );
 
-// Add settings link on plugin page
+// Add settings link on plugin page.
 function wpecomm_mercadopago_settings_link( $links ) {
+
+  $option_page = 'options-general.php?page=wpsc-settings&tab=gateway&payment_gateway_id=';
   $plugin_links = array();
+
   $plugin_links[] = '<a href="' . esc_url( admin_url(
-    'options-general.php?page=wpsc-settings&tab=gateway&payment_gateway_id=WPSC_Merchant_MercadoPago_Basic' ) ) . '">' .
-    __( 'Basic Checkout', 'wpecomm-mercadopago-module' ) .
-  '</a>';
+    $option_page . 'WPSC_Merchant_MercadoPago_Basic' ) ) . '">' .
+    __( 'Basic Checkout', 'wpecomm-mercadopago-module' ) . '</a>';
   $plugin_links[] = '<a href="' . esc_url( admin_url(
-    'options-general.php?page=wpsc-settings&tab=gateway&payment_gateway_id=WPSC_Merchant_MercadoPago_Custom' ) ) . '">' .
-    __( 'Custom Checkout', 'wpecomm-mercadopago-module' ) .
-  '</a>';
+    $option_page . 'WPSC_Merchant_MercadoPago_Custom' ) ) . '">' .
+    __( 'Custom Checkout', 'wpecomm-mercadopago-module' ) . '</a>';
   $plugin_links[] = '<a href="' . esc_url( admin_url(
-    'options-general.php?page=wpsc-settings&tab=gateway&payment_gateway_id=WPSC_Merchant_MercadoPago_Ticket' ) ) . '">' .
-    __( 'Ticket', 'wpecomm-mercadopago-module' ) .
-  '</a>';
+    $option_page . 'WPSC_Merchant_MercadoPago_Ticket' ) ) . '">' .
+    __( 'Ticket', 'wpecomm-mercadopago-module' ) . '</a>';
+
+  $plugin_links[] = '<br><a target="_blank" href="' .
+    'https://wordpress.org/support/view/plugin-reviews/wpecomm-mercado-pago-module?filter=5#postform">' .
+    sprintf(
+      __( 'Rate Us', 'wpecomm-mercadopago-module' ) . ' %s', '&#9733;&#9733;&#9733;&#9733;&#9733;'
+    ) . '</a>';
+  $plugin_links[] = '<a target="_blank" href="' .
+    'https://wordpress.org/support/plugin/wpecomm-mercado-pago-module#postform">' .
+    __( 'Report Issue', 'wpecomm-mercadopago-module' ) . '</a>';
+
   return array_merge( $plugin_links, $links );
+
 }
+
 $plugin = plugin_basename( __FILE__ );
 add_filter( "plugin_action_links_$plugin", 'wpecomm_mercadopago_settings_link' );
 
