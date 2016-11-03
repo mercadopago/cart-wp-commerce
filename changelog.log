@@ -1,16 +1,26 @@
 CHANGELOG:
 
+= v4.2.1 (04/11/2016) =
+* Features
+	- Two Card Payment Configuration. Merchants can configure this feature in back-office through settings page.
+* Improvements
+	- Removed some redundant notice messages;
+	- Improved algorithm to process settings page flow and checkout;
+	- Refactored code to meet WordPress coding standards.
+* Bug fixes
+	- Fixed a SSL issue related to ticket solution (the open locker) in gateway selection.
+
 = v4.2.0 (14/09/2016) =
 * Features
 	- Custom Checkout for LatAm. Offer a checkout fully customized to your brand experience with our simple-to-use payments API. Want to see how it works on-the-fly? Please check this video: <a href="TODO">Custom Checkout + Customer Cards</a>;
 	- Ticket for LatAm. Now, customer can pay orders with bank tickets. Want to see how it works on-the-fly? Please check this video: <a href="TODO">Tickets</a>.
 * Improvements
 	- Several little improvements for Basic Checkout.
-		
+
 = v4.1.0 (22/08/2016) =
 * Improvements
 	- Wrapped the module as an WordPress Plugin Directory.
-	
+
 = v4.0.0 (20/08/2016) =
 * Features
 	- LatAm Basic Checkout support. Great for merchants who want to get going quickly and easily. This is the basic payment integration with Mercado Pago. Want to see how it works on-the-fly? Please check this video: <a href="https://www.youtube.com/watch?v=DgOsX1eXjBU">Standard Checkout</a>

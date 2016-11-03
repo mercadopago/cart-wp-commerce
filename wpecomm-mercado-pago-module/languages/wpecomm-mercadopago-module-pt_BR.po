@@ -28,3 +28,9 @@ msgstr "Checkout Transparente"
 
 msgid "Ticket"
 msgstr "Boleto"
+
+msgid "Rate Us"
+msgstr "Avalie"
+
+msgid "Report Issue"
+msgstr "Informar Problema"
