@@ -426,7 +426,7 @@ msgid "Payment Methods"
 msgstr "Medios de Pago"
 
 msgid "Select the payment methods that you want to receive with Mercado Pago."
-msgstr "Selecione los medios de pago que desea aceptar con Mercado Pago."
+msgstr "Seleccione los medios de pago que desea aceptar con Mercado Pago."
 
 msgid "Two Cards Mode"
 msgstr "Modo de Dos Tarjetas"
