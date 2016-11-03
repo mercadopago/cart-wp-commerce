@@ -75,7 +75,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
   <thead>
   <tbody>
     <tr>
-      <td>v4.2.0</td>
+      <td>v4.2.1</td>
       <td>Stable (Current version)</td>
       <td>WPeCommerce 3.11.x or greater</td>
     </tr>
@@ -99,7 +99,7 @@ You have two ways to install this module: from your WordPress Store, or by downl
 
 **Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.0.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.1.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "wpecomm-mercado-pago-module" directory;
 
@@ -119,7 +119,7 @@ On your store administration, go to *Settings > Store > Payments* tab. Click in 
 1. **Solution Header**: This part is the header, where you can enable/disable the solution;
 
 	*Display Name*: This is the title of the payment option that will be shown to your customers.
-	
+
 2. **Mercado Pago Credentials**: In this part, you should configure your credentials *Client_id* and *Client_secret*;
 
 	Remember that you can obtain your *Client_id* and *Client_secret*, accordingly to your country, in the following links:
@@ -165,7 +165,7 @@ On your store administration, go to *Settings > Store > Payments* tab. Click in 
 1. **Solution Header**: This part is the header, where you can enable/disable the solution;
 
 	*Display Name*: This is the title of the payment option that will be shown to your customers.
-	
+
 2. **Mercado Pago Credentials**: In this part, you should configure your credentials *Public Key* and *Access Token*;
 
 	Remember that you can obtain your *Public Key* and *Access Token*, accordingly to your country, in the following links:
@@ -190,7 +190,7 @@ On your store administration, go to *Settings > Store > Payments* tab. Click in 
 4. **Payment Options**: This part allows you to configure how payment is made.
 
 	*Currency Conversion*: Let merchants try to convert unsupported currency into Mercado Pago supported currency.
-	
+
 5. **Test and Debug Options**: This part allows you to configure debug and test features.
 
 	*Mercado Pago Sandbox*: Test your payments in Mercado Pago sandbox environment;<br />
@@ -225,7 +225,7 @@ On your store administration, go to *Settings > Store > Payments* tab. Click in 
 	*Store Identificator*: A prefix to identify your store, when you have multiple stores for only one Mercado Pago account;<br />
 	*URL Approved Payment*: This is the URL where the customer is redirected if his payment is approved;<br />
 	*URL Pending Payment*: This is the URL where the customer is redirected if his payment is in process.
-	
+
 4. **Payment Options**: This part allows you to configure how payment is made.
 
 	*Currency Conversion*: Let merchants try to convert unsupported currency into Mercado Pago supported currency.
@@ -233,7 +233,7 @@ On your store administration, go to *Settings > Store > Payments* tab. Click in 
 5. **Test and Debug Options**: This part allows you to configure debug and test features.
 
 	*Debug and Log*: Enables/disables system logs.
-		
+
 <a name="upgrade"></a>
 ##Upgrade Mercado Pago Plugin##
 
@@ -249,7 +249,7 @@ If you already had installed a previous version of WPeComm Mercado Pago Module, 
 
 **Upgrade with Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.0.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.1.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "wpecomm-mercado-pago-module" directory;
 

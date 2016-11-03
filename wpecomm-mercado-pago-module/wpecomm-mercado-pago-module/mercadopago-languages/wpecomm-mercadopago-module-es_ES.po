@@ -421,3 +421,21 @@ msgstr "Por favor, realice el pago del ticket para tener su orden aprobada."
 
 msgid "Print the Ticket"
 msgstr "Imprimir el ticket"
+
+msgid "Payment Methods"
+msgstr "Medios de Pago"
+
+msgid "Select the payment methods that you want to receive with Mercado Pago."
+msgstr "Seleccione los medios de pago que desea aceptar con Mercado Pago."
+
+msgid "Two Cards Mode"
+msgstr "Modo de Dos Tarjetas"
+
+msgid "Payments with Two Cards"
+msgstr "Pagos con Dos Tarjetas"
+
+msgid "Your customer will be able to use two different cards to pay the order."
+msgstr "Su cliente será capaz de utilizar dos tarjetas diferentes para pagar el pedido."
+
+msgid "Your Mercado Pago credentials Access Token appears to be misconfigured."
+msgstr "Las credenciales de Mercado Pago Access Token parece estar mal configurado."

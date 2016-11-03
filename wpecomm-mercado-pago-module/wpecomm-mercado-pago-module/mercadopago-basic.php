@@ -127,7 +127,7 @@ function submit_mercadopago_basic() {
 	if (isset($_POST['mercadopago_certified_maxinstallments'])) {
 		update_option('mercadopago_certified_maxinstallments', trim($_POST['mercadopago_certified_maxinstallments']));
 	}
-	/*if (isset($_POST['mercadopago_certified_exmethods']) && isset($_POST['mercadopago_certified_paymentmethods'])) {
+	if (isset($_POST['mercadopago_certified_exmethods']) && isset($_POST['mercadopago_certified_paymentmethods'])) {
 		$paymentmethods = explode(",", $_POST['mercadopago_certified_paymentmethods']);
 		$methods = $_POST['mercadopago_certified_exmethods'];
 		if (!in_array('account_money', $methods)) {
@@ -139,12 +139,20 @@ function submit_mercadopago_basic() {
 	} else {
 		update_option('mercadopago_certified_exmethods', '');
 		update_option('mercadopago_certified_paymentmethods', '');
-	}*/
-	if (isset($_POST['mercadopago_certified_exmethods'])) {
+	}
+	/*if (isset($_POST['mercadopago_certified_exmethods'])) {
 		$methods = implode(",", $_POST['mercadopago_certified_exmethods']);
 		update_option('mercadopago_certified_exmethods', $methods);
 	} else {
 		update_option('mercadopago_certified_exmethods', '');
+	}*/
+	if ( ! empty( $_POST['mercadopago_certified_twocards'] ) ) {
+		$mp = new MP(
+			get_option( 'mercadopago_certified_clientid' ),
+			get_option( 'mercadopago_certified_clientsecret' )
+		);
+		$payment_split_mode = trim( $_POST['mercadopago_certified_twocards'] );
+		$response = $mp->set_two_cards_mode( $payment_split_mode );
 	}
 	if (isset($_POST['mercadopago_certified_sandbox'])) {
 		update_option('mercadopago_certified_sandbox', trim($_POST['mercadopago_certified_sandbox']));
@@ -280,14 +288,12 @@ function form_mercadopago_basic() {
 	// send output to generate settings page
 	$output = "
 	<tr>
-		<td></td>
-		<td><h3><strong>" . __('Mercado Pago Credentials', 'wpecomm-mercadopago-module' ) . "</strong></h3></td>
-	</tr>
-	<tr>
 		<td>
 			<img width='200' height='52' src='" .
-				plugins_url( 'wpsc-merchants/mercadopago-images/mplogo.png', plugin_dir_path( __FILE__ ) ) .
-			"'>
+			plugins_url(
+				'wpsc-merchants/mercadopago-images/mplogo.png',
+				plugin_dir_path( __FILE__ )
+			) . "'>
 		</td>
 		<td>
 			<input type='hidden' size='60' value='" . $result['site_id'] . "' name='mercadopago_certified_siteid' />
@@ -312,16 +318,14 @@ function form_mercadopago_basic() {
 				"' name='mercadopago_certified_checkoutmessage6' />
 			<input type='hidden' size='60' value='" . $result['is_test_user'] . "' name='mercadopago_certified_istestuser' />
 			<input type='hidden' size='60' value='" . $result['currency_ratio'] . "' name='mercadopago_certified_currencyratio' />
-			<p><a href='https://wordpress.org/support/view/plugin-reviews/wpecomm-mercado-pago-module?filter=5#postform' target='_blank' class='button button-primary'>" . sprintf(
-					__( 'Please, rate us %s on WordPress.org and give your feedback to help improve this module!', 'wpecomm-mercadopago-module' ),
-					'&#9733;&#9733;&#9733;&#9733;&#9733;'
-					) . "
-			</a></p><br>
+			<strong>" . __( 'Mercado Pago Credentials', 'wpecomm-mercadopago-module' ) . "</strong>
 			<p class='description'>" .
-				sprintf( '%s', $credentials_message ) . '<br>' . sprintf(
-					__( 'You can obtain your credentials for', 'wpecomm-mercadopago-module' ) . ' %s.',
-					$api_secret_locale ) . "
-			</p>
+				sprintf( '%s', $credentials_message ) . "<br>" .
+				sprintf(
+					__( 'You can obtain your credentials for', 'wpecomm-mercadopago-module' ) . " %s.",
+					$api_secret_locale
+				) .
+			"</p>
 		</td>
 	</tr>
 	<tr>
@@ -454,9 +458,20 @@ function form_mercadopago_basic() {
 		</td>
 	</tr>
 	<tr>
-		<td>" . __('Exclude Payment Methods', 'wpecomm-mercadopago-module') . "</td>
+		<td>" . __('Payment Methods', 'wpecomm-mercadopago-module') . "</td>
 		<td>" .
 			methods($result['payment_methods']) . "
+		</td>
+	</tr>
+	<tr>
+		<td>" . __( 'Two Cards Mode', 'wpecomm-mercadopago-module' ) . "</td>
+		<td>" .
+			"<select name='mercadopago_certified_twocards' id='auto_return'>" .
+				payment_split_mode( $result['payment_split_mode'] ) .
+			"</select>
+			<p class='description'>" .
+				__( 'Your customer will be able to use two different cards to pay the order.', 'wpecomm-mercadopago-module' ) .
+			"</p>
 		</td>
 	</tr>
 	<tr>
@@ -834,29 +849,29 @@ function methods($methods = null) {
 		foreach ($methods as $method) :
 			if ($method['id'] != 'account_money') {
 				$icon = '<img height="12" src="' . $method['secure_thumbnail'] . '">';
-				/*if ($activemethods != null && in_array($method['id'], $activemethods)) {
-					$showmethods .=
-						'<input name="mercadopago_certified_exmethods[]" type="checkbox" value="' .
-						$method['id'] . '"> ' . $icon . " (" . $method['name'] . ')<br /><br />';
-				} else {
-					$showmethods .=
-						'<input name="mercadopago_certified_exmethods[]" type="checkbox" checked="yes" value="' .
-						$method['id'] . '"> ' . $icon . " (" . $method['name'] . ')<br /><br />';
-				}*/
 				if ($activemethods != null && in_array($method['id'], $activemethods)) {
 					$showmethods .=
+						'<input name="mercadopago_certified_exmethods[]" type="checkbox" value="' .
+						$method['id'] . '"> ' . $icon . " (" . $method['name'] . ')<br /><br />';
+				} else {
+					$showmethods .=
+						'<input name="mercadopago_certified_exmethods[]" type="checkbox" checked="yes" value="' .
+						$method['id'] . '"> ' . $icon . " (" . $method['name'] . ')<br /><br />';
+				}
+				/*if ($activemethods != null && in_array($method['id'], $activemethods)) {
+					$showmethods .=
 						'<input name="mercadopago_certified_exmethods[]" type="checkbox" checked="yes" value="' .
 						$method['id'] . '"> ' . $icon . " (" . $method['name'] . ')<br /><br />';
 				} else {
 					$showmethods .=
 						'<input name="mercadopago_certified_exmethods[]" type="checkbox" value="' .
 						$method['id'] . '"> ' . $icon . " (" . $method['name'] . ')<br /><br />';
-				}
+				}*/
 			}
 		endforeach;
 		$showmethods .=
 			'<p class="description">' .
-				__( 'Select the payment methods that you <strong>don\'t</strong> want to receive with Mercado Pago.', 'wpecomm-mercadopago-module' ) .
+				__( 'Select the payment methods that you want to receive with Mercado Pago.', 'wpecomm-mercadopago-module' ) .
 			'</p>';
 		return $showmethods;
 	} else {
@@ -1007,6 +1022,30 @@ function currency_conversion() {
 	return $select_currencyconversion;
 }
 
+function payment_split_mode( $twocards ) {
+
+	$twocards = $twocards === false || is_null( $twocards ) ? 'inactive' : $twocards;
+	$twocards_options = array(
+		array('value' => 'active', 'text' => __( 'Active', 'wpecomm-mercadopago-module' ) ),
+		array('value' => 'inactive', 'text' => __( 'Inactive', 'wpecomm-mercadopago-module' ) )
+	);
+
+	foreach ( $twocards_options as $op_twocards ) :
+		$selected = '';
+		if ( $op_twocards['value'] == $twocards ) :
+			$selected = 'selected="selected"';
+		endif;
+		$select_twocards .=
+			'<option value="' . $op_twocards['value'] .
+			'" id="twocards-' . $op_twocards['value'] .
+			'" ' . $selected . '>' . $op_twocards['text'] .
+			'</option>';
+	endforeach;
+
+	return $select_twocards;
+
+}
+
 function debugs() {
 	if (get_option('mercadopago_certified_debug') == null || get_option('mercadopago_certified_debug') == '') {
 		$mercadopago_certified_debug = 'No';
@@ -1035,9 +1074,11 @@ function validateCredentials($client_id, $client_secret) {
 	$result = array();
 	if (empty($client_id) || empty($client_secret)) {
 		$result['site_id'] = null;
+		$result['collector_id'] = null;
 		$result['is_valid'] = false;
 		$result['is_test_user'] = true;
 		$result['currency_ratio'] = -1;
+		$result['payment_split_mode'] = 'inactive';
 		$result['payment_methods'] = null;
 		$result['all_payment_methods'] = '';
 		return $result;
@@ -1048,8 +1089,12 @@ function validateCredentials($client_id, $client_secret) {
 			$result['access_token'] = $mp->get_access_token();
 			$get_request = $mp->get( "/users/me?access_token=" . $result['access_token'] );
 			if (isset($get_request['response']['site_id'])) {
+
 				$result['is_test_user'] = in_array('test_user', $get_request['response']['tags']) ? "yes" : "no";
 				$result['site_id'] = $get_request['response']['site_id'];
+				$result['collector_id'] = $get_request['response']['id'];
+				$result['payment_split_mode'] = $mp->check_two_cards();
+
 				$payment_methods = $mp->get( "/v1/payment_methods/?access_token=" . $result['access_token'] );
 				$payment_methods = $payment_methods["response"];
 				$arr = array();
@@ -1082,27 +1127,33 @@ function validateCredentials($client_id, $client_secret) {
 				return $result;
 			} else {
 				$result['site_id'] = null;
+				$result['collector_id'] = null;
 				$result['is_valid'] = false;
 				$result['is_test_user'] = true;
 				$result['currency_ratio'] = -1;
+				$result['payment_split_mode'] = 'inactive';
 				$result['payment_methods'] = null;
 				$result['all_payment_methods'] = '';
 				return $result;
 			}
 		} catch ( MercadoPagoException $e ) {
 			$result['site_id'] = null;
+			$result['collector_id'] = null;
 			$result['is_valid'] = false;
 			$result['is_test_user'] = true;
 			$result['currency_ratio'] = -1;
+			$result['payment_split_mode'] = 'inactive';
 			$result['payment_methods'] = null;
 			$result['all_payment_methods'] = '';
 			return $result;
 		}
 	}
 	$result['site_id'] = null;
+	$result['collector_id'] = null;
 	$result['is_valid'] = false;
 	$result['is_test_user'] = true;
 	$result['currency_ratio'] = -1;
+	$result['payment_split_mode'] = 'inactive';
 	$result['payment_methods'] = null;
 	$result['all_payment_methods'] = '';
 	return $result;

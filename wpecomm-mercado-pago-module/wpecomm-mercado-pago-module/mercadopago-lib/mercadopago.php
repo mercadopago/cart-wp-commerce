@@ -11,7 +11,7 @@ $GLOBALS["LIB_LOCATION"] = dirname(__FILE__);
 
 class MP {
 
-    const version = "4.2.0";
+    const version = "4.2.1";
 
     private $client_id;
     private $client_secret;
@@ -519,6 +519,51 @@ class MP {
 
         $result = MPRestClient::delete($request);
         return $result;
+    }
+
+    //=== ACCOUNT SETTINGS FUNCTIONS ===
+
+    /**
+     * Summary: Check the status of a account regarding its option to use two cards for pay.
+     * Description: Check the status of a account regarding its option to use two cards for pay.
+     * @return array( json )
+     */
+    public function check_two_cards() {
+
+        $request = array(
+            'uri' => '/account/settings?access_token=' . $this->get_access_token()
+         );
+
+        $two_cards_info = MPRestClient::get( $request, $this->version );
+        if ( $two_cards_info['status'] == 200 )
+            return $two_cards_info['response']['two_cards'];
+        else {
+            return 'inactive';
+        }
+
+    }
+
+    /**
+     * Summary: Set paymennts with two cards for the merchant.
+     * Description: Set paymennts with two cards for the merchant.
+     * @param string $mode ( should be 'active' or 'inactive' string )
+     * @return array( json )
+     */
+    public function set_two_cards_mode( $mode ) {
+
+        $request = array(
+            'uri' => '/account/settings?access_token=' . $this->get_access_token(),
+            'data' => array(
+                'two_cards' => $mode
+             ),
+            'headers' => array(
+                'content-type' => 'application/json'
+             )
+         );
+
+        $two_cards_info = MPRestClient::put( $request, $this->version );
+        return $two_cards_info;
+
     }
 
     /* **************************************************************************************** */

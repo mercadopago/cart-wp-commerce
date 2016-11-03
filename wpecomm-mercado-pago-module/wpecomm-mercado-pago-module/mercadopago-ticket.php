@@ -636,36 +636,30 @@ function form_mercadopago_ticket() {
 	// send output to generate settings page
 	$output = "
 		<tr>
-			<td></td>
-			<td><h3><strong>" . __('Mercado Pago Credentials', 'wpecomm-mercadopago-module' ) . "</strong></h3></td>
-		</tr>
-		<tr>
 			<td>
-				<img width='200' height='52' src='" .
-					plugins_url( 'wpsc-merchants/mercadopago-images/mplogo.png', plugin_dir_path( __FILE__ ) ) .
-				"'>
-			</td>
+            <img width='200' height='52' src='" .
+            plugins_url(
+               'wpsc-merchants/mercadopago-images/mplogo.png',
+               plugin_dir_path( __FILE__ )
+            ) . "'>
+         </td>
 			<td>
-				<input type='hidden' size='60' value='" . $result['site_id'] . "' name='mercadopago_ticket_siteid' />
-				<input type='hidden' size='60' value='" .
+            <input type='hidden' size='60' value='" . $result['site_id'] . "' name='mercadopago_ticket_siteid' />
+            <input type='hidden' size='60' value='" .
                json_encode( $form_labels ) .
                "' name='mercadopago_ticket_checkoutmessage1' />
-				<input type='hidden' size='60' value='" . $result['is_test_user'] . "' name='mercadopago_ticket_istestuser' />
-				<input type='hidden' size='60' value='" . $result['currency_ratio'] . "' name='mercadopago_ticket_currencyratio' />
-				<input type='hidden' size='60' value='" .
-					json_encode( $result['payment_methods'] ) .
-					"' name='mercadopago_ticket_payment_methods' />
-				<p><a href='https://wordpress.org/support/view/plugin-reviews/wpecomm-mercado-pago-module?filter=5#postform' target='_blank' class='button button-primary'>" . sprintf(
-						__( 'Please, rate us %s on WordPress.org and give your feedback to help improve this module!', 'wpecomm-mercadopago-module' ),
-						'&#9733;&#9733;&#9733;&#9733;&#9733;'
-						) . "
-				</a></p><br>
-				<p class='description'>" .
-					sprintf( '%s', $credentials_message ) . '<br>' . sprintf(
-						__( 'You can obtain your credentials for', 'wpecomm-mercadopago-module' ) . ' %s.',
-						$api_secret_locale ) . "
-				</p>
-			</td>
+            <input type='hidden' size='60' value='" . $result['is_test_user'] . "' name='mercadopago_ticket_istestuser' />
+            <input type='hidden' size='60' value='" . $result['currency_ratio'] . "' name='mercadopago_ticket_currencyratio' />
+            <input type='hidden' size='60' value='" .
+               json_encode( $result['payment_methods'] ) .
+               "' name='mercadopago_ticket_payment_methods' />
+            <strong>" . __('Mercado Pago Credentials', 'wpecomm-mercadopago-module' ) . "</strong>
+            <p class='description'>" .
+               sprintf( '%s', $credentials_message ) . '<br>' . sprintf(
+                  __( 'You can obtain your credentials for', 'wpecomm-mercadopago-module' ) . ' %s.',
+                  $api_secret_locale ) . "
+            </p>
+         </td>
 		</tr>
 		<tr>
 			<td>" . __('Access Token', 'wpecomm-mercadopago-module' ) . "</td>
@@ -970,7 +964,7 @@ function drawTicketOptions( $payment_methods ) {
                </div>
                <div class="mp-box-inputs mp-col-45">
                   <label>
-                     <img src="' . $payment[ "thumbnail" ] . '" alt="' . $payment[ 'name' ] . '" />
+                     <img src="' . $payment[ "secure_thumbnail" ] . '" alt="' . $payment[ 'name' ] . '" />
                      &nbsp;(' . $payment[ "name" ] . ')
                   </label>
                </div>
@@ -996,7 +990,7 @@ function drawTicketOptions( $payment_methods ) {
 function getPaymentMethodsImages( $payment_methods ) {
 	$html = "";
 	foreach ( $payment_methods as $payment ) {
-		$html .= '<img class="logo" src="' . $payment[ 'thumbnail' ] . '" width="90" height="40" style="float:right;"/>';
+		$html .= '<img class="logo" src="' . $payment[ 'secure_thumbnail' ] . '" width="90" height="40" style="float:right;"/>';
 		break;
 	}
 	return $html;

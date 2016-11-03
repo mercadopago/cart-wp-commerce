@@ -4,7 +4,7 @@ Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago, wpecommerce
 Requires at least: WP-eCommerce 3.11.x
 Tested up to: WP-eCommerce 3.11.x
-Stable tag: 4.2.0
+Stable tag: 4.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,7 +39,7 @@ You have two ways to install this module: from your WordPress Store, or by downl
 3. You should find the module read to be installed. Click install.
 
 = Manual Download =
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.0.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.1.zip">WordPress Plugin Directory</a>);
 2. Unzip the folder and find "wpecomm-mercado-pago-module" directory;
 3. Copy "wpecomm-mercado-pago-module" directory to **[WordPressRootDirectory]/wp-content/plugins/** directory.
 
@@ -103,6 +103,14 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 4. `Configuration of Basic Checkout`
 
 == Changelog ==
+
+= v4.2.1 (04/11/2016) =
+* Features
+	- Two Card Payment Configuration. Merchants can configure this feature in back-office through settings page.
+* Improvements
+	- Improved some visual interface (plugin manager and payment methods).
+* Bug fixes
+	- Fixed a SSL issue related to ticket solution (the open locker) in gateway selection.
 
 = v4.2.0 (14/09/2016) =
 * Features
