@@ -108,9 +108,7 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 * Features
 	- Two Card Payment Configuration. Merchants can configure this feature in back-office through settings page.
 * Improvements
-	- Removed some redundant notice messages;
-	- Improved algorithm to process settings page flow and checkout;
-	- Refactored code to meet WordPress coding standards.
+	- Improved some visual interface (plugin manager and payment methods).
 * Bug fixes
 	- Fixed a SSL issue related to ticket solution (the open locker) in gateway selection.
 
