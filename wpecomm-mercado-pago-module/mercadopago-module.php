@@ -8,7 +8,7 @@
  * Author URI: https://www.mercadopago.com.br/developers/
  * Developer: Marcelo T. Hama (marcelo.hama@mercadolibre.com)
  * Copyright: Copyright(c) MercadoPago [https://www.mercadopago.com]
- * Version: 4.2.1
+ * Version: 4.2.2
  * License: https://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  * Text Domain: wpecomm-mercadopago-module
  * Domain Path: /languages/
@@ -24,6 +24,8 @@ if ( !class_exists( 'WPeComm_MercadoPago_Module' ) ) :
 
 // WPeCommerce MercadoPago Module main class
 class WPeComm_MercadoPago_Module {
+
+  const VERSION = '4.2.2';
 
 	// Singleton design pattern
 	protected static $instance = null;
@@ -145,6 +147,25 @@ class WPeComm_MercadoPago_Module {
   	}
   	closedir($dir);
 	}
+
+  /**
+     * Summary: Builds up the array for the mp_install table, with info related with checkout.
+     * Description: Builds up the array for the mp_install table, with info related with checkout.
+     * @return an array with the module informations.
+     */
+    public static function get_common_settings() {
+
+      $infra_data = array(
+        'module_version' => WPeComm_MercadoPago_Module::VERSION,
+        'platform' => 'WPeCommerce',
+        'platform_version' => get_option( 'wpsc_version', '0' ),
+        'code_version' => phpversion(),
+        'so_server' => PHP_OS
+      );
+
+      return $infra_data;
+
+    }
 
 }
 

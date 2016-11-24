@@ -11,7 +11,7 @@ $GLOBALS["LIB_LOCATION"] = dirname(__FILE__);
 
 class MP {
 
-    const version = "4.2.1";
+    const version = "4.2.2";
 
     private $client_id;
     private $client_secret;
@@ -67,7 +67,8 @@ class MP {
         ));
 
         if ($access_data["status"] != 200) {
-            throw new MercadoPagoException ($access_data['response']['message'], $access_data['status']);
+            //throw new MercadoPagoException ($access_data['response']['message'], $access_data['status']);
+            return null;
         }
 
         $this->access_data = $access_data['response'];
@@ -534,7 +535,7 @@ class MP {
             'uri' => '/account/settings?access_token=' . $this->get_access_token()
          );
 
-        $two_cards_info = MPRestClient::get( $request, $this->version );
+        $two_cards_info = MPRestClient::get( $request );
         if ( $two_cards_info['status'] == 200 )
             return $two_cards_info['response']['two_cards'];
         else {
@@ -561,8 +562,28 @@ class MP {
              )
          );
 
-        $two_cards_info = MPRestClient::put( $request, $this->version );
+        $two_cards_info = MPRestClient::put( $request );
         return $two_cards_info;
+
+    }
+
+    //=== MODULE ANALYTICS FUNCTIONS ===
+
+    /**
+     * Summary: Save the settings of the module for analytics purposes.
+     * Description: Save the settings of the module for analytics purposes.
+     * @param array( json )
+     * @return array( json )
+     */
+    public function analytics_save_settings( $module_info ) {
+
+        $request = array(
+            'uri' => '/modules/tracking/settings?access_token=' . $this->get_access_token(),
+            'data' => $module_info
+         );
+
+        $result = MPRestClient::post( $request );
+        return $result;
 
     }
 

@@ -75,7 +75,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
   <thead>
   <tbody>
     <tr>
-      <td>v4.2.1</td>
+      <td>v4.2.2</td>
       <td>Stable (Current version)</td>
       <td>WPeCommerce 3.11.x or greater</td>
     </tr>
@@ -99,7 +99,7 @@ You have two ways to install this module: from your WordPress Store, or by downl
 
 **Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.1.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.2.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "wpecomm-mercado-pago-module" directory;
 
@@ -249,7 +249,7 @@ If you already had installed a previous version of WPeComm Mercado Pago Module, 
 
 **Upgrade with Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.1.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.2.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "wpecomm-mercado-pago-module" directory;
 
@@ -262,7 +262,6 @@ To confirm that your module is really updated, you can see in *Plugins* item in 
 <a name="Feedback"></a>
 ##Feedback##
 
-We want to know your opinion, please answer the following form.
+We want to know your opinion, feel free to access our pages:
 
-* [Portuguese](http://goo.gl/forms/2n5jWHaQbfEtdy0E2)
-* [Spanish](http://goo.gl/forms/A9bm8WuqTIZ89MI22)
+* [Facebook](https://www.facebook.com/groups/modulos.mercadopago/)

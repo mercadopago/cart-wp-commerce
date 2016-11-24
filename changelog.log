@@ -1,5 +1,9 @@
 CHANGELOG:
 
+= v4.2.2 (24/11/2016) =
+* Improvements
+	- Analytical analysis checking.
+
 = v4.2.1 (04/11/2016) =
 * Features
 	- Two Card Payment Configuration. Merchants can configure this feature in back-office through settings page.
