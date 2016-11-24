@@ -262,7 +262,6 @@ To confirm that your module is really updated, you can see in *Plugins* item in 
 <a name="Feedback"></a>
 ##Feedback##
 
-We want to know your opinion, please answer the following form.
+We want to know your opinion, feel free to access our pages:
 
-* [Portuguese](http://goo.gl/forms/2n5jWHaQbfEtdy0E2)
-* [Spanish](http://goo.gl/forms/A9bm8WuqTIZ89MI22)
+* [Facebook](https://www.facebook.com/groups/modulos.mercadopago/)
