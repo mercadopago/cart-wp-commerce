@@ -27,7 +27,7 @@ Offer a checkout fully customized to your brand experience with our simple-to-us
 * Accept Mercado Pago's discount coupons.
 * Improve conversion rate.
 
-*Available for Argentina, Brazil, Colombia, Mexico, Peru and Venezuela*
+*Available for Argentina, Brazil, Colombia, Mexico, Peru, Venezuela and Uruguay*
 
 **Basic Checkout**
 
@@ -39,7 +39,7 @@ Great for merchants who want to get going quickly and easily.
 * Accept tickets, bank transfer and account money in addition to cards.
 * Accept Mercado Pago's discount coupons.
 
-*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
+*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru, Venezuela and Uruguay*
 
 <a name="requirements"></a>
 ##Requirements##
@@ -75,7 +75,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
   <thead>
   <tbody>
     <tr>
-      <td>v4.2.3</td>
+      <td>v4.2.4</td>
       <td>Stable (Current version)</td>
       <td>WPeCommerce 3.11.x or greater</td>
     </tr>
@@ -99,7 +99,7 @@ You have two ways to install this module: from your WordPress Store, or by downl
 
 **Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.3.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.4.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "wpecomm-mercado-pago-module" directory;
 
@@ -131,6 +131,7 @@ On your store administration, go to *Settings > Store > Payments* tab. Click in 
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=basic
 	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
+	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=basic
 
 3. **Checkout Options**: This part allows you to customize your general checkout fields;
 
@@ -177,6 +178,7 @@ On your store administration, go to *Settings > Store > Payments* tab. Click in 
 	* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
 	* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
 	* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
+	* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=custom
 
 3. **Checkout Options**: This part allows you to customize your general checkout fields;
 
@@ -249,7 +251,7 @@ If you already had installed a previous version of WPeComm Mercado Pago Module, 
 
 **Upgrade with Manual Download**
 
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.3.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.4.zip">WordPress Plugin Directory</a>);
 
 2. Unzip the folder and find "wpecomm-mercado-pago-module" directory;
 
