@@ -27,7 +27,7 @@ Offer a checkout fully customized to your brand experience with our simple-to-us
 * Accept Mercado Pago's discount coupons.
 * Improve conversion rate.
 
-*Available for Argentina, Brazil, Colombia, Mexico, Peru, Uruguay and Venezuela*
+*Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru, Uruguay and Venezuela*
 
 **Basic Checkout**
 
