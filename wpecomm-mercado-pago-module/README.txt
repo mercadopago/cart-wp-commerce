@@ -54,6 +54,7 @@ To confirm that your module is really installed, you can click in **Plugins** it
 		* Colombia: https://www.mercadopago.com/mco/account/credentials?type=basic
 		* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=basic
 		* Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
+		* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=basic
 		* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
 	* And to get your **Public Key**/**Access Token** you can go to:
 		* Argentina: https://www.mercadopago.com/mla/account/credentials?type=custom
@@ -62,6 +63,7 @@ To confirm that your module is really installed, you can click in **Plugins** it
 		* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 		* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
 		* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
+		* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=custom
 		* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
 2. For the solutions **Mercado Pago - Basic Checkout**, **Mercado Pago - Custom Checkout**, and **Mercado Pago - Ticket**, you can:
 	* Enable/Disable you plugin (for all solutions);
