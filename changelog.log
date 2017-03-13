@@ -1,8 +1,19 @@
 CHANGELOG:
 
+= v4.2.4 (13/03/2017) =
+* Features
+	- Rollout to Uruguay. This plugin is now supporting Uruguay for Basic Checkout with its local language translations.
+* Improvements
+	- Conformity with Argentina's E 51/2017 resolution to show up CFT/TEA amounts;
+	- Removed decimals from Chile and Colombia currencies, as they aren't used.
+
+= v4.2.3 (12/12/2016) =
+* Improvements
+	- Analytics of module checkout.
+
 = v4.2.2 (24/11/2016) =
 * Improvements
-	- Analytical analysis checking.
+	- Analytics of module settings.
 
 = v4.2.1 (04/11/2016) =
 * Features

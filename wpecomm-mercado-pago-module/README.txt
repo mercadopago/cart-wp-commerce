@@ -4,7 +4,7 @@ Donate link: https://www.mercadopago.com.br/developers/
 Tags: ecommerce, mercadopago, wpecommerce
 Requires at least: WP-eCommerce 3.11.x
 Tested up to: WP-eCommerce 3.11.x
-Stable tag: 4.2.2
+Stable tag: 4.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,7 +39,7 @@ You have two ways to install this module: from your WordPress Store, or by downl
 3. You should find the module read to be installed. Click install.
 
 = Manual Download =
-1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.2.zip">WordPress Plugin Directory</a>);
+1. Get the module sources from a repository (<a href="https://github.com/mercadopago/cart-wp-commerce/archive/master.zip">Github</a> or <a href="https://downloads.wordpress.org/plugin/wpecomm-mercado-pago-module.4.2.4.zip">WordPress Plugin Directory</a>);
 2. Unzip the folder and find "wpecomm-mercado-pago-module" directory;
 3. Copy "wpecomm-mercado-pago-module" directory to **[WordPressRootDirectory]/wp-content/plugins/** directory.
 
@@ -54,6 +54,7 @@ To confirm that your module is really installed, you can click in **Plugins** it
 		* Colombia: https://www.mercadopago.com/mco/account/credentials?type=basic
 		* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=basic
 		* Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
+		* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=basic
 		* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=basic
 	* And to get your **Public Key**/**Access Token** you can go to:
 		* Argentina: https://www.mercadopago.com/mla/account/credentials?type=custom
@@ -62,6 +63,7 @@ To confirm that your module is really installed, you can click in **Plugins** it
 		* Colombia: https://www.mercadopago.com/mco/account/credentials?type=custom
 		* Mexico: https://www.mercadopago.com/mlm/account/credentials?type=custom
 		* Peru: https://www.mercadopago.com/mpe/account/credentials?type=custom
+		* Uruguay: https://www.mercadopago.com/mlu/account/credentials?type=custom
 		* Venezuela: https://www.mercadopago.com/mlv/account/credentials?type=custom
 2. For the solutions **Mercado Pago - Basic Checkout**, **Mercado Pago - Custom Checkout**, and **Mercado Pago - Ticket**, you can:
 	* Enable/Disable you plugin (for all solutions);
@@ -103,6 +105,17 @@ Please, check our FAQ at: https://www.mercadopago.com.br/ajuda/
 4. `Configuration of Basic Checkout`
 
 == Changelog ==
+
+= v4.2.4 (13/03/2017) =
+* Features
+	- Rollout to Uruguay. This plugin is now supporting Uruguay for Basic Checkout with its local language translations.
+* Improvements
+	- Conformity with Argentina's E 51/2017 resolution to show up CFT/TEA amounts;
+	- Removed decimals from Chile and Colombia currencies, as they aren't used.
+
+= v4.2.3 (12/12/2016) =
+* Improvements
+	- Analytics of module checkout.
 
 = v4.2.2 (24/11/2016) =
 * Improvements

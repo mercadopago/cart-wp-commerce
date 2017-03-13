@@ -65,6 +65,14 @@
 
       box_loading: "#mp-box-loading",
       submit: "#submit",
+      // tax resolution AG 51/2017
+      boxInstallments: '#mp-box-installments',
+      boxInstallmentsSelector: '#mp-box-installments-selector',
+      taxCFT: '#mp-box-input-tax-cft',
+      taxTEA: '#mp-box-input-tax-tea',
+      taxTextCFT: '#mp-tax-cft-text',
+      taxTextTEA: '#mp-tax-tea-text',
+      // form
       form: "#mercadopago-form",
       formCustomerAndCard: "#mercadopago-form-customer-and-card",
       utilities_fields: "#mercadopago-utilities"
@@ -275,6 +283,7 @@
   */
 
   MPv1.setInstallmentInfo = function(status, response) {
+
     var selectorInstallments = document.querySelector(MPv1.selectors.installments);
 
     if (response.length > 0) {
@@ -284,7 +293,24 @@
 
       // fragment.appendChild(option);
       for (var i = 0; i < payerCosts.length; i++) {
-        html_option += "<option value='"+ payerCosts[i].installments +"''>" + (payerCosts[i].recommended_message || payerCosts[i].installments) + "</option>";
+        /*html_option += "<option value='"+ payerCosts[i].installments +"''>" +
+        (payerCosts[i].recommended_message || payerCosts[i].installments) +
+        "</option>";*/
+        // Resolution 51/2017
+        var dataInput = "";
+        if ( MPv1.site_id == "MLA" ) {
+          var tax = payerCosts[i].labels;
+          if ( tax.length > 0 ) {
+            for ( var l=0; l<tax.length; l++ ) {
+              if ( tax[l].indexOf( "CFT_" ) !== -1 ) {
+                dataInput = "data-tax='" + tax[l] + "'";
+              }
+            }
+          }
+        }
+        html_option += "<option value='" + payerCosts[i].installments + "' " + dataInput + ">" +
+        (payerCosts[i].recommended_message || payerCosts[i].installments) +
+        "</option>";
       }
 
       // not take the user's selection if equal
@@ -293,8 +319,29 @@
       }
 
       selectorInstallments.removeAttribute("disabled");
+      MPv1.showTaxes();
+
     }
+
   }
+
+  MPv1.showTaxes = function() {
+      var selectorIsntallments = document.querySelector( MPv1.selectors.installments );
+      var tax = selectorIsntallments.options[selectorIsntallments.selectedIndex].getAttribute( "data-tax" );
+      var cft = "";
+      var tea = "";
+      if ( tax != null ) {
+        var tax_split = tax.split( "|" );
+        cft = tax_split[0].replace( "_", " ");
+        tea = tax_split[1].replace( "_", " ");
+        if ( cft == "CFT 0,00%" && tea == "TEA 0,00%" ) {
+          cft = "";
+          tea = "";
+        }
+      }
+      document.querySelector( MPv1.selectors.taxTextCFT ).innerHTML = cft;
+      document.querySelector( MPv1.selectors.taxTextTEA ).innerHTML = tea;
+    }
 
 
   /*
@@ -700,8 +747,8 @@
         MPv1.getPaymentMethods();
       }
 
-      //flow: MLB AND MCO
-      if (MPv1.site_id == "MLB") {
+      // flow: MLB, MCO AND MLA
+      if ( MPv1.site_id == "MLB" ) {
 
         document.querySelector(MPv1.selectors.mpDocType).style.display = "none";
         document.querySelector(MPv1.selectors.mpIssuer).style.display = "none";
@@ -709,8 +756,14 @@
         document.querySelector(MPv1.selectors.docNumber).classList.remove("mp-col-75");
         document.querySelector(MPv1.selectors.docNumber).classList.add("mp-col-100");
 
-      } else if (MPv1.site_id == "MCO") {
+      } else if ( MPv1.site_id == "MCO" ) {
         document.querySelector(MPv1.selectors.mpIssuer).style.display = "none";
+      } else if ( MPv1.site_id == "MLA" ) {
+        document.querySelector( MPv1.selectors.boxInstallmentsSelector ).classList.remove( "mp-col-100" );
+        document.querySelector( MPv1.selectors.boxInstallmentsSelector ).classList.add( "mp-col-70" );
+        document.querySelector( MPv1.selectors.taxCFT ).style.display = "block";
+        document.querySelector( MPv1.selectors.taxTEA ).style.display = "block";
+        MPv1.addListenerEvent( document.querySelector( MPv1.selectors.installments ), "change", MPv1.showTaxes );
       }
 
       if (MPv1.debug) {

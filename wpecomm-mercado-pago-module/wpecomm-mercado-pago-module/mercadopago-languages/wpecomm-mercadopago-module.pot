@@ -438,3 +438,6 @@ msgstr ""
 
 msgid "Your Mercado Pago credentials Access Token appears to be misconfigured."
 msgstr ""
+
+msgid "Uruguay"
+msgstr ""

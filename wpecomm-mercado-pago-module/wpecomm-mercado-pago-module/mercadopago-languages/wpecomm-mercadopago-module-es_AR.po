@@ -439,3 +439,6 @@ msgstr "Su cliente será capaz de utilizar dos tarjetas diferentes para pagar el
 
 msgid "Your Mercado Pago credentials Access Token appears to be misconfigured."
 msgstr "Las credenciales de Mercado Pago Access Token parece estar mal configurado."
+
+msgid "Uruguay"
+msgstr "Uruguay"
