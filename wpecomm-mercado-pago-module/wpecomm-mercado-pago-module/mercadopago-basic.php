@@ -671,12 +671,11 @@ function function_mercadopago_basic($seperator, $sessionid) {
 		}
 		// tax fees cost as an item
 		$fee_price = (
-			((float)($item->unit_price)) *
-			(float)($item->quantity)
-		) * (
-			(float)get_option('mercadopago_certified_currencyratio') > 0 ?
-			(float)get_option('mercadopago_certified_currencyratio') : 1
-		);
+ 			((float)($wpsc_cart->total_tax))
+ 		) * (
+ 			(float)get_option('mercadopago_certified_currencyratio') > 0 ?
+ 			(float)get_option('mercadopago_certified_currencyratio') : 1
+ 		);
 		if ( $site_id == 'MCO' || $site_id == 'MLC' ) {
 			$fee_price = floor( $fee_price );
 		}
