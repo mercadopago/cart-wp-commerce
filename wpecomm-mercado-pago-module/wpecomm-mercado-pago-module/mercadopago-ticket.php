@@ -16,30 +16,30 @@ $nzshpcrt_gateways[$num] = array(
 	'name' =>  __( 'Mercado Pago - Ticket', 'wpecomm-mercadopago-module' ),
 	'api_version' => 2.0,
 	//'image' => WPSC_URL . '/wpsc-merchants/mercadopago-images/mercadopago.png',
-	 'class_name' => 'WPSC_Merchant_MercadoPago_Ticket',
-	 'has_recurring_billing' => true,
-	 'display_name' => __( 'Mercado Pago - Ticket', 'wpecomm-mercadopago-module' ),
-	 'wp_admin_cannot_cancel' => false,
-	 'requirements' => array(
-		 'php_version' => 5.6,
+	'class_name' => 'WPSC_Merchant_MercadoPago_Ticket',
+	'has_recurring_billing' => true,
+	'display_name' => __( 'Mercado Pago - Ticket', 'wpecomm-mercadopago-module' ),
+	'wp_admin_cannot_cancel' => false,
+	'requirements' => array(
+		'php_version' => 5.6,
 			'extra_modules' => array()
-	 ),
-	 'form' => 'form_mercadopago_ticket',
-	 'submit_function' => 'submit_mercadopago_ticket',
-	 'internalname' => 'WPSC_Merchant_MercadoPago_Ticket'
+	),
+	'form' => 'form_mercadopago_ticket',
+	'submit_function' => 'submit_mercadopago_ticket',
+	'internalname' => 'WPSC_Merchant_MercadoPago_Ticket'
 );
 
 class WPSC_Merchant_MercadoPago_Ticket extends wpsc_merchant {
 
 	var $name = '';
-  	var $purchase_id = null;
+	var $purchase_id = null;
 
 	function __construct( $purchase_id = null, $is_receiving = false ) {
 		add_action( 'init', array( $this, 'load_plugin_textdomain_wpecomm' ) );
 		add_action( 'wpsc_submit_gateway_options', array( $this, 'callback_submit_options_ticket' ) );
 		$this->purchase_id = $purchase_id;
 		$this->name = __( 'Mercado Pago - Ticket', 'wpecomm-mercadopago-module' );
-	 	parent::__construct( $purchase_id, $is_receiving );
+		parent::__construct( $purchase_id, $is_receiving );
 	}
 
 	public static function callback_submit_options_ticket() {

@@ -1,5 +1,9 @@
 CHANGELOG:
 
+= v4.2.5 (27/03/2017) =
+* Bug fixes
+	- Fixed a bug related to double sum of the second product in the cart.
+
 = v4.2.4 (13/03/2017) =
 * Features
 	- Rollout to Uruguay. This plugin is now supporting Uruguay for Basic Checkout with its local language translations.
