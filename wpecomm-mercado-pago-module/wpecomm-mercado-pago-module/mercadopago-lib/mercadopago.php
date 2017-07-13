@@ -173,6 +173,10 @@ class MP {
      * @return array(json)
      */
     public function get_payment($id) {
+        if (!ctype_digit(strval($id))) {
+            throw new MercadoPagoException("Invalid argument. Payment ID must be integer");
+        }
+
         $uri_prefix = $this->sandbox ? "/sandbox" : "";
 
         $request = array(
