@@ -11,7 +11,7 @@ $GLOBALS["LIB_LOCATION"] = dirname(__FILE__);
 
 class MP {
 
-    const version = "4.2.5";
+    const version = "4.2.6";
 
     private $client_id;
     private $client_secret;
@@ -167,31 +167,6 @@ class MP {
         return $discount_info;
     }
 
-    /**
-     * Get information for specific payment
-     * @param int $id
-     * @return array(json)
-     */
-    public function get_payment($id) {
-        if (!ctype_digit(strval($id))) {
-            throw new MercadoPagoException("Invalid argument. Payment ID must be integer");
-        }
-
-        $uri_prefix = $this->sandbox ? "/sandbox" : "";
-
-        $request = array(
-            "uri" => $uri_prefix."/collections/notifications/{$id}",
-            "params" => array(
-                "access_token" => $this->get_access_token()
-            )
-        );
-
-        $payment_info = MPRestClient::get($request);
-        return $payment_info;
-    }
-    public function get_payment_info($id) {
-        return $this->get_payment($id);
-    }
 
     /**
      * Get information for specific authorized payment
@@ -208,46 +183,6 @@ class MP {
 
         $authorized_payment_info = MPRestClient::get($request);
         return $authorized_payment_info;
-    }
-
-    /**
-     * Refund accredited payment
-     * @param int $id
-     * @return array(json)
-     */
-    public function refund_payment($id) {
-        $request = array(
-            "uri" => "/collections/{$id}",
-            "params" => array(
-                "access_token" => $this->get_access_token()
-            ),
-            "data" => array(
-                "status" => "refunded"
-            )
-        );
-
-        $response = MPRestClient::put($request);
-        return $response;
-    }
-
-    /**
-     * Cancel pending payment
-     * @param int $id
-     * @return array(json)
-     */
-    public function cancel_payment($id) {
-        $request = array(
-            "uri" => "/collections/{$id}",
-            "params" => array(
-                "access_token" => $this->get_access_token()
-            ),
-            "data" => array(
-                "status" => "cancelled"
-            )
-        );
-
-        $response = MPRestClient::put($request);
-        return $response;
     }
 
     /**
@@ -268,30 +203,6 @@ class MP {
 
         $response = MPRestClient::put($request);
         return $response;
-    }
-
-    /**
-     * Search payments according to filters, with pagination
-     * @param array $filters
-     * @param int $offset
-     * @param int $limit
-     * @return array(json)
-     */
-    public function search_payment($filters, $offset = 0, $limit = 0) {
-        $filters["offset"] = $offset;
-        $filters["limit"] = $limit;
-
-        $uri_prefix = $this->sandbox ? "/sandbox" : "";
-
-        $request = array(
-            "uri" => $uri_prefix."/collections/search",
-            "params" => array_merge ($filters, array(
-                "access_token" => $this->get_access_token()
-            ))
-        );
-
-        $collection_result = MPRestClient::get($request);
-        return $collection_result;
     }
 
     /**
